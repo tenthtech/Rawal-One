@@ -75,19 +75,19 @@ export const problemPathways: ProblemPathway[] = [
   {
     title: "Road or pothole issue",
     description: "Find help with damaged roads and street surfaces.",
-    href: "/services?category=roads-streets&issue=pothole",
+    href: "/services?q=pothole&category=roads-streets",
     linkLabel: "Find road and pothole services",
   },
   {
     title: "Streetlight problem",
     description: "Find the right service for a faulty streetlight.",
-    href: "/services?category=roads-streets&issue=streetlight",
+    href: "/services?q=streetlight&category=roads-streets",
     linkLabel: "Find streetlight services",
   },
   {
     title: "Missed waste collection",
     description: "Get guidance when a scheduled pickup is missed.",
-    href: "/services?category=waste-recycling&issue=missed-collection",
+    href: "/services?q=missed%20collection&category=waste-recycling",
     linkLabel: "Find waste collection services",
   },
 ];
@@ -144,7 +144,7 @@ export const communityEvents: CommunityEvent[] = [
 
 export const usefulLinks = [
   { label: "Browse all services", href: "/services" },
-  { label: "Forms & documents", href: "/services?category=forms-documents" },
+  { label: "Forms & documents", href: "/services?q=forms%20documents" },
   { label: "Accessibility", href: "/services?q=accessibility" },
   { label: "Public notices", href: "/#updates" },
   { label: "Contact information", href: "/services?q=contact%20information" },
