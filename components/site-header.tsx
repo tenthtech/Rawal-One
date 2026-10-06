@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const navigation = [
-  { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
+  { href: "/#community", label: "Community" },
+  { href: "/#updates", label: "News & Notices" },
   { href: "/#about-this-demo", label: "About this demo" },
 ];
 
@@ -45,9 +46,7 @@ export function SiteHeader() {
   }, [menuOpen]);
 
   function isCurrentPage(href: string) {
-    if (href === "/") return pathname === "/";
-    if (href === "/services") return pathname === "/services";
-    return false;
+    return !href.includes("#") && pathname === href;
   }
 
   const navigationList = navigation.map((item) => {
@@ -59,7 +58,7 @@ export function SiteHeader() {
           href={item.href}
           aria-current={isCurrent ? "page" : undefined}
           onClick={() => setMenuOpen(false)}
-          className={`flex min-h-11 items-center border-b-2 px-1 text-[0.9375rem] font-bold no-underline transition-colors motion-reduce:transition-none md:min-h-16 ${
+          className={`flex min-h-11 items-center border-b-2 px-1 text-[0.9375rem] font-bold no-underline transition-colors motion-reduce:transition-none lg:min-h-16 ${
             isCurrent
               ? "border-civic text-civic"
               : "border-transparent text-ink hover:border-line hover:text-civic"
@@ -76,7 +75,7 @@ export function SiteHeader() {
       <div className="bg-civic text-white">
         <div className="mx-auto flex min-h-9 max-w-[76rem] flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-2 text-[0.8125rem] sm:px-8 lg:px-10">
           <p className="font-bold tracking-[0.01em]">
-            Tenth Tech municipal services research
+            Municipal services demonstration
           </p>
           <p className="text-white/80">Rawalpindi, Pakistan</p>
         </div>
@@ -103,8 +102,8 @@ export function SiteHeader() {
             </span>
           </Link>
 
-          <nav aria-label="Primary navigation" className="hidden md:block">
-            <ul className="flex items-center gap-7">{navigationList}</ul>
+          <nav aria-label="Primary navigation" className="hidden lg:block">
+            <ul className="flex items-center gap-5 xl:gap-7">{navigationList}</ul>
           </nav>
 
           <button
@@ -113,7 +112,7 @@ export function SiteHeader() {
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((open) => !open)}
-            className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-line bg-surface px-3 text-sm font-bold text-ink hover:border-civic hover:text-civic md:hidden"
+            className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-line bg-surface px-3 text-sm font-bold text-ink hover:border-civic hover:text-civic lg:hidden"
           >
             <span>{menuOpen ? "Close" : "Menu"}</span>
             <svg
@@ -145,7 +144,7 @@ export function SiteHeader() {
           id="mobile-navigation"
           aria-label="Mobile navigation"
           hidden={!menuOpen}
-          className="border-t border-line bg-surface px-5 pb-4 sm:px-8 md:hidden"
+          className="border-t border-line bg-surface px-5 pb-4 sm:px-8 lg:hidden"
         >
           <ul className="divide-y divide-line">{navigationList}</ul>
         </nav>
