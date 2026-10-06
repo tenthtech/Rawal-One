@@ -281,7 +281,22 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                         {getServiceCategoryLabel(service.category)}
                       </p>
                       <h3 className="mt-2 text-xl font-bold tracking-[-0.015em] text-ink">
-                        {service.title}
+                        {"detailHref" in service ? (
+                          <Link
+                            href={service.detailHref}
+                            className="group inline-flex min-h-11 items-center gap-2 text-ink underline decoration-civic/35 underline-offset-4 hover:text-civic hover:decoration-civic"
+                          >
+                            <span>{service.title}</span>
+                            <span
+                              aria-hidden="true"
+                              className="shrink-0 text-civic"
+                            >
+                              →
+                            </span>
+                          </Link>
+                        ) : (
+                          service.title
+                        )}
                       </h3>
                       <p className="mt-2 max-w-2xl leading-7 text-muted">
                         {service.summary}

@@ -29,13 +29,13 @@ export const serviceNotice = {
   label: "Service advisory",
   title: "Planned water maintenance in Satellite Town",
   description:
-    "Scheduled maintenance may affect water pressure in parts of Satellite Town this afternoon.",
+    "Scheduled maintenance may affect water pressure in parts of Satellite Town on 7 October.",
   metadata: [
     { label: "Affected area", value: "Satellite Town" },
     { label: "Status", value: "Planned maintenance" },
   ],
-  href: "/#updates",
-  linkLabel: "View service updates",
+  href: "/services/water-service-interruptions",
+  linkLabel: "View service update",
 };
 
 export const popularServices: HomepageLink[] = [

@@ -16,6 +16,7 @@ export type ServiceRecord = {
   summary: string;
   category: ServiceCategorySlug;
   keywords: readonly string[];
+  detailHref?: `/services/${string}`;
 };
 
 export const services = [
@@ -71,6 +72,7 @@ export const services = [
     title: "Water service interruptions",
     summary: "Check service advisories and planned maintenance information.",
     category: "water-sewer",
+    detailHref: "/services/water-service-interruptions",
     keywords: [
       "water outage",
       "no water",
