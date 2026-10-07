@@ -1,6 +1,11 @@
 import "server-only";
 
+import {
+  getDocumentCategoryLabel,
+  municipalDocuments,
+} from "@/data/documents";
 import { cityUpdates, communityEvents } from "@/data/homepage";
+import { publicNotices } from "@/data/notices";
 import {
   getServiceCategoryLabel,
   services,
@@ -13,6 +18,7 @@ import { getActivePublicAlerts } from "@/lib/alerts";
 export const searchFilters = [
   { value: "all", label: "All" },
   { value: "services", label: "Services" },
+  { value: "documents", label: "Documents" },
   { value: "updates-notices", label: "Updates & notices" },
   { value: "community", label: "Community" },
   { value: "alerts", label: "Current alerts" },
@@ -93,9 +99,10 @@ const ignoredQueryTerms = new Set([
 
 const groupPriority: Record<SearchResultGroup, number> = {
   services: 0,
-  "updates-notices": 1,
-  community: 2,
-  alerts: 3,
+  documents: 1,
+  "updates-notices": 2,
+  community: 3,
+  alerts: 4,
 };
 
 export function tidySearchQuery(value: string) {
@@ -246,25 +253,59 @@ function getServiceDocuments(): SearchDocument[] {
 }
 
 function getUpdateDocuments(): SearchDocument[] {
-  return cityUpdates.map((update, index) => {
-    const isPublicNotice = update.category === "Public notice";
-
-    return {
+  return cityUpdates
+    .filter((update) => update.category !== "Public notice")
+    .map((update, index) => ({
       id: `update:${index}:${normalizeSearchText(update.title).replace(/ /g, "-")}`,
       group: "updates-notices",
-      typeLabel: isPublicNotice ? "Public notice" : "City update",
+      typeLabel: "City update",
       title: update.title,
       summary: update.description,
       href: "/#updates",
-      category: isPublicNotice ? undefined : update.category,
+      category: update.category,
       date: {
         dateTime: update.dateTime,
         label: update.date,
       },
       keywords: [],
       body: [],
-    };
-  });
+    }));
+}
+
+function getDocumentResourceDocuments(): SearchDocument[] {
+  return municipalDocuments.map((document) => ({
+    id: `document:${document.slug}`,
+    group: "documents",
+    typeLabel: "Document",
+    title: document.title,
+    summary: document.description,
+    href: document.href,
+    category: `${getDocumentCategoryLabel(document.category) ?? "Municipal resource"} · ${document.format}`,
+    date: {
+      dateTime: document.updatedDateTime,
+      label: document.updatedDate,
+    },
+    keywords: [...document.keywords, document.format],
+    body: [],
+  }));
+}
+
+function getPublicNoticeDocuments(): SearchDocument[] {
+  return publicNotices.map((notice) => ({
+    id: `notice:${notice.slug}`,
+    group: "updates-notices",
+    typeLabel: "Public notice",
+    title: notice.title,
+    summary: notice.summary,
+    href: `/notices#${notice.slug}`,
+    category: `${notice.category} · ${notice.status}`,
+    date: {
+      dateTime: notice.publishedDateTime,
+      label: notice.publishedDate,
+    },
+    keywords: notice.keywords,
+    body: [],
+  }));
 }
 
 function getCommunityDocuments(): SearchDocument[] {
@@ -385,7 +426,9 @@ export async function searchRawalOne(query: string, now = new Date()) {
 
   const documents = [
     ...getServiceDocuments(),
+    ...getDocumentResourceDocuments(),
     ...getUpdateDocuments(),
+    ...getPublicNoticeDocuments(),
     ...getCommunityDocuments(),
     ...(await getAlertDocuments(now)),
   ];

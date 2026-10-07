@@ -115,13 +115,13 @@ export const cityUpdates: CityUpdate[] = [
   },
   {
     category: "Public notice",
-    title: "Public notice: development application review",
+    title: "Development application consultation",
     description:
-      "Residents can review information related to an upcoming development application consultation.",
-    date: "15 October 2026",
-    dateTime: "2026-10-15",
-    href: "/services?category=permits-applications",
-    linkLabel: "Find permits and applications",
+      "Residents can review information related to a demonstration development application and consultation period.",
+    date: "5 October 2026",
+    dateTime: "2026-10-05",
+    href: "/notices#development-application-consultation",
+    linkLabel: "Read public notice",
   },
 ];
 
@@ -144,9 +144,9 @@ export const communityEvents: CommunityEvent[] = [
 
 export const usefulLinks = [
   { label: "Browse all services", href: "/services" },
-  { label: "Forms & documents", href: "/services?q=forms%20documents" },
+  { label: "Forms & documents", href: "/documents" },
   { label: "Accessibility", href: "/services?q=accessibility" },
-  { label: "Public notices", href: "/#updates" },
+  { label: "Public notices", href: "/notices" },
   { label: "Contact information", href: "/services?q=contact%20information" },
   { label: "About this demonstration", href: "/#about-this-demo" },
 ];

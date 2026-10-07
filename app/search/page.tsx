@@ -13,7 +13,7 @@ import {
 export const metadata: Metadata = {
   title: "Search",
   description:
-    "Search Rawal One services, notices, community information and current resident updates.",
+    "Search Rawal One services, documents, notices, community information and current resident updates.",
   robots: {
     index: false,
     follow: true,
@@ -37,6 +37,7 @@ const suggestedSearches = [
 
 const filteredResultLabels: Record<Exclude<SearchFilter, "all">, string> = {
   services: "service",
+  documents: "document",
   "updates-notices": "update or notice",
   community: "community",
   alerts: "current alert",
@@ -94,8 +95,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               Search Rawal One
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-muted">
-              Find services, notices, community information and current resident
-              updates.
+              Find services, documents, notices, community information and current
+              resident updates.
             </p>
           </div>
 
@@ -231,7 +232,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               {results.length === 0 ? (
                 <div className="mt-7 border-y border-line bg-surface px-5 py-8 sm:px-7">
                   <p className="max-w-xl text-lg leading-8 text-muted">
-                    Try a different term or browse all services.
+                    Try a different term or browse services and documents.
                   </p>
                   <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
                     {activeFilter !== "all" && allResults.length > 0 ? (
@@ -247,6 +248,12 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                       className="inline-flex min-h-11 items-center font-bold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
                     >
                       Browse all services
+                    </Link>
+                    <Link
+                      href="/documents"
+                      className="inline-flex min-h-11 items-center font-bold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
+                    >
+                      Browse documents
                     </Link>
                   </div>
                 </div>
