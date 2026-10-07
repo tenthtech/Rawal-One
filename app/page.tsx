@@ -22,8 +22,9 @@ export default async function HomePage() {
     <>
       {activeAlerts.length > 0 ? (
         <section
+          id="current-alerts"
           aria-labelledby="current-alerts-heading"
-          className="border-b border-line bg-page"
+          className="scroll-mt-6 border-b border-line bg-page"
         >
           <div className="mx-auto max-w-[76rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
             <div className="max-w-4xl">
@@ -73,12 +74,12 @@ export default async function HomePage() {
           </div>
 
           <form
-            action="/services"
+            action="/search"
             method="get"
             role="search"
             className="border-t-4 border-accent bg-surface p-5 shadow-[0_1px_0_rgba(24,37,33,0.08)] sm:p-8"
           >
-            <label htmlFor="service-search" className="block text-base font-bold text-ink">
+            <label htmlFor="global-search" className="block text-base font-bold text-ink">
               Search Rawal One
             </label>
             <div className="mt-3 flex flex-col gap-3 sm:flex-row">
@@ -96,10 +97,11 @@ export default async function HomePage() {
                   <path d="m16 16 4 4" />
                 </svg>
                 <input
-                  id="service-search"
+                  id="global-search"
                   name="q"
                   type="search"
-                  placeholder="Search services, permits, waste collection, road notices..."
+                  maxLength={200}
+                  placeholder="Search water, permits, waste, roads..."
                   className="search-preview min-h-14 w-full min-w-0 rounded-sm border-2 border-civic bg-white py-3 pe-4 ps-12 text-base text-ink"
                 />
               </div>
