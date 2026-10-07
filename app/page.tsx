@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { EmergencyAlert } from "@/components/emergency-alert";
 import { ServiceNotice } from "@/components/service-notice";
 import {
   cityUpdates,
@@ -9,10 +10,49 @@ import {
   serviceNotice,
   usefulLinks,
 } from "@/data/homepage";
+import { getActivePublicAlerts } from "@/lib/alerts";
 
-export default function HomePage() {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const activeAlerts = await getActivePublicAlerts();
+
   return (
     <>
+      {activeAlerts.length > 0 ? (
+        <section
+          aria-labelledby="current-alerts-heading"
+          className="border-b border-line bg-page"
+        >
+          <div className="mx-auto max-w-[76rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+            <div className="max-w-4xl">
+              <p className="text-sm font-bold tracking-[0.08em] text-emergency uppercase">
+                Important resident information
+              </p>
+              <h2
+                id="current-alerts-heading"
+                className="mt-2 text-3xl font-bold tracking-[-0.025em] text-ink"
+              >
+                Current alerts
+              </h2>
+              <p className="mt-3 leading-7 text-muted">
+                Active emergency and service information published by the Rawal
+                One communications demonstration.
+              </p>
+            </div>
+
+            <ul className="mt-6 space-y-5">
+              {activeAlerts.map((alert) => (
+                <li key={alert.id}>
+                  <EmergencyAlert alert={alert} headingLevel="h3" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
+
       <section className="border-b border-line bg-sage" aria-labelledby="help-heading">
         <div className="mx-auto grid max-w-[76rem] gap-10 px-5 py-14 sm:px-8 sm:py-16 lg:grid-cols-[minmax(0,0.88fr)_minmax(24rem,1.12fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-20">
           <div className="max-w-2xl">

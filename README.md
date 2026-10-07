@@ -37,4 +37,9 @@ Run the production build locally with `pnpm start` after `pnpm build`.
 - `app/` — routes, metadata, global styles, and layout
 - `components/` — shared public shell components
 
-The current foundation includes `/`, `/services`, and `/admin`. Product services, search, administration, and integrations are intentionally outside this phase.
+The current demonstration includes resident service discovery, a water-service
+detail experience, and a focused emergency-alert publishing workflow under
+`/admin`.
+
+Alert persistence uses a lightweight local JSON file for this R&D prototype. A
+production municipal implementation would use durable Canadian-hosted storage.
