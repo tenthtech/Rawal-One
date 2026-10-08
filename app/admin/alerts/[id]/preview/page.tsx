@@ -9,6 +9,7 @@ import {
 import { EmergencyAlert } from "@/components/emergency-alert";
 import { getAlertStatusLabel, isAlertExpired } from "@/lib/alert-model";
 import { getAlertById } from "@/lib/alerts";
+import { requireAdminSession } from "@/lib/supabase/auth";
 
 export const metadata: Metadata = {
   title: "Alert preview",
@@ -28,6 +29,8 @@ export default async function AlertPreviewPage({
   params,
   searchParams,
 }: AlertPreviewPageProps) {
+  await requireAdminSession();
+
   const { id } = await params;
   const alert = await getAlertById(id);
 

@@ -10,6 +10,7 @@ import {
   type CreateAlertInput,
 } from "@/lib/alert-model";
 import { createAlert, deactivateAlert, publishAlert } from "@/lib/alerts";
+import { requireAdminSession } from "@/lib/supabase/auth";
 
 type AlertField =
   | "severity"
@@ -157,6 +158,8 @@ export async function createAlertAction(
   previousState: AlertFormState,
   formData: FormData,
 ): Promise<AlertFormState> {
+  await requireAdminSession();
+
   const values: AlertFormValues = {
     severity: getFormValue(formData, "severity"),
     title: getFormValue(formData, "title"),
@@ -210,6 +213,8 @@ export async function createAlertAction(
 }
 
 export async function publishAlertAction(id: string) {
+  await requireAdminSession();
+
   let succeeded = false;
 
   try {
@@ -230,6 +235,8 @@ export async function publishAlertAction(id: string) {
 }
 
 export async function deactivateAlertAction(id: string) {
+  await requireAdminSession();
+
   let succeeded = false;
 
   try {

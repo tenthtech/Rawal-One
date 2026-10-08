@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { deactivateAlertAction } from "@/app/admin/alerts/actions";
+import { signOutAction } from "@/app/admin/login/actions";
 import {
   formatAlertDateTime,
   getAlertSeverityLabel,
@@ -10,6 +11,7 @@ import {
   type AlertSeverity,
 } from "@/lib/alert-model";
 import { readAlerts } from "@/lib/alerts";
+import { requireAdminSession } from "@/lib/supabase/auth";
 
 export const metadata: Metadata = {
   title: "Communications administration",
@@ -61,6 +63,7 @@ const statusStyles = {
 } as const;
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
+  const session = await requireAdminSession();
   const alerts = await readAlerts();
   const params = await searchParams;
   const noticeKey = Array.isArray(params.notice) ? params.notice[0] : params.notice;
@@ -85,6 +88,16 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               Create, review and publish urgent information for the Rawal One
               resident homepage.
             </p>
+            {session.mode === "supabase" ? (
+              <form action={signOutAction} className="mt-6">
+                <button
+                  type="submit"
+                  className="inline-flex min-h-11 items-center justify-center rounded-sm border-2 border-civic bg-surface px-4 py-2 font-bold text-civic hover:bg-page"
+                >
+                  Sign out
+                </button>
+              </form>
+            ) : null}
           </div>
         </div>
       </header>
@@ -101,9 +114,11 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             Demonstration workspace
           </h2>
           <p className="mt-2 max-w-4xl leading-7 text-muted">
-            This R&amp;D workspace has no authentication and must contain only
-            fictional municipal alert content. Website publishing is provided
-            solely for demonstrating the communications workflow.
+            {session.mode === "supabase"
+              ? "This hosted R&D workspace requires the demonstration administrator account and must contain only fictional municipal alert content."
+              : "This local R&D workspace uses the development-only JSON fallback without authentication and must contain only fictional municipal alert content."}{" "}
+            Website publishing is provided solely for demonstrating the
+            communications workflow.
           </p>
         </section>
 

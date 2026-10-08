@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { AlertForm } from "@/components/alert-form";
+import { requireAdminSession } from "@/lib/supabase/auth";
 
 export const metadata: Metadata = {
   title: "Create emergency alert",
@@ -9,7 +10,12 @@ export const metadata: Metadata = {
     "Create a fictional emergency alert in the Rawal One administration demonstration.",
 };
 
-export default function NewAlertPage() {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function NewAlertPage() {
+  await requireAdminSession();
+
   return (
     <div className="bg-page">
       <header className="border-b border-line bg-sage">
