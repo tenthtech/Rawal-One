@@ -30,16 +30,16 @@ export const waterServiceDetail = {
     affectedArea: "Satellite Town",
     impact: "Reduced water pressure or temporary interruption",
     maintenanceStart: {
-      dateTime: "2026-10-07T10:00:00+05:00",
-      label: "7 October 2026, 10:00 AM",
+      dateTime: "2026-10-10T10:00:00+05:00",
+      label: "10 October 2026, 10:00 AM",
     },
     maintenanceEnd: {
-      dateTime: "2026-10-07T14:00:00+05:00",
+      dateTime: "2026-10-10T14:00:00+05:00",
       label: "2:00 PM",
     },
     lastUpdated: {
-      dateTime: "2026-10-06T16:30:00+05:00",
-      label: "6 October 2026, 4:30 PM",
+      dateTime: "2026-10-08T09:00:00+05:00",
+      label: "8 October 2026, 9:00 AM",
     },
   },
   immediateActions: [
@@ -151,7 +151,7 @@ export const waterServiceDetail = {
   ],
   contentOwner: "Water & sewer services",
   contentLastUpdated: {
-    dateTime: "2026-10-06",
-    label: "6 October 2026",
+    dateTime: "2026-10-08",
+    label: "8 October 2026",
   },
 } as const;

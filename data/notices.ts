@@ -122,7 +122,7 @@ export const publicNotices: readonly PublicNotice[] = [
       "feedback",
     ],
     relatedLink: {
-      label: "Download the waste collection guide",
+      label: "View the waste collection guide",
       href: "/documents#waste-collection-guide-2026",
     },
   },

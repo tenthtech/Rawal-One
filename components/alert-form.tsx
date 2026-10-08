@@ -120,6 +120,7 @@ export function AlertForm() {
               information.
             </p>
             <select
+              key={state.values.severity}
               id="severity"
               name="severity"
               required
@@ -289,7 +290,7 @@ export function AlertForm() {
         </ul>
       </section>
 
-      <div className="flex flex-col-reverse gap-3 border-t border-line pt-7 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-3 border-t border-line pt-7 sm:flex-row sm:items-center">
         <button
           type="submit"
           name="intent"
