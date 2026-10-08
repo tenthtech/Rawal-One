@@ -41,10 +41,10 @@ export function EmergencyAlert({
     <article
       aria-labelledby={headingId}
       data-alert-severity={alert.severity}
-      className={`min-w-0 border border-line border-s-4 ${styles.border} bg-surface px-5 py-6 sm:px-7 sm:py-7`}
+      className={`min-w-0 border border-line border-s-[6px] ${styles.border} bg-surface px-5 py-6 shadow-[0_5px_18px_rgba(24,37,33,0.06)] sm:px-7 sm:py-7`}
     >
       <p
-        className={`text-sm font-bold tracking-[0.08em] uppercase ${styles.label}`}
+        className={`text-xs font-extrabold tracking-[0.12em] uppercase ${styles.label}`}
       >
         {getAlertSeverityLabel(alert.severity)} alert
       </p>

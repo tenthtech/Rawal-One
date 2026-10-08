@@ -74,18 +74,19 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
         className="border-b border-line bg-sage"
         aria-labelledby="documents-page-heading"
       >
-        <div className="mx-auto max-w-[76rem] px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
-          <div className="max-w-3xl border-s-4 border-accent ps-5 sm:ps-7">
-            <p className="text-sm font-bold tracking-[0.08em] text-civic uppercase">
+        <div className="mx-auto max-w-[76rem] px-5 py-10 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
+          <div className="max-w-3xl">
+            <div className="mb-5 h-1 w-12 rounded-full bg-accent" aria-hidden="true" />
+            <p className="text-xs font-bold tracking-[0.14em] text-civic uppercase sm:text-sm">
               Resident resources
             </p>
             <h1
               id="documents-page-heading"
-              className="mt-3 text-4xl font-bold tracking-[-0.03em] text-ink sm:text-5xl"
+              className="mt-3 text-4xl leading-[1.12] font-bold tracking-tight text-ink sm:text-5xl"
             >
               Documents &amp; forms
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-muted">
+            <p className="mt-4 max-w-2xl text-lg leading-8 text-muted">
               Find commonly used forms, guides, notices and municipal reference
               documents.
             </p>
@@ -94,18 +95,18 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
       </section>
 
       <section className="bg-page" aria-labelledby="documents-results-heading">
-        <div className="mx-auto max-w-[76rem] px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
+        <div className="mx-auto max-w-[76rem] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
             <h2
               id="documents-results-heading"
-              className="text-2xl font-bold tracking-[-0.02em] text-ink sm:text-3xl"
+              className="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
             >
               {matchingDocuments.length === 0 ? "No documents found" : "Documents"}
             </h2>
             <p
               role="status"
               aria-atomic="true"
-              className="max-w-full [overflow-wrap:anywhere] text-base font-bold text-civic"
+              className="max-w-full [overflow-wrap:anywhere] text-sm font-semibold text-civic sm:text-base"
             >
               {resultStatus}
             </p>
@@ -115,7 +116,7 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
             action="/documents"
             method="get"
             role="search"
-            className="mt-7 border-y border-line bg-surface px-5 py-6 sm:px-7"
+            className="mt-6 rounded-md border border-line bg-surface px-5 py-5 sm:px-7 sm:py-6"
           >
             <label htmlFor="documents-search" className="block text-base font-bold text-ink">
               Search documents
@@ -142,12 +143,12 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                   defaultValue={query}
                   maxLength={200}
                   placeholder="Search forms, permits, waste, water..."
-                  className="search-preview min-h-14 w-full min-w-0 rounded-sm border-2 border-civic bg-white py-3 pe-4 ps-12 text-base text-ink"
+                  className="search-preview min-h-14 w-full min-w-0 rounded-md border border-civic bg-white py-3 pe-4 ps-12 text-base text-ink"
                 />
               </div>
               <button
                 type="submit"
-                className="min-h-14 rounded-sm bg-civic px-6 py-3 font-bold text-white hover:bg-civic-deep"
+                className="min-h-14 rounded-md bg-civic px-6 py-3 font-bold text-white hover:bg-civic-deep"
               >
                 Search
               </button>
@@ -167,7 +168,7 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
           </form>
 
           {matchingDocuments.length === 0 ? (
-            <div className="mt-8 border-y border-line bg-surface px-5 py-8 sm:px-7">
+            <div className="mt-7 rounded-sm border border-line bg-surface px-5 py-7 sm:px-7">
               <p className="max-w-xl text-lg leading-8 text-muted">
                 Try a different search term or view all documents.
               </p>
@@ -179,20 +180,19 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
               </Link>
             </div>
           ) : (
-            <ul className="mt-8 border-t border-line">
+            <ul className="mt-7 divide-y divide-line border-y border-line bg-surface px-4 sm:px-6">
               {matchingDocuments.map((document) => (
                 <li
                   id={document.slug}
                   key={document.slug}
-                  className="scroll-mt-6 border-b border-line"
+                  className="scroll-mt-6"
                 >
-                  <article className="grid min-w-0 gap-5 px-1 py-6 sm:px-3 sm:py-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-10">
+                  <article className="grid min-w-0 gap-4 py-5 sm:py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-10">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm [overflow-wrap:anywhere]">
-                        <p className="font-bold text-civic">{document.format}</p>
-                        <span className="text-line" aria-hidden="true">
-                          |
-                        </span>
+                        <p className="rounded-sm bg-sage px-2 py-0.5 text-xs font-bold tracking-[0.08em] text-civic uppercase">
+                          {document.format}
+                        </p>
                         <p className="text-muted">
                           {getDocumentCategoryLabel(document.category)}
                         </p>
@@ -206,7 +206,7 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                           </time>
                         </p>
                       </div>
-                      <h3 className="mt-2 text-xl font-bold tracking-[-0.015em] text-ink sm:text-2xl">
+                      <h3 className="mt-3 text-xl font-bold tracking-tight text-ink sm:text-2xl">
                         {document.title}
                       </h3>
                       <p className="mt-2 max-w-3xl leading-7 text-muted">
@@ -216,9 +216,10 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                     <a
                       href={document.href}
                       download={document.fileName}
-                      className="inline-flex min-h-11 items-center justify-center justify-self-start rounded-sm border-2 border-civic px-4 py-2 font-bold text-civic no-underline hover:bg-sage md:justify-self-end"
+                      className="inline-flex min-h-11 items-center justify-center justify-self-start gap-2 rounded-md border border-civic px-4 py-2 font-bold text-civic no-underline hover:bg-sage md:justify-self-end"
                     >
                       Download PDF
+                      <span aria-hidden="true">↓</span>
                       <span className="sr-only">: {document.title}</span>
                     </a>
                   </article>

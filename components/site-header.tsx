@@ -7,8 +7,9 @@ import { useEffect, useRef, useState } from "react";
 const navigation = [
   { href: "/services", label: "Services" },
   { href: "/#community", label: "Community" },
-  { href: "/#updates", label: "News & Notices" },
-  { href: "/#about-this-demo", label: "About this demo" },
+  { href: "/notices", label: "News & Notices" },
+  { href: "/documents", label: "Documents" },
+  { href: "/#about-this-demo", label: "About" },
 ];
 
 export function SiteHeader() {
@@ -49,35 +50,49 @@ export function SiteHeader() {
     return !href.includes("#") && pathname === href;
   }
 
-  const navigationList = navigation.map((item) => {
-    const isCurrent = isCurrentPage(item.href);
+  function navigationList(mobile: boolean) {
+    return navigation.map((item) => {
+      const isCurrent = isCurrentPage(item.href);
+      const isActiveSection =
+        isCurrent || (item.href === "/services" && pathname.startsWith("/services/"));
 
-    return (
-      <li key={item.href}>
-        <Link
-          href={item.href}
-          aria-current={isCurrent ? "page" : undefined}
-          onClick={() => setMenuOpen(false)}
-          className={`flex min-h-11 items-center border-b-2 px-1 text-[0.9375rem] font-bold no-underline transition-colors motion-reduce:transition-none lg:min-h-16 ${
-            isCurrent
-              ? "border-civic text-civic"
-              : "border-transparent text-ink hover:border-line hover:text-civic"
-          }`}
-        >
-          {item.label}
-        </Link>
-      </li>
-    );
-  });
+      return (
+        <li key={item.href}>
+          <Link
+            href={item.href}
+            aria-current={isCurrent ? "page" : undefined}
+            onClick={() => setMenuOpen(false)}
+            className={`group flex min-h-12 items-center justify-between gap-3 font-bold no-underline transition-colors motion-reduce:transition-none ${
+              mobile
+                ? "border-b border-line py-3 text-base"
+                : "border-b-[3px] px-1 text-[0.9rem] xl:min-h-[4.75rem]"
+            } ${
+              isActiveSection
+                ? "border-civic text-civic"
+                : "border-transparent text-ink hover:border-accent hover:text-civic"
+            }`}
+          >
+            {item.label}
+            {mobile ? (
+              <span aria-hidden="true" className="text-civic/65 group-hover:text-civic">
+                →
+              </span>
+            ) : null}
+          </Link>
+        </li>
+      );
+    });
+  }
 
   return (
     <header ref={headerRef}>
-      <div className="bg-civic text-white">
-        <div className="mx-auto flex min-h-9 max-w-[76rem] flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-2 text-[0.8125rem] sm:px-8 lg:px-10">
-          <p className="font-bold tracking-[0.01em]">
-            Municipal services demonstration
+      <div className="bg-civic-deep text-white">
+        <div className="mx-auto flex min-h-8 max-w-[76rem] items-center justify-between gap-4 px-5 py-1.5 text-xs sm:px-8 lg:px-10">
+          <p className="font-semibold tracking-[0.02em]">Rawalpindi, Pakistan</p>
+          <p className="text-white/80">
+            <span className="sm:hidden">R&amp;D demonstration</span>
+            <span className="hidden sm:inline">Tenth Tech R&amp;D demonstration</span>
           </p>
-          <p className="text-white/80">Rawalpindi, Pakistan</p>
         </div>
       </div>
 
@@ -86,24 +101,26 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label="Rawal One home"
-            className="my-3 flex min-h-12 min-w-0 items-center gap-3 rounded-sm no-underline sm:my-4"
+            className="my-2.5 flex min-h-12 min-w-0 items-center gap-3 rounded-sm no-underline sm:my-3"
           >
             <span
-              className="h-10 w-1 shrink-0 bg-accent"
+              className="h-11 w-1.5 shrink-0 bg-accent"
               aria-hidden="true"
             />
             <span className="min-w-0">
-              <span className="block text-xl font-bold leading-tight tracking-[-0.02em] text-civic sm:text-2xl">
+              <span className="block text-[1.375rem] font-extrabold leading-tight tracking-[-0.04em] text-civic sm:text-[1.625rem]">
                 Rawal One
               </span>
-              <span className="block text-xs leading-tight text-muted sm:text-sm">
+              <span className="block text-xs font-medium leading-tight text-muted sm:text-[0.8125rem]">
                 Your city. One place.
               </span>
             </span>
           </Link>
 
-          <nav aria-label="Primary navigation" className="hidden lg:block">
-            <ul className="flex items-center gap-5 xl:gap-7">{navigationList}</ul>
+          <nav aria-label="Primary navigation" className="hidden xl:block">
+            <ul className="flex items-center gap-5 2xl:gap-7">
+              {navigationList(false)}
+            </ul>
           </nav>
 
           <button
@@ -112,7 +129,7 @@ export function SiteHeader() {
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((open) => !open)}
-            className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-line bg-surface px-3 text-sm font-bold text-ink hover:border-civic hover:text-civic lg:hidden"
+            className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-line bg-page px-3 text-sm font-bold text-civic hover:border-civic hover:bg-sage xl:hidden"
           >
             <span>{menuOpen ? "Close" : "Menu"}</span>
             <svg
@@ -144,9 +161,9 @@ export function SiteHeader() {
           id="mobile-navigation"
           aria-label="Mobile navigation"
           hidden={!menuOpen}
-          className="border-t border-line bg-surface px-5 pb-4 sm:px-8 lg:hidden"
+          className="border-t border-line bg-page px-5 pb-3 sm:px-8 xl:hidden"
         >
-          <ul className="divide-y divide-line">{navigationList}</ul>
+          <ul className="mx-auto max-w-[76rem]">{navigationList(true)}</ul>
         </nav>
       </div>
     </header>

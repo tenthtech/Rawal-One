@@ -3,13 +3,14 @@
 :root {
   --civic-green: #174c3c;
   --civic-green-deep: #10372c;
-  --ink: #182521;
-  --page: #f7f6f2;
+  --ink: #1b2b25;
+  --page: #f8f5ee;
   --surface: #ffffff;
-  --muted: #5f6c66;
-  --accent: #c58a32;
-  --line: #d7ddd8;
-  --sage: #e8efeb;
+  --muted: #53645b;
+  --accent: #bd8533;
+  --line: #d5ddd5;
+  --sage: #e8efe8;
+  --warm: #f1e8d8;
 
   /* Reserved semantic status colours for future service messaging. */
   --status-information: #245f87;
@@ -29,12 +30,13 @@
   --color-accent: var(--accent);
   --color-line: var(--line);
   --color-sage: var(--sage);
+  --color-warm: var(--warm);
   --color-information: var(--status-information);
   --color-advisory: var(--status-advisory);
   --color-warning: var(--status-warning);
   --color-emergency: var(--status-emergency);
   --color-success: var(--status-success);
-  --font-sans: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 html {
@@ -45,7 +47,7 @@ html {
 body {
   background: var(--page);
   color: var(--ink);
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   margin: 0;
 }
 

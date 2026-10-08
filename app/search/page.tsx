@@ -83,24 +83,25 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         className="border-b border-line bg-sage"
         aria-labelledby="search-page-heading"
       >
-        <div className="mx-auto grid max-w-[76rem] gap-9 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[minmax(0,0.78fr)_minmax(28rem,1.22fr)] lg:items-end lg:gap-16 lg:px-10">
-          <div className="max-w-2xl border-s-4 border-accent ps-5 sm:ps-7">
-            <p className="text-sm font-bold tracking-[0.08em] text-civic uppercase">
+        <div className="mx-auto grid max-w-[76rem] gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(27rem,1.1fr)] lg:items-center lg:gap-16 lg:px-10 lg:py-16">
+          <div className="max-w-2xl">
+            <div className="mb-5 h-1 w-12 rounded-full bg-accent" aria-hidden="true" />
+            <p className="text-xs font-bold tracking-[0.14em] text-civic uppercase sm:text-sm">
               Resident information
             </p>
             <h1
               id="search-page-heading"
-              className="mt-3 text-4xl font-bold tracking-[-0.03em] text-ink sm:text-5xl"
+              className="mt-3 text-4xl leading-[1.12] font-bold tracking-tight text-ink sm:text-5xl"
             >
               Search Rawal One
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-muted">
+            <p className="mt-4 max-w-xl text-lg leading-8 text-muted">
               Find services, documents, notices, community information and current
               resident updates.
             </p>
           </div>
 
-          <div className="border-t-4 border-accent bg-surface p-5 shadow-[0_1px_0_rgba(24,37,33,0.08)] sm:p-7">
+          <div className="rounded-md border border-line bg-surface p-5 shadow-[0_10px_30px_-24px_rgba(24,37,33,0.35)] sm:p-7">
             <form action="/search" method="get" role="search">
               <label
                 htmlFor="global-search"
@@ -130,7 +131,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                     defaultValue={query}
                     maxLength={200}
                     placeholder="Search water, permits, waste, roads..."
-                    className="search-preview min-h-14 w-full min-w-0 rounded-sm border-2 border-civic bg-white py-3 pe-4 ps-12 text-base text-ink"
+                    className="search-preview min-h-14 w-full min-w-0 rounded-md border border-civic bg-white py-3 pe-4 ps-12 text-base text-ink"
                   />
                 </div>
                 {activeFilter !== "all" ? (
@@ -138,7 +139,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 ) : null}
                 <button
                   type="submit"
-                  className="min-h-14 rounded-sm bg-civic px-6 py-3 font-bold text-white hover:bg-civic-deep"
+                  className="min-h-14 rounded-md bg-civic px-6 py-3 font-bold text-white hover:bg-civic-deep"
                 >
                   Search
                 </button>
@@ -153,17 +154,20 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           className="bg-page"
           aria-labelledby="search-suggestions-heading"
         >
-          <div className="mx-auto max-w-[76rem] px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
+          <div className="mx-auto max-w-[76rem] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
+            <p className="text-xs font-bold tracking-[0.14em] text-civic uppercase sm:text-sm">
+              A place to start
+            </p>
             <h2
               id="search-suggestions-heading"
-              className="text-2xl font-bold tracking-[-0.02em] text-ink sm:text-3xl"
+              className="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl"
             >
               Try searching for a service or local topic.
             </h2>
             <p className="mt-3 max-w-2xl leading-7 text-muted">
               Start with one of these common resident searches.
             </p>
-            <ul className="mt-7 max-w-3xl border-t border-line sm:grid sm:grid-cols-2 sm:gap-x-10">
+            <ul className="mt-6 max-w-3xl border-t border-line sm:grid sm:grid-cols-2 sm:gap-x-10">
               {suggestedSearches.map((suggestion) => (
                 <li key={suggestion.query} className="border-b border-line">
                   <Link
@@ -171,7 +175,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                     className="group flex min-h-14 items-center justify-between gap-4 py-3 font-bold text-civic underline decoration-civic/25 underline-offset-4 hover:decoration-civic"
                   >
                     {suggestion.label}
-                    <span aria-hidden="true">→</span>
+                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
                   </Link>
                 </li>
               ))}
@@ -180,15 +184,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </section>
       ) : (
         <div className="bg-page">
-          <div className="mx-auto grid max-w-[76rem] gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14 lg:px-10">
-            <nav aria-labelledby="search-filters-heading">
+          <div className="mx-auto grid max-w-[76rem] gap-10 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-16 lg:px-10">
+            <nav className="border-t-2 border-accent pt-5" aria-labelledby="search-filters-heading">
               <h2
                 id="search-filters-heading"
-                className="text-xl font-bold tracking-[-0.015em] text-ink"
+                className="text-lg font-bold tracking-tight text-ink"
               >
                 Filter results
               </h2>
-              <ul className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+              <ul className="mt-4 grid gap-1 sm:grid-cols-2 lg:grid-cols-1">
                 {searchFilters.map((filter) => {
                   const isCurrent = activeFilter === filter.value;
 
@@ -197,10 +201,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                       <Link
                         href={buildSearchHref(query, filter.value)}
                         aria-current={isCurrent ? "page" : undefined}
-                        className={`flex min-h-12 items-center gap-2 border border-line border-s-4 px-3 py-2 font-bold no-underline ${
+                        className={`flex min-h-12 items-center gap-2 rounded-sm border-s-2 px-3 py-2 font-semibold no-underline ${
                           isCurrent
                             ? "border-s-civic bg-sage text-civic"
-                            : "border-s-transparent bg-surface text-ink hover:border-s-civic hover:text-civic"
+                            : "border-s-transparent text-ink hover:border-s-accent hover:bg-surface hover:text-civic"
                         }`}
                       >
                         {isCurrent ? <span aria-hidden="true">✓</span> : null}
@@ -216,21 +220,21 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
                 <h2
                   id="search-results-heading"
-                  className="text-2xl font-bold tracking-[-0.02em] text-ink sm:text-3xl"
+                  className="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
                 >
                   {results.length === 0 ? "No results found" : "Search results"}
                 </h2>
                 <p
                   role="status"
                   aria-atomic="true"
-                  className="max-w-full [overflow-wrap:anywhere] text-base font-bold text-civic"
+                  className="max-w-full [overflow-wrap:anywhere] text-sm font-semibold text-civic sm:text-base"
                 >
                   {resultStatus}
                 </p>
               </div>
 
               {results.length === 0 ? (
-                <div className="mt-7 border-y border-line bg-surface px-5 py-8 sm:px-7">
+                <div className="mt-6 rounded-sm border border-line bg-surface px-5 py-7 sm:px-7">
                   <p className="max-w-xl text-lg leading-8 text-muted">
                     Try a different term or browse services and documents.
                   </p>
@@ -258,10 +262,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   </div>
                 </div>
               ) : (
-                <ol className="mt-7 border-t border-line">
+                <ol className="mt-6 divide-y divide-line border-y border-line bg-surface px-4 sm:px-6">
                   {results.map((result) => (
-                    <li key={result.id} className="min-w-0 border-b border-line">
-                      <article className="px-1 py-6 sm:px-3 sm:py-7">
+                    <li key={result.id} className="min-w-0">
+                      <article className="py-5 sm:py-6">
                         <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-sm [overflow-wrap:anywhere]">
                           <p className="font-bold text-civic">{result.typeLabel}</p>
                           {result.category ? (
@@ -283,7 +287,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                             </>
                           ) : null}
                         </div>
-                        <h3 className="mt-2 text-xl font-bold tracking-[-0.015em] text-ink sm:text-2xl">
+                        <h3 className="mt-2 text-xl font-bold tracking-tight text-ink sm:text-2xl">
                           <Link
                             href={result.href}
                             className="text-ink underline decoration-civic/35 underline-offset-4 [overflow-wrap:anywhere] hover:text-civic hover:decoration-civic"

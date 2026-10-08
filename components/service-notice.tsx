@@ -25,16 +25,16 @@ export function ServiceNotice({
   return (
     <section
       aria-labelledby="service-notice-heading"
-      className="border-s-4 border-advisory bg-surface px-5 py-6 sm:px-7"
+      className="border border-line border-s-4 border-s-advisory bg-warm px-5 py-5 sm:px-7 sm:py-6"
     >
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(17rem,0.75fr)] lg:items-center lg:gap-10">
         <div>
-          <p className="text-sm font-bold tracking-[0.08em] text-advisory uppercase">
+          <p className="text-xs font-extrabold tracking-[0.12em] text-advisory uppercase">
             {label}
           </p>
           <h2
             id="service-notice-heading"
-            className="mt-2 text-xl font-bold tracking-[-0.015em] text-ink sm:text-2xl"
+            className="mt-2 text-xl font-bold tracking-[-0.025em] text-ink sm:text-2xl"
           >
             {title}
           </h2>

@@ -145,8 +145,8 @@ export const communityEvents: CommunityEvent[] = [
 export const usefulLinks = [
   { label: "Browse all services", href: "/services" },
   { label: "Forms & documents", href: "/documents" },
-  { label: "Accessibility", href: "/services?q=accessibility" },
+  { label: "Accessibility statement", href: "/documents?q=accessibility" },
   { label: "Public notices", href: "/notices" },
-  { label: "Contact information", href: "/services?q=contact%20information" },
+  { label: "Community services", href: "/services?category=community-services" },
   { label: "About this demonstration", href: "/#about-this-demo" },
 ];
