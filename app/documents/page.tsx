@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { PublicPageIntro } from "@/components/public-page-intro";
 import {
   getDocumentCategoryLabel,
   municipalDocuments,
@@ -70,58 +71,21 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
 
   return (
     <>
-      <section
-        className="border-b border-line bg-sage"
-        aria-labelledby="documents-page-heading"
+      <PublicPageIntro
+        id="documents-page-heading"
+        eyebrow="Resident resources"
+        title="Documents & forms"
+        description="Find commonly used forms, guides, notices and municipal reference documents."
       >
-        <div className="mx-auto max-w-[76rem] px-5 py-10 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
-          <div className="max-w-3xl">
-            <div className="mb-5 h-1 w-12 rounded-full bg-accent" aria-hidden="true" />
-            <p className="text-xs font-bold tracking-[0.14em] text-civic uppercase sm:text-sm">
-              Resident resources
-            </p>
-            <h1
-              id="documents-page-heading"
-              className="mt-3 text-4xl leading-[1.12] font-bold tracking-tight text-ink sm:text-5xl"
+        <div className="border-t-[3px] border-accent bg-surface px-5 py-5 shadow-[0_14px_34px_-30px_rgba(16,55,44,0.45)] sm:px-7 sm:py-6">
+          <form action="/documents" method="get" role="search">
+            <label
+              htmlFor="documents-search"
+              className="block text-base font-semibold tracking-[-0.01em] text-ink"
             >
-              Documents &amp; forms
-            </h1>
-            <p className="mt-4 max-w-2xl text-lg leading-8 text-muted">
-              Find commonly used forms, guides, notices and municipal reference
-              documents.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-page" aria-labelledby="documents-results-heading">
-        <div className="mx-auto max-w-[76rem] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
-            <h2
-              id="documents-results-heading"
-              className="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
-            >
-              {matchingDocuments.length === 0 ? "No documents found" : "Documents"}
-            </h2>
-            <p
-              role="status"
-              aria-atomic="true"
-              className="max-w-full [overflow-wrap:anywhere] text-sm font-semibold text-civic sm:text-base"
-            >
-              {resultStatus}
-            </p>
-          </div>
-
-          <form
-            action="/documents"
-            method="get"
-            role="search"
-            className="mt-6 rounded-md border border-line bg-surface px-5 py-5 sm:px-7 sm:py-6"
-          >
-            <label htmlFor="documents-search" className="block text-base font-bold text-ink">
               Search documents
             </label>
-            <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
               <div className="relative min-w-0 flex-1">
                 <svg
                   aria-hidden="true"
@@ -143,12 +107,12 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                   defaultValue={query}
                   maxLength={200}
                   placeholder="Search forms, permits, waste, water..."
-                  className="search-preview min-h-14 w-full min-w-0 rounded-md border border-civic bg-white py-3 pe-4 ps-12 text-base text-ink"
+                  className="civic-input search-preview min-h-14 w-full min-w-0 ps-12"
                 />
               </div>
               <button
                 type="submit"
-                className="min-h-14 rounded-md bg-civic px-6 py-3 font-bold text-white hover:bg-civic-deep"
+                className="civic-button min-h-14 px-7"
               >
                 Search
               </button>
@@ -156,7 +120,7 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
             {query ? (
               <Link
                 href="/documents"
-                className="mt-3 inline-flex min-h-11 items-center font-bold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
+                className="civic-link mt-2 inline-flex min-h-11 items-center text-sm font-semibold"
               >
                 Clear search
               </Link>
@@ -166,34 +130,75 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
               </p>
             )}
           </form>
+        </div>
+      </PublicPageIntro>
+
+      <section className="bg-page" aria-labelledby="documents-results-heading">
+        <div className="civic-container py-10 sm:py-12 lg:py-16">
+          <div className="flex flex-col gap-3 border-b-2 border-ink pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+            <div>
+              <p className="civic-eyebrow">Resource library</p>
+              <h2
+                id="documents-results-heading"
+                className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-ink sm:text-3xl"
+              >
+                {matchingDocuments.length === 0 ? "No documents found" : "Documents"}
+              </h2>
+            </div>
+            <p
+              role="status"
+              aria-atomic="true"
+              className="max-w-full [overflow-wrap:anywhere] text-sm font-semibold text-civic"
+            >
+              {resultStatus}
+            </p>
+          </div>
 
           {matchingDocuments.length === 0 ? (
-            <div className="mt-7 rounded-sm border border-line bg-surface px-5 py-7 sm:px-7">
+            <div className="mt-6 border-s-[3px] border-accent bg-surface px-5 py-8 sm:px-7">
               <p className="max-w-xl text-lg leading-8 text-muted">
                 Try a different search term or view all documents.
               </p>
               <Link
                 href="/documents"
-                className="mt-5 inline-flex min-h-11 items-center rounded-sm bg-civic px-5 py-3 font-bold text-white no-underline hover:bg-civic-deep"
+                className="civic-button mt-5 inline-flex min-h-11 items-center px-5 py-3"
               >
                 View all documents
               </Link>
             </div>
           ) : (
-            <ul className="mt-7 divide-y divide-line border-y border-line bg-surface px-4 sm:px-6">
+            <ul className="divide-y divide-line border-b border-b-line">
               {matchingDocuments.map((document) => (
                 <li
                   id={document.slug}
                   key={document.slug}
                   className="scroll-mt-6"
                 >
-                  <article className="grid min-w-0 gap-4 py-5 sm:py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-10">
+                  <article className="grid min-w-0 grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4 gap-y-3 py-6 sm:grid-cols-[3.25rem_minmax(0,1fr)] sm:gap-x-5 sm:py-7 lg:grid-cols-[3.25rem_minmax(0,1fr)_auto] lg:items-center lg:gap-x-8">
+                    <div
+                      aria-hidden="true"
+                      className="flex h-11 w-11 items-center justify-center border border-line bg-sage text-civic sm:h-13 sm:w-13"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-6 w-6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M6 2.75h7l5 5V21H6a2 2 0 0 1-2-2V4.75a2 2 0 0 1 2-2Z" />
+                        <path d="M13 2.75v5h5" />
+                        <path d="M8 13h6M8 17h8" />
+                      </svg>
+                    </div>
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm [overflow-wrap:anywhere]">
-                        <p className="rounded-sm bg-sage px-2 py-0.5 text-xs font-bold tracking-[0.08em] text-civic uppercase">
+                        <p className="border border-line bg-surface px-2 py-0.5 text-xs font-semibold tracking-[0.08em] text-civic uppercase">
                           {document.format}
                         </p>
-                        <p className="text-muted">
+                        <p className="font-medium text-civic">
                           {getDocumentCategoryLabel(document.category)}
                         </p>
                         <span className="text-line" aria-hidden="true">
@@ -206,20 +211,25 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                           </time>
                         </p>
                       </div>
-                      <h3 className="mt-3 text-xl font-bold tracking-tight text-ink sm:text-2xl">
+                      <h3 className="mt-3 text-xl font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-[1.35rem]">
                         {document.title}
                       </h3>
-                      <p className="mt-2 max-w-3xl leading-7 text-muted">
+                      <p className="mt-2 max-w-2xl leading-7 text-muted">
                         {document.description}
                       </p>
                     </div>
                     <a
                       href={document.href}
                       download={document.fileName}
-                      className="inline-flex min-h-11 items-center justify-center justify-self-start gap-2 rounded-md border border-civic px-4 py-2 font-bold text-civic no-underline hover:bg-sage md:justify-self-end"
+                      className="group col-start-2 inline-flex min-h-11 items-center justify-self-start gap-2 font-semibold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic lg:col-start-auto lg:justify-self-end"
                     >
                       Download PDF
-                      <span aria-hidden="true">↓</span>
+                      <span
+                        aria-hidden="true"
+                        className="flex h-8 w-8 items-center justify-center border border-line bg-surface text-base text-civic transition-colors duration-200 group-hover:border-civic group-hover:bg-civic group-hover:text-white motion-reduce:transition-none"
+                      >
+                        ↓
+                      </span>
                       <span className="sr-only">: {document.title}</span>
                     </a>
                   </article>

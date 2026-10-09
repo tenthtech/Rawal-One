@@ -4,6 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { BrandMark } from "@/components/brand-mark";
+import { CivicIcon } from "@/components/civic-icon";
+
 const navigation = [
   { href: "/services", label: "Services" },
   { href: "/#community", label: "Community" },
@@ -54,7 +57,8 @@ export function SiteHeader() {
     return navigation.map((item) => {
       const isCurrent = isCurrentPage(item.href);
       const isActiveSection =
-        isCurrent || (item.href === "/services" && pathname.startsWith("/services/"));
+        isCurrent ||
+        (item.href === "/services" && pathname.startsWith("/services/"));
 
       return (
         <li key={item.href}>
@@ -62,21 +66,12 @@ export function SiteHeader() {
             href={item.href}
             aria-current={isCurrent ? "page" : undefined}
             onClick={() => setMenuOpen(false)}
-            className={`group flex min-h-12 items-center justify-between gap-3 font-bold no-underline transition-colors motion-reduce:transition-none ${
-              mobile
-                ? "border-b border-line py-3 text-base"
-                : "border-b-[3px] px-1 text-[0.9rem] xl:min-h-[4.75rem]"
-            } ${
-              isActiveSection
-                ? "border-civic text-civic"
-                : "border-transparent text-ink hover:border-accent hover:text-civic"
-            }`}
+            data-active={isActiveSection || undefined}
+            className={mobile ? "mobile-nav-link" : "site-nav-link"}
           >
             {item.label}
             {mobile ? (
-              <span aria-hidden="true" className="text-civic/65 group-hover:text-civic">
-                →
-              </span>
+              <CivicIcon name="arrow" className="h-5 w-5 text-civic" />
             ) : null}
           </Link>
         </li>
@@ -85,85 +80,96 @@ export function SiteHeader() {
   }
 
   return (
-    <header ref={headerRef}>
-      <div className="bg-civic-deep text-white">
-        <div className="mx-auto flex min-h-8 max-w-[76rem] items-center justify-between gap-4 px-5 py-1.5 text-xs sm:px-8 lg:px-10">
-          <p className="font-semibold tracking-[0.02em]">Rawalpindi, Pakistan</p>
+    <header ref={headerRef} className="site-header">
+      <div className="site-utility-bar">
+        <div className="civic-container flex min-h-8 items-center justify-between gap-3 py-1.5 text-[0.6875rem]">
+          <p className="flex items-center gap-2 font-medium tracking-[0.03em]">
+            <span aria-hidden="true" className="h-1 w-1 bg-[#d8b679]" />
+            Rawalpindi, Pakistan
+          </p>
           <p className="text-white/80">
-            <span className="sm:hidden">R&amp;D demonstration</span>
-            <span className="hidden sm:inline">Tenth Tech R&amp;D demonstration</span>
+            <span className="sm:hidden">R&amp;D demo</span>
+            <span className="hidden sm:inline">
+              Tenth Tech R&amp;D demonstration
+            </span>
           </p>
         </div>
       </div>
 
       <div className="border-b border-line bg-surface">
-        <div className="mx-auto flex max-w-[76rem] items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
-          <Link
-            href="/"
-            aria-label="Rawal One home"
-            className="my-2.5 flex min-h-12 min-w-0 items-center gap-3 rounded-sm no-underline sm:my-3"
-          >
-            <span
-              className="h-11 w-1.5 shrink-0 bg-accent"
-              aria-hidden="true"
-            />
+        <div className="civic-container site-header-main">
+          <Link href="/" aria-label="Rawal One home" className="site-brand">
+            <BrandMark className="site-brand-mark" />
             <span className="min-w-0">
-              <span className="block text-[1.375rem] font-extrabold leading-tight tracking-[-0.04em] text-civic sm:text-[1.625rem]">
-                Rawal One
-              </span>
-              <span className="block text-xs font-medium leading-tight text-muted sm:text-[0.8125rem]">
-                Your city. One place.
-              </span>
+              <span className="site-wordmark">Rawal One</span>
+              <span className="site-tagline">Your city. One place.</span>
             </span>
           </Link>
 
           <nav aria-label="Primary navigation" className="hidden xl:block">
-            <ul className="flex items-center gap-5 2xl:gap-7">
-              {navigationList(false)}
-            </ul>
+            <ul className="flex items-center gap-7">{navigationList(false)}</ul>
           </nav>
 
-          <button
-            ref={menuButtonRef}
-            type="button"
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMenuOpen((open) => !open)}
-            className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-line bg-page px-3 text-sm font-bold text-civic hover:border-civic hover:bg-sage xl:hidden"
-          >
-            <span>{menuOpen ? "Close" : "Menu"}</span>
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
+          <div className="flex shrink-0 items-center gap-3">
+            <Link
+              href="/search"
+              aria-label="Search Rawal One"
+              className="header-search hidden sm:flex"
             >
-              {menuOpen ? (
-                <>
-                  <path d="M6 6l12 12" />
-                  <path d="M18 6L6 18" />
-                </>
-              ) : (
-                <>
-                  <path d="M4 7h16" />
-                  <path d="M4 12h16" />
-                  <path d="M4 17h16" />
-                </>
-              )}
-            </svg>
-          </button>
+              <CivicIcon name="search" className="h-5 w-5" />
+            </Link>
+            <button
+              ref={menuButtonRef}
+              type="button"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
+              onClick={() => setMenuOpen((open) => !open)}
+              className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-civic bg-surface px-3 text-sm font-semibold text-civic transition-colors duration-200 hover:bg-sage xl:hidden"
+            >
+              <span>{menuOpen ? "Close" : "Menu"}</span>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                {menuOpen ? (
+                  <>
+                    <path d="M6 6l12 12" />
+                    <path d="M18 6L6 18" />
+                  </>
+                ) : (
+                  <>
+                    <path d="M4 7h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 17h16" />
+                  </>
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         <nav
           id="mobile-navigation"
           aria-label="Mobile navigation"
           hidden={!menuOpen}
-          className="border-t border-line bg-page px-5 pb-3 sm:px-8 xl:hidden"
+          className="mobile-navigation xl:hidden"
         >
-          <ul className="mx-auto max-w-[76rem]">{navigationList(true)}</ul>
+          <div className="civic-container py-3 pb-6">
+            <ul>{navigationList(true)}</ul>
+            <Link
+              href="/search"
+              onClick={() => setMenuOpen(false)}
+              className="mt-5 flex min-h-14 items-center gap-3 bg-sage px-4 text-sm font-semibold text-civic"
+            >
+              <CivicIcon name="search" className="h-5 w-5" />
+              Search all of Rawal One
+            </Link>
+          </div>
         </nav>
       </div>
     </header>

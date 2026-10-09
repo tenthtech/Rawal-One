@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { PublicPageIntro } from "@/components/public-page-intro";
 import {
   getServiceCategory,
   getServiceCategoryLabel,
@@ -105,139 +106,116 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
 
   return (
     <>
-      <section
-        className="border-b border-line bg-page"
-        aria-labelledby="services-heading"
+      <PublicPageIntro
+        id="services-heading"
+        eyebrow="Resident services"
+        title="Services"
+        description="Find municipal services, applications, local information and the right pathway for reporting an issue."
       >
-        <div className="mx-auto grid max-w-[76rem] gap-8 px-5 py-11 sm:px-8 sm:py-16 lg:grid-cols-[minmax(0,0.82fr)_minmax(27rem,1.18fr)] lg:items-center lg:gap-20 lg:px-10">
-          <div className="max-w-xl">
-            <p className="flex items-center gap-3 text-xs font-bold tracking-[0.14em] text-civic uppercase sm:text-sm">
-              <span aria-hidden="true" className="h-0.5 w-8 bg-accent" />
-              Resident services
-            </p>
-            <h1
-              id="services-heading"
-              className="mt-4 text-4xl font-bold leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl lg:text-[3.5rem]"
+        <div className="border-t-[3px] border-accent bg-surface px-5 py-5 shadow-[0_14px_34px_-30px_rgba(16,55,44,0.45)] sm:px-7 sm:py-6">
+          <form action="/services" method="get" role="search">
+            <label
+              htmlFor="services-search"
+              className="block text-base font-semibold tracking-[-0.01em] text-ink"
             >
-              Services
-            </h1>
-            <p className="mt-5 max-w-lg text-lg leading-8 text-muted">
-              Find municipal services, applications, local information and the
-              right pathway for reporting an issue.
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-line bg-surface p-5 shadow-[0_12px_36px_rgba(24,37,33,0.06)] sm:p-7">
-            <form action="/services" method="get" role="search">
-              <label
-                htmlFor="services-search"
-                className="block text-lg font-bold tracking-[-0.01em] text-ink"
-              >
-                Search services
-              </label>
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <div className="relative min-w-0 flex-1">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="pointer-events-none absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-civic"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  >
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="m16 16 4 4" />
-                  </svg>
-                  <input
-                    key={query}
-                    id="services-search"
-                    name="q"
-                    type="search"
-                    defaultValue={query}
-                    placeholder="Search waste, permits, water, roads..."
-                    className="search-preview min-h-14 w-full min-w-0 rounded-md border border-civic bg-page py-3 pe-4 ps-12 text-base text-ink"
-                  />
-                </div>
-                {activeCategory ? (
-                  <input
-                    type="hidden"
-                    name="category"
-                    value={activeCategory.slug}
-                  />
-                ) : null}
-                <button
-                  type="submit"
-                  className="min-h-14 rounded-md bg-civic px-6 py-3 font-bold text-white hover:bg-civic-deep"
+              Search services
+            </label>
+            <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
+              <div className="relative min-w-0 flex-1">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="pointer-events-none absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-civic"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 >
-                  Search
-                </button>
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m16 16 4 4" />
+                </svg>
+                <input
+                  key={query}
+                  id="services-search"
+                  name="q"
+                  type="search"
+                  defaultValue={query}
+                  placeholder="Search waste, permits, water, roads..."
+                  className="civic-input search-preview min-h-14 w-full min-w-0 ps-12"
+                />
               </div>
-            </form>
+              {activeCategory ? (
+                <input
+                  type="hidden"
+                  name="category"
+                  value={activeCategory.slug}
+                />
+              ) : null}
+              <button type="submit" className="civic-button min-h-14 px-7">
+                Search
+              </button>
+            </div>
+          </form>
 
-            {query ? (
-              <Link
-                href={buildServicesHref({ category: activeCategory?.slug })}
-                className="mt-3 inline-flex min-h-11 items-center font-bold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
-              >
-                Clear search
-              </Link>
-            ) : (
-              <p className="mt-3 text-sm leading-6 text-muted">
-                Search by service, resident task or a common term such as
-                garbage or pothole.
-              </p>
-            )}
-          </div>
+          {query ? (
+            <Link
+              href={buildServicesHref({ category: activeCategory?.slug })}
+              className="civic-link mt-2 inline-flex min-h-11 items-center text-sm font-semibold"
+            >
+              Clear search
+            </Link>
+          ) : (
+            <p className="mt-3 text-sm leading-6 text-muted">
+              Search by service, resident task or a common term such as garbage
+              or pothole.
+            </p>
+          )}
         </div>
-      </section>
+      </PublicPageIntro>
 
       <section className="bg-page" aria-label="Services directory">
-        <div className="mx-auto grid max-w-[76rem] gap-10 px-5 py-11 sm:px-8 sm:py-14 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-14 lg:px-10">
-          <nav aria-labelledby="service-categories-heading" className="min-w-0 lg:self-start">
+        <div className="civic-container grid gap-10 py-10 sm:py-12 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-16 lg:py-16">
+          <nav
+            aria-labelledby="service-categories-heading"
+            className="min-w-0 border-t-[3px] border-accent pt-5 lg:self-start"
+          >
+            <p className="civic-eyebrow">Explore</p>
             <h2
               id="service-categories-heading"
-              className="text-lg font-bold tracking-[-0.015em] text-ink"
+              className="mt-2 text-xl font-semibold tracking-[-0.025em] text-ink"
             >
               Browse by category
             </h2>
-            <ul className="mt-4 grid grid-cols-2 overflow-hidden rounded-lg border border-line bg-surface lg:grid-cols-1">
+            <ul className="mt-5 flex flex-wrap gap-2 lg:block lg:border-t lg:border-line">
               <li>
                 <Link
                   href={buildServicesHref({ query })}
                   aria-current={!activeCategory ? "page" : undefined}
-                  className={`flex min-h-12 items-center justify-between gap-3 border-s-4 px-4 py-2 text-sm font-bold no-underline sm:text-base ${
+                  className={`inline-flex min-h-11 items-center gap-2 border px-3 py-2 text-sm font-semibold no-underline transition-colors motion-reduce:transition-none lg:flex lg:min-h-12 lg:border-0 lg:border-b lg:border-s-[3px] lg:px-4 ${
                     !activeCategory
-                      ? "border-s-accent bg-sage text-civic"
-                      : "border-s-transparent text-ink hover:border-s-accent hover:bg-page hover:text-civic"
+                      ? "border-civic bg-civic text-white lg:border-line lg:border-s-accent lg:bg-sage lg:text-civic"
+                      : "border-line bg-surface text-ink hover:border-civic hover:bg-sage lg:border-line lg:border-s-transparent lg:bg-transparent lg:hover:border-s-accent lg:hover:bg-surface lg:hover:text-civic"
                   }`}
                 >
                   <span className="min-w-0">All services</span>
                   {!activeCategory ? <span aria-hidden="true">✓</span> : null}
                 </Link>
               </li>
-              {serviceCategories.map((category, index) => {
+              {serviceCategories.map((category) => {
                 const isCurrent = activeCategory?.slug === category.slug;
 
                 return (
-                  <li
-                    key={category.slug}
-                    className={
-                      index === 0
-                        ? "border-s border-line lg:border-s-0 lg:border-t"
-                        : "border-t border-line max-lg:even:border-s"
-                    }
-                  >
+                  <li key={category.slug}>
                     <Link
                       href={buildServicesHref({
                         query,
                         category: category.slug,
                       })}
                       aria-current={isCurrent ? "page" : undefined}
-                      className={`flex min-h-12 items-center justify-between gap-3 border-s-4 px-4 py-2 text-sm font-bold no-underline sm:text-base ${
+                      className={`inline-flex min-h-11 items-center gap-2 border px-3 py-2 text-sm font-semibold no-underline transition-colors motion-reduce:transition-none lg:flex lg:min-h-12 lg:border-0 lg:border-b lg:border-s-[3px] lg:px-4 ${
                         isCurrent
-                          ? "border-s-accent bg-sage text-civic"
-                          : "border-s-transparent text-ink hover:border-s-accent hover:bg-page hover:text-civic"
+                          ? "border-civic bg-civic text-white lg:border-line lg:border-s-accent lg:bg-sage lg:text-civic"
+                          : "border-line bg-surface text-ink hover:border-civic hover:bg-sage lg:border-line lg:border-s-transparent lg:bg-transparent lg:hover:border-s-accent lg:hover:bg-surface lg:hover:text-civic"
                       }`}
                     >
                       <span className="min-w-0">{category.label}</span>
@@ -250,55 +228,58 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
           </nav>
 
           <section className="min-w-0" aria-labelledby="service-results-heading">
-            <div className="flex flex-col gap-2 border-b border-line pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
-              <h2
-                id="service-results-heading"
-                className="text-2xl font-bold tracking-[-0.025em] text-ink sm:text-3xl"
-              >
-                {matchingServices.length === 0
-                  ? "No services found"
-                  : "Service results"}
-              </h2>
+            <div className="flex flex-col gap-3 border-b-2 border-ink pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+              <div>
+                <p className="civic-eyebrow">Directory</p>
+                <h2
+                  id="service-results-heading"
+                  className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-ink sm:text-3xl"
+                >
+                  {matchingServices.length === 0
+                    ? "No services found"
+                    : "Service results"}
+                </h2>
+              </div>
               <p
                 role="status"
                 aria-atomic="true"
-                className="max-w-full [overflow-wrap:anywhere] text-sm font-bold text-civic"
+                className="max-w-full [overflow-wrap:anywhere] text-sm font-semibold text-civic"
               >
                 {resultStatus}
               </p>
             </div>
 
             {matchingServices.length === 0 ? (
-              <div className="mt-6 rounded-lg border border-line bg-surface px-5 py-8 sm:px-7">
+              <div className="mt-6 border-s-[3px] border-accent bg-surface px-5 py-8 sm:px-7">
                 <p className="max-w-xl text-lg leading-8 text-muted">
                   Try a different search term or browse all services.
                 </p>
                 <Link
                   href="/services"
-                  className="mt-5 inline-flex min-h-11 items-center rounded-md bg-civic px-5 py-3 font-bold text-white no-underline hover:bg-civic-deep"
+                  className="civic-button mt-5 inline-flex min-h-11 items-center px-5 py-3"
                 >
                   View all services
                 </Link>
               </div>
             ) : (
-              <ul className="grid xl:grid-cols-2 xl:gap-x-10">
+              <ul className="grid xl:grid-cols-2 xl:gap-x-12">
                 {matchingServices.map((service) => (
                   <li key={service.slug} className="min-w-0 border-b border-line">
-                    <article className="px-1 py-5 sm:px-2 sm:py-6">
-                      <p className="text-xs font-bold tracking-[0.08em] text-civic uppercase">
+                    <article className="py-6 sm:py-7">
+                      <p className="text-sm font-semibold tracking-[0.08em] text-civic uppercase">
                         <span className="sr-only">Category: </span>
                         {getServiceCategoryLabel(service.category)}
                       </p>
-                      <h3 className="mt-2 text-xl font-bold leading-snug tracking-[-0.02em] text-ink">
+                      <h3 className="mt-2 text-xl font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-[1.35rem]">
                         {"detailHref" in service ? (
                           <Link
                             href={service.detailHref}
-                            className="group inline-flex min-h-11 items-center gap-3 text-ink underline decoration-civic/30 underline-offset-4 hover:text-civic hover:decoration-civic"
+                            className="group inline-flex min-h-11 items-center gap-3 text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
                           >
                             <span>{service.title}</span>
                             <span
                               aria-hidden="true"
-                              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sage text-civic group-hover:bg-civic group-hover:text-white"
+                              className="flex h-8 w-8 shrink-0 items-center justify-center border border-line bg-surface text-base text-civic transition-colors group-hover:border-civic group-hover:bg-civic group-hover:text-white motion-reduce:transition-none"
                             >
                               →
                             </span>

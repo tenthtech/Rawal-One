@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 import "./globals.css";
+
+const publicSans = localFont({
+  src: "../public/fonts/public-sans-latin-variable.woff2",
+  display: "swap",
+  weight: "100 900",
+  variable: "--font-public-sans",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -19,10 +27,14 @@ export const viewport: Viewport = {
   themeColor: "#174C3C",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
-      <body className="flex min-h-screen flex-col antialiased">
+      <body
+        className={`${publicSans.variable} flex min-h-screen flex-col antialiased`}
+      >
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>

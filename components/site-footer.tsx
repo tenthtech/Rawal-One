@@ -1,50 +1,53 @@
 import Link from "next/link";
 
-const exploreLinks = [
-  { href: "/services", label: "Services" },
-  { href: "/search", label: "Search" },
-  { href: "/documents", label: "Documents" },
-  { href: "/notices", label: "Public notices" },
+import { BrandMark } from "@/components/brand-mark";
+import { CivicIcon } from "@/components/civic-icon";
+
+const serviceLinks = [
+  { href: "/services", label: "All services" },
+  { href: "/search", label: "Search Rawal One" },
+  { href: "/documents", label: "Documents & forms" },
 ];
 
 const communityLinks = [
   { href: "/#community", label: "Around the community" },
+  { href: "/notices", label: "News & public notices" },
   { href: "/documents?q=accessibility", label: "Accessibility statement" },
-  { href: "/services?category=community-services", label: "Community services" },
 ];
 
 export function SiteFooter() {
   return (
-    <footer id="about-this-demo" className="bg-civic-deep text-white">
-      <div className="mx-auto max-w-[76rem] px-5 pt-12 pb-6 sm:px-8 sm:pt-14 lg:px-10">
-        <div className="grid gap-x-10 gap-y-9 border-b border-white/20 pb-10 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(8rem,0.65fr)_minmax(9rem,0.7fr)_minmax(0,1.2fr)]">
-          <div>
+    <footer id="about-this-demo" className="site-footer">
+      <div className="civic-container">
+        <div className="footer-grid">
+          <div className="footer-identity">
             <Link
               href="/"
-              className="inline-block text-[1.65rem] font-extrabold tracking-[-0.04em] text-white no-underline"
+              aria-label="Rawal One home"
+              className="inline-flex min-h-14 items-center gap-3 text-white no-underline"
             >
-              Rawal One
+              <BrandMark className="h-10 w-10 shrink-0" />
+              <span>
+                <span className="block text-[1.65rem] font-semibold leading-tight tracking-[-0.055em]">
+                  Rawal One
+                </span>
+                <span className="mt-1 block text-xs font-normal tracking-normal text-white/75">
+                  Your city. One place.
+                </span>
+              </span>
             </Link>
-            <p className="mt-1 text-sm font-medium text-white/85">
-              Your city. One place.
-            </p>
-            <p className="mt-5 max-w-xs text-sm leading-6 text-white/75">
-              An easier starting point for everyday services, local updates and
-              community life in Rawalpindi.
+            <p className="mt-5 max-w-64 text-sm leading-6 text-white/75">
+              Everyday services. Shared spaces.
+              <br />A place to feel connected.
             </p>
           </div>
 
-          <nav aria-label="Explore">
-            <h2 className="text-sm font-bold tracking-[0.08em] text-white/70 uppercase">
-              Explore
-            </h2>
-            <ul className="mt-3 space-y-1">
-              {exploreLinks.map((item) => (
+          <nav aria-label="Footer services">
+            <h2 className="footer-label">Find what you need</h2>
+            <ul className="mt-3">
+              {serviceLinks.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="inline-flex min-h-11 items-center text-sm font-semibold text-white no-underline hover:underline hover:underline-offset-4"
-                  >
+                  <Link href={item.href} className="footer-link">
                     {item.label}
                   </Link>
                 </li>
@@ -53,16 +56,11 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-label="Community information">
-            <h2 className="text-sm font-bold tracking-[0.08em] text-white/70 uppercase">
-              Community
-            </h2>
-            <ul className="mt-3 space-y-1">
+            <h2 className="footer-label">Our community</h2>
+            <ul className="mt-3">
               {communityLinks.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="inline-flex min-h-11 items-center text-sm font-semibold text-white no-underline hover:underline hover:underline-offset-4"
-                  >
+                  <Link href={item.href} className="footer-link">
                     {item.label}
                   </Link>
                 </li>
@@ -70,21 +68,34 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <div>
-            <h2 className="text-sm font-bold tracking-[0.08em] text-white/70 uppercase">
-              About this demonstration
-            </h2>
-            <p className="mt-4 max-w-sm text-sm leading-6 text-white/85">
+          <div className="footer-about">
+            <h2 className="footer-label">Made in Rawalpindi</h2>
+            <p className="mt-4 text-sm leading-6 text-white/75">
               Rawal One is an internal municipal digital-services R&amp;D
-              demonstration created by Tenth Tech in Rawalpindi, Pakistan. It
-              is not an official government service.
+              demonstration created by Tenth Tech in Rawalpindi, Pakistan. It is
+              not an official government service.
             </p>
           </div>
         </div>
 
-        <p className="pt-5 text-xs leading-5 text-white/65">
-          &copy; 2026 Tenth Tech. Research and development demonstration.
-        </p>
+        <div className="footer-bottom">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+            <p>&copy; 2026 Tenth Tech. Research &amp; development.</p>
+            <Link
+              href="/image-credits"
+              className="inline-flex min-h-11 items-center text-white/85 underline decoration-white/40 underline-offset-4 hover:text-white"
+            >
+              Image credits
+            </Link>
+          </div>
+          <Link
+            href="#main-content"
+            className="inline-flex min-h-11 items-center gap-2 text-white/85 hover:text-white"
+          >
+            Back to the top{" "}
+            <CivicIcon name="arrow" className="h-4 w-4 -rotate-90" />
+          </Link>
+        </div>
       </div>
     </footer>
   );
