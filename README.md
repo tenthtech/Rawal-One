@@ -23,10 +23,14 @@ pnpm dev
 
 Open `http://localhost:3000` to view the application.
 
-Without Supabase variables, local development keeps the clean JSON alert store
-as a development-only fallback and allows the local administration workflow.
-To use Supabase locally, copy `.env.example` to `.env.local` and set both the
-project URL and public anon key.
+When both Supabase variables are absent, `pnpm dev` uses development-only
+repository fallbacks: alerts use `data/alerts.json`, while notices, documents,
+city updates and community events use the existing local content. The local CMS
+content is read-only. A partial Supabase configuration does not enable the
+fallback.
+
+To exercise the authenticated CMS, copy `.env.example` to `.env.local` and set
+both the project URL and public anon key.
 
 Useful checks:
 
@@ -41,17 +45,23 @@ Run the production build locally with `pnpm start` after `pnpm build`.
 ## Structure
 
 - `app/` — routes, metadata, global styles, and layout
-- `components/` — shared public shell components
+- `components/` — shared public and administration components
 - `supabase/schema.sql` — alert table, grants, and row-level security setup
+- `supabase/cms-schema.sql` — CMS tables, document Storage bucket, and policies
+- `supabase/content-seed.sql` — idempotent demonstration CMS content seed
 
 The current demonstration includes resident service discovery, a water-service
-detail experience, and a focused emergency-alert publishing workflow under
-`/admin`.
+detail experience, emergency-alert publishing, and an authenticated municipal
+communications CMS for notices, documents, city updates and community events.
+The administration workspace also provides a read-only view of resident
+services.
 
-Configured deployments store alerts in Supabase and protect administration with
-one manually managed Supabase Auth account. Public alert reads use the anon key
-under row-level security; no service-role key is required. Hosted administration
-fails closed if Supabase is not configured.
+Configured deployments store alerts and CMS records in Supabase and protect
+administration with a manually managed Supabase Auth account. Public reads use
+the anon key under row-level security, and authenticated administration uses the
+same project URL and anon key with the signed-in user's session. No service-role
+key is required or supported. Hosted administration fails closed if Supabase is
+not configured.
 
 See the concise [Netlify and Supabase deployment guide](docs/deployment.md) for
 project setup, environment variables, build settings, demo login and the

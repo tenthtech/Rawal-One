@@ -17,32 +17,32 @@ export default async function NewAlertPage() {
   await requireAdminSession();
 
   return (
-    <div className="bg-page">
-      <header className="border-b border-line bg-sage">
-        <div className="mx-auto max-w-[76rem] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
+    <div className="px-5 py-7 sm:px-8 sm:py-9 xl:px-10">
+      <div className="mx-auto max-w-[78rem]">
+        <header className="border-b border-line pb-6">
           <Link
-            href="/admin"
-            className="inline-flex min-h-11 items-center gap-2 font-bold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
+            href="/admin/alerts"
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-bold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
           >
             <span aria-hidden="true">←</span>
-            Communications
+            Emergency Alerts
           </Link>
-          <p className="mt-6 text-sm font-bold tracking-[0.08em] text-civic uppercase">
-            Rawal One administration
+          <p className="mt-4 text-xs font-bold tracking-[0.12em] text-civic uppercase">
+            Content
           </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-[-0.03em] text-ink sm:text-5xl">
+          <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-ink sm:text-4xl">
             Create emergency alert
           </h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-muted">
+          <p className="mt-3 max-w-3xl leading-7 text-muted">
             Save a draft for later or continue directly to a public-presentation
             preview. Nothing appears on the resident homepage until it is
             published.
           </p>
-        </div>
-      </header>
+        </header>
 
-      <div className="mx-auto max-w-4xl px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
-        <AlertForm />
+        <div className="max-w-4xl py-8 sm:py-10">
+          <AlertForm />
+        </div>
       </div>
     </div>
   );

@@ -1,12 +1,6 @@
 import "server-only";
 
 import {
-  getDocumentCategoryLabel,
-  municipalDocuments,
-} from "@/data/documents";
-import { cityUpdates, communityEvents } from "@/data/homepage";
-import { publicNotices } from "@/data/notices";
-import {
   getServiceCategoryLabel,
   services,
   type ServiceRecord,
@@ -14,6 +8,20 @@ import {
 import { waterServiceDetail } from "@/data/water-service";
 import { getAlertSeverityLabel, formatAlertDateTime } from "@/lib/alert-model";
 import { getActivePublicAlerts } from "@/lib/alerts";
+import {
+  readAllPublishedCommunityEvents,
+  readPublishedCityUpdates,
+  readPublishedDocuments,
+  readPublishedNotices,
+} from "@/lib/cms";
+import {
+  formatEventDate,
+  formatPublicDate,
+  getDocumentCategoryLabelFromSlug,
+  getNoticePublicStatus,
+  getPublicContentAnchor,
+  getSeededCityUpdateLink,
+} from "@/lib/public-content";
 
 export const searchFilters = [
   { value: "all", label: "All" },
@@ -172,7 +180,8 @@ function containsSearchTerm(value: string, term: string) {
   const valueWords = normalizeSearchText(value).split(" ").filter(Boolean);
   const termWords = normalizeSearchText(term).split(" ").filter(Boolean);
 
-  if (termWords.length === 0 || termWords.length > valueWords.length) return false;
+  if (termWords.length === 0 || termWords.length > valueWords.length)
+    return false;
 
   return valueWords.some((_, startIndex) =>
     termWords.every((termWord, offset) => {
@@ -252,78 +261,128 @@ function getServiceDocuments(): SearchDocument[] {
   });
 }
 
-function getUpdateDocuments(): SearchDocument[] {
-  return cityUpdates
-    .filter((update) => update.category !== "Public notice")
-    .map((update, index) => ({
-      id: `update:${index}:${normalizeSearchText(update.title).replace(/ /g, "-")}`,
-      group: "updates-notices",
-      typeLabel: "City update",
-      title: update.title,
-      summary: update.description,
-      href: "/#updates",
-      category: update.category,
+type PublishedCityUpdate = Awaited<
+  ReturnType<typeof readPublishedCityUpdates>
+>[number];
+type PublishedDocument = Awaited<
+  ReturnType<typeof readPublishedDocuments>
+>[number];
+type PublishedNotice = Awaited<ReturnType<typeof readPublishedNotices>>[number];
+type PublishedCommunityEvent = Awaited<
+  ReturnType<typeof readAllPublishedCommunityEvents>
+>[number];
+
+function getUpdateDocuments(
+  updates: readonly PublishedCityUpdate[],
+  notices: readonly PublishedNotice[],
+): SearchDocument[] {
+  return updates
+    .filter((update) => update.status === "published")
+    .filter(
+      (update) =>
+        !(
+          update.category === "Public notice" &&
+          notices.some(
+            (notice) =>
+              notice.status === "published" &&
+              notice.title === update.title &&
+              notice.summary === update.summary,
+          )
+        ),
+    )
+    .map((update) => {
+      const publishedAt = update.published_at ?? update.updated_at;
+      const seededLink = getSeededCityUpdateLink(
+        update.id,
+        update.title,
+        update.category,
+      );
+
+      return {
+        id: `update:${update.id}`,
+        group: "updates-notices",
+        typeLabel: "City update",
+        title: update.title,
+        summary: update.summary,
+        href: seededLink?.href ?? "/#updates",
+        category: update.category,
+        date: {
+          dateTime: publishedAt,
+          label: formatPublicDate(publishedAt),
+        },
+        keywords: update.keywords,
+        body: [],
+      };
+    });
+}
+
+function getDocumentResourceDocuments(
+  documents: readonly PublishedDocument[],
+): SearchDocument[] {
+  return documents
+    .filter((document) => document.status === "published")
+    .map((document) => ({
+      id: `document:${document.id}`,
+      group: "documents",
+      typeLabel: "Document",
+      title: document.title,
+      summary: document.description,
+      href: document.file_url,
+      category: `${getDocumentCategoryLabelFromSlug(document.category)} · ${document.document_type}`,
       date: {
-        dateTime: update.dateTime,
-        label: update.date,
+        dateTime: document.updated_at,
+        label: formatPublicDate(document.updated_at),
       },
-      keywords: [],
+      keywords: [...document.keywords, document.document_type],
       body: [],
     }));
 }
 
-function getDocumentResourceDocuments(): SearchDocument[] {
-  return municipalDocuments.map((document) => ({
-    id: `document:${document.slug}`,
-    group: "documents",
-    typeLabel: "Document",
-    title: document.title,
-    summary: document.description,
-    href: document.href,
-    category: `${getDocumentCategoryLabel(document.category) ?? "Municipal resource"} · ${document.format}`,
-    date: {
-      dateTime: document.updatedDateTime,
-      label: document.updatedDate,
-    },
-    keywords: [...document.keywords, document.format],
-    body: [],
-  }));
+function getPublicNoticeDocuments(
+  notices: readonly PublishedNotice[],
+  now: Date,
+): SearchDocument[] {
+  return notices
+    .filter((notice) => notice.status === "published")
+    .map((notice) => ({
+      id: `notice:${notice.id}`,
+      group: "updates-notices",
+      typeLabel: "Public notice",
+      title: notice.title,
+      summary: notice.summary,
+      href: `/notices#${getPublicContentAnchor(notice.title, "notice", notice.id)}`,
+      category: `${notice.category} · ${getNoticePublicStatus(notice.closing_at, now)}`,
+      date: notice.published_at
+        ? {
+            dateTime: notice.published_at,
+            label: formatPublicDate(notice.published_at),
+          }
+        : undefined,
+      keywords: notice.keywords,
+      body: [notice.body],
+    }));
 }
 
-function getPublicNoticeDocuments(): SearchDocument[] {
-  return publicNotices.map((notice) => ({
-    id: `notice:${notice.slug}`,
-    group: "updates-notices",
-    typeLabel: "Public notice",
-    title: notice.title,
-    summary: notice.summary,
-    href: `/notices#${notice.slug}`,
-    category: `${notice.category} · ${notice.status}`,
-    date: {
-      dateTime: notice.publishedDateTime,
-      label: notice.publishedDate,
-    },
-    keywords: notice.keywords,
-    body: [],
-  }));
-}
-
-function getCommunityDocuments(): SearchDocument[] {
-  return communityEvents.map((event, index) => ({
-    id: `event:${index}:${normalizeSearchText(event.title).replace(/ /g, "-")}`,
-    group: "community",
-    typeLabel: "Community event",
-    title: event.title,
-    summary: event.description,
-    href: "/#community",
-    category: "Community",
-    date: {
-      dateTime: event.dateTime,
-      label: event.date,
-    },
-    keywords: [],
-    body: [],
-  }));
+function getCommunityDocuments(
+  events: readonly PublishedCommunityEvent[],
+): SearchDocument[] {
+  return events
+    .filter((event) => event.status === "published")
+    .map((event) => ({
+      id: `event:${event.id}`,
+      group: "community",
+      typeLabel: "Community event",
+      title: event.title,
+      summary: event.summary,
+      href: "/#community",
+      category: event.location ? `Community · ${event.location}` : "Community",
+      date: {
+        dateTime: event.starts_at,
+        label: formatEventDate(event.starts_at),
+      },
+      keywords: event.keywords,
+      body: [],
+    }));
 }
 
 async function getAlertDocuments(now: Date): Promise<SearchDocument[]> {
@@ -348,7 +407,10 @@ async function getAlertDocuments(now: Date): Promise<SearchDocument[]> {
   }));
 }
 
-function scoreConcept(document: SearchDocument, alternatives: readonly string[]) {
+function scoreConcept(
+  document: SearchDocument,
+  alternatives: readonly string[],
+) {
   const title = normalizeSearchText(document.title);
   const summary = normalizeSearchText(document.summary);
   const context = normalizeSearchText(
@@ -368,7 +430,9 @@ function scoreConcept(document: SearchDocument, alternatives: readonly string[])
     } else if (keywords.some((keyword) => keyword === normalizedAlternative)) {
       fieldScore = 36;
     } else if (
-      keywords.some((keyword) => containsSearchTerm(keyword, normalizedAlternative))
+      keywords.some((keyword) =>
+        containsSearchTerm(keyword, normalizedAlternative),
+      )
     ) {
       fieldScore = 30;
     } else if (containsSearchTerm(summary, normalizedAlternative)) {
@@ -392,12 +456,17 @@ function rankDocument(
   normalizedQuery: string,
   concepts: readonly (readonly string[])[],
 ): RankedResult | null {
-  const conceptScores = concepts.map((concept) => scoreConcept(document, concept));
+  const conceptScores = concepts.map((concept) =>
+    scoreConcept(document, concept),
+  );
 
   if (conceptScores.some((score) => score === 0)) return null;
 
   const title = normalizeSearchText(document.title);
-  let score = conceptScores.reduce((total, conceptScore) => total + conceptScore, 0);
+  let score = conceptScores.reduce(
+    (total, conceptScore) => total + conceptScore,
+    0,
+  );
 
   if (title === normalizedQuery) {
     score += 180;
@@ -424,13 +493,22 @@ export async function searchRawalOne(query: string, now = new Date()) {
 
   if (!normalizedQuery || concepts.length === 0) return [];
 
+  const [cmsDocuments, updates, notices, events, alertDocuments] =
+    await Promise.all([
+      readPublishedDocuments(),
+      readPublishedCityUpdates(),
+      readPublishedNotices(),
+      readAllPublishedCommunityEvents(),
+      getAlertDocuments(now),
+    ]);
+
   const documents = [
     ...getServiceDocuments(),
-    ...getDocumentResourceDocuments(),
-    ...getUpdateDocuments(),
-    ...getPublicNoticeDocuments(),
-    ...getCommunityDocuments(),
-    ...(await getAlertDocuments(now)),
+    ...getDocumentResourceDocuments(cmsDocuments),
+    ...getUpdateDocuments(updates, notices),
+    ...getPublicNoticeDocuments(notices, now),
+    ...getCommunityDocuments(events),
+    ...alertDocuments,
   ];
 
   return documents

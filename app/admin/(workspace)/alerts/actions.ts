@@ -35,9 +35,7 @@ function getFormValue(formData: FormData, field: AlertField) {
 }
 
 function parsePakistanDateTime(value: string) {
-  const match = value.match(
-    /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/,
-  );
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/);
 
   if (!match) return null;
 
@@ -203,13 +201,13 @@ export async function createAlertAction(
     };
   }
 
-  revalidatePath("/admin");
+  revalidatePath("/admin/alerts");
 
   if (intent === "preview") {
     redirect(`/admin/alerts/${alertId}/preview?notice=draft-created`);
   }
 
-  redirect("/admin?notice=draft-saved");
+  redirect("/admin/alerts?notice=draft-saved");
 }
 
 export async function publishAlertAction(id: string) {
@@ -225,13 +223,13 @@ export async function publishAlertAction(id: string) {
   }
 
   if (!succeeded) {
-    redirect("/admin?notice=operation-failed");
+    redirect("/admin/alerts?notice=operation-failed");
   }
 
   revalidatePath("/");
-  revalidatePath("/admin");
+  revalidatePath("/admin/alerts");
   revalidatePath(`/admin/alerts/${id}/preview`);
-  redirect("/admin?notice=published");
+  redirect("/admin/alerts?notice=published");
 }
 
 export async function deactivateAlertAction(id: string) {
@@ -247,11 +245,11 @@ export async function deactivateAlertAction(id: string) {
   }
 
   if (!succeeded) {
-    redirect("/admin?notice=operation-failed");
+    redirect("/admin/alerts?notice=operation-failed");
   }
 
   revalidatePath("/");
-  revalidatePath("/admin");
+  revalidatePath("/admin/alerts");
   revalidatePath(`/admin/alerts/${id}/preview`);
-  redirect("/admin?notice=deactivated");
+  redirect("/admin/alerts?notice=deactivated");
 }

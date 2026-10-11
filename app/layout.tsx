@@ -2,8 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { ApplicationFrame } from "@/components/application-frame";
 
 import "./globals.css";
 
@@ -35,14 +34,7 @@ export default function RootLayout({
       <body
         className={`${publicSans.variable} flex min-h-screen flex-col antialiased`}
       >
-        <a className="skip-link" href="#main-content">
-          Skip to main content
-        </a>
-        <SiteHeader />
-        <main id="main-content" tabIndex={-1} className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
+        <ApplicationFrame>{children}</ApplicationFrame>
       </body>
     </html>
   );

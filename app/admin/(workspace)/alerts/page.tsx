@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { deactivateAlertAction } from "@/app/admin/alerts/actions";
-import { signOutAction } from "@/app/admin/login/actions";
+import { deactivateAlertAction } from "@/app/admin/(workspace)/alerts/actions";
 import {
   formatAlertDateTime,
   getAlertSeverityLabel,
@@ -11,10 +10,9 @@ import {
   type AlertSeverity,
 } from "@/lib/alert-model";
 import { readAlerts } from "@/lib/alerts";
-import { requireAdminSession } from "@/lib/supabase/auth";
 
 export const metadata: Metadata = {
-  title: "Communications administration",
+  title: "Emergency alerts administration",
   description:
     "Emergency alert publishing workspace for the Rawal One R&D demonstration.",
 };
@@ -63,10 +61,11 @@ const statusStyles = {
 } as const;
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
-  const session = await requireAdminSession();
   const alerts = await readAlerts();
   const params = await searchParams;
-  const noticeKey = Array.isArray(params.notice) ? params.notice[0] : params.notice;
+  const noticeKey = Array.isArray(params.notice)
+    ? params.notice[0]
+    : params.notice;
   const notice =
     noticeKey && noticeKey in notices
       ? notices[noticeKey as keyof typeof notices]
@@ -74,51 +73,42 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   const now = new Date();
 
   return (
-    <div className="bg-page">
-      <header className="border-b border-line bg-sage">
-        <div className="mx-auto max-w-[76rem] px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
-          <div className="max-w-4xl border-s-4 border-accent ps-5 sm:ps-7">
-            <p className="text-sm font-bold tracking-[0.08em] text-civic uppercase">
-              Rawal One administration
+    <div className="px-5 py-7 sm:px-8 sm:py-9 xl:px-10">
+      <div className="mx-auto max-w-[78rem]">
+        <header className="flex flex-col gap-5 border-b border-line pb-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-bold tracking-[0.12em] text-civic uppercase">
+              Content
             </p>
-            <h1 className="mt-3 [overflow-wrap:anywhere] text-[2rem] font-bold tracking-[-0.03em] text-ink sm:text-5xl">
-              Communications
+            <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-ink sm:text-4xl">
+              Emergency Alerts
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-muted">
-              Create, review and publish urgent information for the Rawal One
-              resident homepage.
+            <p className="mt-3 max-w-2xl leading-7 text-muted">
+              Create, review and publish urgent information for the resident
+              homepage.
             </p>
-            {session.mode === "supabase" ? (
-              <form action={signOutAction} className="mt-6">
-                <button
-                  type="submit"
-                  className="inline-flex min-h-11 items-center justify-center rounded-sm border-2 border-civic bg-surface px-4 py-2 font-bold text-civic hover:bg-page"
-                >
-                  Sign out
-                </button>
-              </form>
-            ) : null}
           </div>
-        </div>
-      </header>
+          <Link
+            href="/admin/alerts/new"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-sm bg-civic px-4 py-2.5 font-bold text-white no-underline hover:bg-civic-deep"
+          >
+            Create alert
+          </Link>
+        </header>
 
-      <div className="mx-auto max-w-[76rem] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
         <section
           aria-labelledby="demonstration-workspace-heading"
-          className="border-s-4 border-information bg-surface px-5 py-5 sm:px-6"
+          className="mt-6 border-s-4 border-information bg-surface px-5 py-4"
         >
           <h2
             id="demonstration-workspace-heading"
-            className="text-lg font-bold text-ink"
+            className="font-bold text-ink"
           >
             Demonstration workspace
           </h2>
-          <p className="mt-2 max-w-4xl leading-7 text-muted">
-            {session.mode === "supabase"
-              ? "This hosted R&D workspace requires the demonstration administrator account and must contain only fictional municipal alert content."
-              : "This local R&D workspace uses the development-only JSON fallback without authentication and must contain only fictional municipal alert content."}{" "}
-            Website publishing is provided solely for demonstrating the
-            communications workflow.
+          <p className="mt-1 max-w-4xl text-sm leading-6 text-muted">
+            Use only fictional municipal alert content. Website publishing is
+            provided solely for demonstrating the communications workflow.
           </p>
         </section>
 
@@ -129,37 +119,20 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               notice.tone === "error" ? "border-emergency" : "border-success"
             }`}
           >
-            <h2 id="admin-notice-heading" className="text-lg font-bold text-ink">
+            <h2
+              id="admin-notice-heading"
+              className="text-lg font-bold text-ink"
+            >
               {notice.heading}
             </h2>
             <p className="mt-1 leading-7 text-muted">{notice.message}</p>
           </section>
         ) : null}
 
-        <section aria-labelledby="emergency-alerts-heading" className="mt-12">
-          <div className="flex flex-col gap-5 border-b border-line pb-7 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-bold tracking-[0.08em] text-civic uppercase">
-                Public communications
-              </p>
-              <h2
-                id="emergency-alerts-heading"
-                className="mt-2 text-3xl font-bold tracking-[-0.025em] text-ink"
-              >
-                Emergency alerts
-              </h2>
-              <p className="mt-3 max-w-2xl leading-7 text-muted">
-                Draft, preview, publish and deactivate urgent resident notices.
-              </p>
-            </div>
-            <Link
-              href="/admin/alerts/new"
-              className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-sm bg-civic px-5 py-3 font-bold text-white no-underline hover:bg-civic-deep"
-            >
-              Create alert
-            </Link>
-          </div>
-
+        <section aria-labelledby="emergency-alerts-heading" className="mt-8">
+          <h2 id="emergency-alerts-heading" className="sr-only">
+            Alert records
+          </h2>
           {alerts.length === 0 ? (
             <div className="border-b border-line py-10">
               <h3 className="text-xl font-bold text-ink">No alerts yet</h3>
@@ -227,7 +200,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             </div>
                             {alert.publishedAt ? (
                               <div>
-                                <dt className="font-bold text-ink">Published</dt>
+                                <dt className="font-bold text-ink">
+                                  Published
+                                </dt>
                                 <dd className="mt-1 text-muted">
                                   <time dateTime={alert.publishedAt}>
                                     {formatAlertDateTime(alert.publishedAt)} PKT
@@ -254,6 +229,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             className="inline-flex min-h-11 items-center justify-center rounded-sm border-2 border-civic bg-surface px-4 py-2 font-bold text-civic no-underline hover:bg-sage"
                           >
                             {previewLabel}
+                            <span className="sr-only"> {alert.title}</span>
                           </Link>
                           {alert.status === "published" ? (
                             <form action={deactivateAction}>

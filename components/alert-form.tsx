@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef } from "react";
 
-import { createAlertAction } from "@/app/admin/alerts/actions";
+import { createAlertAction } from "@/app/admin/(workspace)/alerts/actions";
 import { alertFieldLimits } from "@/lib/alert-model";
 
 type AlertField =
@@ -36,13 +36,7 @@ const initialState: AlertFormState = {
 const fieldClassName =
   "mt-2 min-h-12 w-full rounded-sm border-2 border-line bg-white px-3 py-2.5 text-base text-ink aria-[invalid=true]:border-emergency";
 
-function ErrorMessage({
-  field,
-  error,
-}: {
-  field: AlertField;
-  error?: string;
-}) {
+function ErrorMessage({ field, error }: { field: AlertField; error?: string }) {
   if (!error) return null;
 
   return (
@@ -66,13 +60,15 @@ export function AlertForm() {
   }, [state.attempt, state.formError]);
 
   function describedBy(field: AlertField, helpId: string) {
-    return state.errors[field]
-      ? `${helpId} ${field}-error`
-      : helpId;
+    return state.errors[field] ? `${helpId} ${field}-error` : helpId;
   }
 
   return (
-    <form action={formAction} aria-busy={isPending} className="mt-10 space-y-10">
+    <form
+      action={formAction}
+      aria-busy={isPending}
+      className="mt-10 space-y-10"
+    >
       {state.formError ? (
         <div
           ref={errorSummaryRef}
@@ -115,7 +111,10 @@ export function AlertForm() {
             <label htmlFor="severity" className="block font-bold text-ink">
               Severity <span className="text-sm text-muted">(Required)</span>
             </label>
-            <p id="severity-help" className="mt-1 max-w-2xl text-sm leading-6 text-muted">
+            <p
+              id="severity-help"
+              className="mt-1 max-w-2xl text-sm leading-6 text-muted"
+            >
               Choose the level that best reflects the urgency of the public
               information.
             </p>
@@ -140,9 +139,12 @@ export function AlertForm() {
             <label htmlFor="title" className="block font-bold text-ink">
               Title <span className="text-sm text-muted">(Required)</span>
             </label>
-            <p id="title-help" className="mt-1 max-w-2xl text-sm leading-6 text-muted">
-              Use a short, specific public heading. Maximum {alertFieldLimits.title}{" "}
-              characters.
+            <p
+              id="title-help"
+              className="mt-1 max-w-2xl text-sm leading-6 text-muted"
+            >
+              Use a short, specific public heading. Maximum{" "}
+              {alertFieldLimits.title} characters.
             </p>
             <input
               id="title"
@@ -162,7 +164,10 @@ export function AlertForm() {
             <label htmlFor="message" className="block font-bold text-ink">
               Message <span className="text-sm text-muted">(Required)</span>
             </label>
-            <p id="message-help" className="mt-1 max-w-2xl text-sm leading-6 text-muted">
+            <p
+              id="message-help"
+              className="mt-1 max-w-2xl text-sm leading-6 text-muted"
+            >
               Explain what residents need to know in plain language. Maximum{" "}
               {alertFieldLimits.message} characters.
             </p>
@@ -182,7 +187,8 @@ export function AlertForm() {
 
           <div>
             <label htmlFor="affectedArea" className="block font-bold text-ink">
-              Affected area <span className="text-sm text-muted">(Required)</span>
+              Affected area{" "}
+              <span className="text-sm text-muted">(Required)</span>
             </label>
             <p
               id="affectedArea-help"
@@ -216,7 +222,10 @@ export function AlertForm() {
             <label htmlFor="expiresAt" className="block font-bold text-ink">
               Expiry <span className="text-sm text-muted">(Optional)</span>
             </label>
-            <p id="expiresAt-help" className="mt-1 max-w-2xl text-sm leading-6 text-muted">
+            <p
+              id="expiresAt-help"
+              className="mt-1 max-w-2xl text-sm leading-6 text-muted"
+            >
               Pakistan Standard Time (PKT). The alert will stop appearing on the
               public homepage after this time.
             </p>
@@ -234,9 +243,13 @@ export function AlertForm() {
 
           <div>
             <label htmlFor="moreInfoUrl" className="block font-bold text-ink">
-              More information <span className="text-sm text-muted">(Optional)</span>
+              More information{" "}
+              <span className="text-sm text-muted">(Optional)</span>
             </label>
-            <p id="moreInfoUrl-help" className="mt-1 max-w-2xl text-sm leading-6 text-muted">
+            <p
+              id="moreInfoUrl-help"
+              className="mt-1 max-w-2xl text-sm leading-6 text-muted"
+            >
               Enter an internal Rawal One path beginning with one forward slash,
               such as /services/water-service-interruptions.
             </p>
@@ -248,10 +261,7 @@ export function AlertForm() {
               inputMode="url"
               defaultValue={state.values.moreInfoUrl}
               aria-invalid={state.errors.moreInfoUrl ? "true" : undefined}
-              aria-describedby={describedBy(
-                "moreInfoUrl",
-                "moreInfoUrl-help",
-              )}
+              aria-describedby={describedBy("moreInfoUrl", "moreInfoUrl-help")}
               className={fieldClassName}
             />
             <ErrorMessage
@@ -262,7 +272,10 @@ export function AlertForm() {
         </div>
       </fieldset>
 
-      <section aria-labelledby="delivery-heading" className="border-t border-line pt-8">
+      <section
+        aria-labelledby="delivery-heading"
+        className="border-t border-line pt-8"
+      >
         <h2
           id="delivery-heading"
           className="text-2xl font-bold tracking-[-0.02em] text-ink"

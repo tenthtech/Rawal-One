@@ -21,7 +21,7 @@ export default function AdminLoginPage() {
   const isLocalFallback = isLocalJsonFallbackEnabled();
 
   return (
-    <div className="bg-page">
+    <div className="min-h-screen bg-page">
       <header className="border-b border-line bg-sage">
         <div className="mx-auto max-w-4xl px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
           <p className="text-sm font-bold tracking-[0.08em] text-civic uppercase">
@@ -31,8 +31,8 @@ export default function AdminLoginPage() {
             Sign in
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-muted">
-            Access the demonstration workspace for creating and publishing
-            fictional municipal emergency alerts.
+            Access the demonstration workspace for managing fictional municipal
+            communications.
           </p>
         </div>
       </header>
@@ -63,7 +63,7 @@ export default function AdminLoginPage() {
               </p>
               {isLocalFallback ? (
                 <p className="mt-3 leading-7 text-muted">
-                  Local development is using the JSON alert fallback. You can{" "}
+                  Local development is using repository-backed content. You can{" "}
                   <Link
                     href="/admin"
                     className="font-bold text-civic underline decoration-civic/35 underline-offset-4"

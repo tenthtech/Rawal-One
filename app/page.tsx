@@ -5,14 +5,21 @@ import { CivicIcon } from "@/components/civic-icon";
 import { EmergencyAlert } from "@/components/emergency-alert";
 import { ServiceNotice } from "@/components/service-notice";
 import {
-  cityUpdates,
-  communityEvents,
   popularServices,
   problemPathways,
   serviceNotice,
   usefulLinks,
 } from "@/data/homepage";
 import { getActivePublicAlerts } from "@/lib/alerts";
+import {
+  readPublishedCityUpdates,
+  readPublishedCommunityEvents,
+} from "@/lib/cms";
+import {
+  formatEventDate,
+  formatPublicDate,
+  getSeededCityUpdateLink,
+} from "@/lib/public-content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -42,8 +49,39 @@ const quickActions = [
   },
 ];
 
+type PublishedCityUpdate = Awaited<
+  ReturnType<typeof readPublishedCityUpdates>
+>[number];
+
+function getCityUpdateLink(update: PublishedCityUpdate) {
+  const seededLink = getSeededCityUpdateLink(
+    update.id,
+    update.title,
+    update.category,
+  );
+  if (seededLink) return seededLink;
+
+  if (update.category === "Service update") {
+    return { href: "/services", label: "Browse services" };
+  }
+
+  if (update.category === "Public notice") {
+    return { href: "/notices", label: "View public notices" };
+  }
+
+  return {
+    href: `/search?q=${encodeURIComponent(update.category)}`,
+    label: "Search this topic",
+  };
+}
+
 export default async function HomePage() {
-  const activeAlerts = await getActivePublicAlerts();
+  const now = new Date();
+  const [activeAlerts, cityUpdates, communityEvents] = await Promise.all([
+    getActivePublicAlerts(now),
+    readPublishedCityUpdates(3),
+    readPublishedCommunityEvents(2, now),
+  ]);
   const [featuredUpdate, ...secondaryUpdates] = cityUpdates;
 
   return (
@@ -261,52 +299,84 @@ export default async function HomePage() {
               All public notices <CivicIcon name="arrow" />
             </Link>
           </div>
-          <div className="updates-grid">
-            <article className="featured-update">
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-                <p className="font-semibold text-civic">
-                  {featuredUpdate.category}
+          {featuredUpdate ? (
+            <div className="updates-grid">
+              <article
+                className={
+                  secondaryUpdates.length === 0
+                    ? "featured-update lg:col-span-2"
+                    : "featured-update"
+                }
+              >
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+                  <p className="font-semibold text-civic">
+                    {featuredUpdate.category}
+                  </p>
+                  <time
+                    dateTime={
+                      featuredUpdate.published_at ?? featuredUpdate.updated_at
+                    }
+                    className="text-muted"
+                  >
+                    {formatPublicDate(
+                      featuredUpdate.published_at ?? featuredUpdate.updated_at,
+                    )}
+                  </time>
+                </div>
+                <h3>{featuredUpdate.title}</h3>
+                <p className="mt-4 max-w-lg text-base leading-7 text-muted">
+                  {featuredUpdate.summary}
                 </p>
-                <time dateTime={featuredUpdate.dateTime} className="text-muted">
-                  {featuredUpdate.date}
-                </time>
-              </div>
-              <h3>{featuredUpdate.title}</h3>
-              <p className="mt-4 max-w-lg text-base leading-7 text-muted">
-                {featuredUpdate.description}
-              </p>
-              <Link href={featuredUpdate.href} className="civic-link mt-6">
-                {featuredUpdate.linkLabel}
-                <CivicIcon name="arrow" />
-              </Link>
-            </article>
-            <ul className="secondary-updates">
-              {secondaryUpdates.map((update) => (
-                <li key={update.title}>
-                  <article>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-                      <p className="font-semibold text-civic">
-                        {update.category}
-                      </p>
-                      <time dateTime={update.dateTime} className="text-muted">
-                        {update.date}
-                      </time>
-                    </div>
-                    <h3 className="mt-3 text-xl font-semibold leading-7 tracking-[-0.025em] text-ink">
-                      {update.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-muted">
-                      {update.description}
-                    </p>
-                    <Link href={update.href} className="civic-link mt-2">
-                      {update.linkLabel}
-                      <CivicIcon name="arrow" />
-                    </Link>
-                  </article>
-                </li>
-              ))}
-            </ul>
-          </div>
+                <Link
+                  href={getCityUpdateLink(featuredUpdate).href}
+                  className="civic-link mt-6"
+                >
+                  {getCityUpdateLink(featuredUpdate).label}
+                  <CivicIcon name="arrow" />
+                </Link>
+              </article>
+              {secondaryUpdates.length > 0 ? (
+                <ul className="secondary-updates">
+                  {secondaryUpdates.map((update) => (
+                    <li key={update.id}>
+                      <article>
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+                          <p className="font-semibold text-civic">
+                            {update.category}
+                          </p>
+                          <time
+                            dateTime={update.published_at ?? update.updated_at}
+                            className="text-muted"
+                          >
+                            {formatPublicDate(
+                              update.published_at ?? update.updated_at,
+                            )}
+                          </time>
+                        </div>
+                        <h3 className="mt-3 text-xl font-semibold leading-7 tracking-[-0.025em] text-ink">
+                          {update.title}
+                        </h3>
+                        <p className="mt-2 text-sm leading-6 text-muted">
+                          {update.summary}
+                        </p>
+                        <Link
+                          href={getCityUpdateLink(update).href}
+                          className="civic-link mt-2"
+                        >
+                          {getCityUpdateLink(update).label}
+                          <CivicIcon name="arrow" />
+                        </Link>
+                      </article>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          ) : (
+            <div className="featured-update">
+              <h3>No city updates are published at this time.</h3>
+            </div>
+          )}
         </div>
       </section>
 
@@ -338,26 +408,39 @@ export default async function HomePage() {
               Neighbourhood activities and shared spaces are part of what makes
               a city feel like home.
             </p>
-            <ul className="community-events">
-              {communityEvents.map((event) => (
-                <li key={event.title}>
-                  <article>
-                    <time dateTime={event.dateTime} className="community-date">
-                      <span>{event.date.split(" ")[0]}</span>
-                      <span>{event.date.split(" ").slice(1).join(" ")}</span>
-                    </time>
-                    <div>
-                      <h3 className="text-lg font-semibold leading-6 tracking-[-0.02em] text-ink">
-                        {event.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-muted">
-                        {event.description}
-                      </p>
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </ul>
+            {communityEvents.length > 0 ? (
+              <ul className="community-events">
+                {communityEvents.map((event) => {
+                  const dateParts = formatEventDate(event.starts_at).split(" ");
+
+                  return (
+                    <li key={event.id}>
+                      <article>
+                        <time
+                          dateTime={event.starts_at}
+                          className="community-date"
+                        >
+                          <span>{dateParts[0]}</span>
+                          <span>{dateParts.slice(1).join(" ")}</span>
+                        </time>
+                        <div>
+                          <h3 className="text-lg font-semibold leading-6 tracking-[-0.02em] text-ink">
+                            {event.title}
+                          </h3>
+                          <p className="mt-2 text-sm leading-6 text-muted">
+                            {event.summary}
+                          </p>
+                        </div>
+                      </article>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className="mt-7 border-t border-[#d1c6b4] py-5 text-sm leading-6 text-muted">
+                There are no upcoming community events at this time.
+              </p>
+            )}
           </div>
         </div>
       </section>

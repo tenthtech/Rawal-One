@@ -34,7 +34,10 @@ export async function signInAction(
 
   try {
     const supabase = await createSupabaseServerClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (error) {
       return {
@@ -53,8 +56,12 @@ export async function signInAction(
 }
 
 export async function signOutAction() {
-  await requireAdminSession();
-  const supabase = await createSupabaseServerClient();
-  await supabase.auth.signOut({ scope: "local" });
+  const session = await requireAdminSession();
+
+  if (session.mode === "supabase") {
+    const supabase = await createSupabaseServerClient();
+    await supabase.auth.signOut({ scope: "local" });
+  }
+
   redirect("/admin/login");
 }

@@ -2,11 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { PublicPageIntro } from "@/components/public-page-intro";
+import { readPublishedDocuments } from "@/lib/cms";
 import {
-  getDocumentCategoryLabel,
-  municipalDocuments,
-  type MunicipalDocument,
-} from "@/data/documents";
+  formatPublicDate,
+  getPublicContentAnchor,
+  getDocumentCategoryLabelFromSlug,
+  getPublicDocumentDownloadUrl,
+} from "@/lib/public-content";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Documents & forms",
@@ -19,7 +24,7 @@ type DocumentsPageProps = {
 };
 
 function getFirstParam(value: string | string[] | undefined) {
-  return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+  return Array.isArray(value) ? (value[0] ?? "") : (value ?? "");
 }
 
 function tidyQuery(value: string) {
@@ -34,23 +39,30 @@ function normalizeSearchText(value: string) {
     .trim();
 }
 
-function getSearchableText(document: MunicipalDocument) {
+type PublishedDocument = Awaited<
+  ReturnType<typeof readPublishedDocuments>
+>[number];
+
+function getSearchableText(document: PublishedDocument) {
   return normalizeSearchText(
     [
       document.title,
       document.description,
-      getDocumentCategoryLabel(document.category),
+      getDocumentCategoryLabelFromSlug(document.category),
       ...document.keywords,
     ].join(" "),
   );
 }
 
-function filterDocuments(query: string) {
+function filterDocuments(
+  documents: readonly PublishedDocument[],
+  query: string,
+) {
   const terms = normalizeSearchText(query).split(" ").filter(Boolean);
 
-  if (terms.length === 0) return [...municipalDocuments];
+  if (terms.length === 0) return [...documents];
 
-  return municipalDocuments.filter((document) => {
+  return documents.filter((document) => {
     const searchableText = getSearchableText(document);
     return terms.every((term) => searchableText.includes(term));
   });
@@ -63,10 +75,15 @@ function getResultStatus(count: number, query: string) {
     : `${count} ${documentLabel}`;
 }
 
-export default async function DocumentsPage({ searchParams }: DocumentsPageProps) {
-  const params = await searchParams;
+export default async function DocumentsPage({
+  searchParams,
+}: DocumentsPageProps) {
+  const [params, documents] = await Promise.all([
+    searchParams,
+    readPublishedDocuments(),
+  ]);
   const query = tidyQuery(getFirstParam(params.q));
-  const matchingDocuments = filterDocuments(query);
+  const matchingDocuments = filterDocuments(documents, query);
   const resultStatus = getResultStatus(matchingDocuments.length, query);
 
   return (
@@ -110,10 +127,7 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                   className="civic-input search-preview min-h-14 w-full min-w-0 ps-12"
                 />
               </div>
-              <button
-                type="submit"
-                className="civic-button min-h-14 px-7"
-              >
+              <button type="submit" className="civic-button min-h-14 px-7">
                 Search
               </button>
             </div>
@@ -126,7 +140,8 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
               </Link>
             ) : (
               <p className="mt-3 text-sm leading-6 text-muted">
-                Search by document title, topic, category or a common resident term.
+                Search by document title, topic, category or a common resident
+                term.
               </p>
             )}
           </form>
@@ -142,7 +157,9 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                 id="documents-results-heading"
                 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-ink sm:text-3xl"
               >
-                {matchingDocuments.length === 0 ? "No documents found" : "Documents"}
+                {matchingDocuments.length === 0
+                  ? "No documents found"
+                  : "Documents"}
               </h2>
             </div>
             <p
@@ -157,21 +174,29 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
           {matchingDocuments.length === 0 ? (
             <div className="mt-6 border-s-[3px] border-accent bg-surface px-5 py-8 sm:px-7">
               <p className="max-w-xl text-lg leading-8 text-muted">
-                Try a different search term or view all documents.
+                {query
+                  ? "Try a different search term or view all documents."
+                  : "There are no published documents at this time."}
               </p>
-              <Link
-                href="/documents"
-                className="civic-button mt-5 inline-flex min-h-11 items-center px-5 py-3"
-              >
-                View all documents
-              </Link>
+              {query ? (
+                <Link
+                  href="/documents"
+                  className="civic-button mt-5 inline-flex min-h-11 items-center px-5 py-3"
+                >
+                  View all documents
+                </Link>
+              ) : null}
             </div>
           ) : (
             <ul className="divide-y divide-line border-b border-b-line">
               {matchingDocuments.map((document) => (
                 <li
-                  id={document.slug}
-                  key={document.slug}
+                  id={getPublicContentAnchor(
+                    document.title,
+                    "document",
+                    document.id,
+                  )}
+                  key={document.id}
                   className="scroll-mt-6"
                 >
                   <article className="grid min-w-0 grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4 gap-y-3 py-6 sm:grid-cols-[3.25rem_minmax(0,1fr)] sm:gap-x-5 sm:py-7 lg:grid-cols-[3.25rem_minmax(0,1fr)_auto] lg:items-center lg:gap-x-8">
@@ -196,18 +221,18 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm [overflow-wrap:anywhere]">
                         <p className="border border-line bg-surface px-2 py-0.5 text-xs font-semibold tracking-[0.08em] text-civic uppercase">
-                          {document.format}
+                          {document.document_type}
                         </p>
                         <p className="font-medium text-civic">
-                          {getDocumentCategoryLabel(document.category)}
+                          {getDocumentCategoryLabelFromSlug(document.category)}
                         </p>
                         <span className="text-line" aria-hidden="true">
                           |
                         </span>
                         <p className="text-muted">
                           Updated{" "}
-                          <time dateTime={document.updatedDateTime}>
-                            {document.updatedDate}
+                          <time dateTime={document.updated_at}>
+                            {formatPublicDate(document.updated_at)}
                           </time>
                         </p>
                       </div>
@@ -218,20 +243,35 @@ export default async function DocumentsPage({ searchParams }: DocumentsPageProps
                         {document.description}
                       </p>
                     </div>
-                    <a
-                      href={document.href}
-                      download={document.fileName}
-                      className="group col-start-2 inline-flex min-h-11 items-center justify-self-start gap-2 font-semibold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic lg:col-start-auto lg:justify-self-end"
-                    >
-                      Download PDF
-                      <span
-                        aria-hidden="true"
-                        className="flex h-8 w-8 items-center justify-center border border-line bg-surface text-base text-civic transition-colors duration-200 group-hover:border-civic group-hover:bg-civic group-hover:text-white motion-reduce:transition-none"
+                    <div className="col-start-2 flex flex-wrap items-center gap-x-5 gap-y-1 lg:col-start-auto lg:justify-self-end">
+                      <a
+                        href={document.file_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex min-h-11 items-center font-semibold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
                       >
-                        ↓
-                      </span>
-                      <span className="sr-only">: {document.title}</span>
-                    </a>
+                        View PDF
+                        <span className="sr-only">: {document.title}</span>
+                      </a>
+                      <a
+                        href={getPublicDocumentDownloadUrl(
+                          document.file_url,
+                          document.file_name,
+                          document.storage_path,
+                        )}
+                        download={document.file_name}
+                        className="group inline-flex min-h-11 items-center gap-2 font-semibold text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"
+                      >
+                        Download PDF
+                        <span
+                          aria-hidden="true"
+                          className="flex h-8 w-8 items-center justify-center border border-line bg-surface text-base text-civic transition-colors duration-200 group-hover:border-civic group-hover:bg-civic group-hover:text-white motion-reduce:transition-none"
+                        >
+                          ↓
+                        </span>
+                        <span className="sr-only">: {document.title}</span>
+                      </a>
+                    </div>
                   </article>
                 </li>
               ))}
