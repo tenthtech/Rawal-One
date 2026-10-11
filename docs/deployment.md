@@ -76,6 +76,17 @@ confirm that published content is visible publicly, the demo user can open
 
 Codex does not deploy the site or change DNS.
 
+## Optional public analytics
+
+GA4 uses the public `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-11Q13VK1YX` build variable.
+Activation is currently gated: leave `NEXT_PUBLIC_GA_PRIVACY_READY=false` until
+the property owner confirms Enhanced Measurement, Google Signals,
+user-provided data collection and advertising personalization are off. Keep
+`NEXT_PUBLIC_GA_ALLOW_LOCAL=false` in hosted environments. The ID alone does
+not enable collection. Follow [the analytics setup and privacy guide](analytics.md)
+before enabling the gate and rebuilding; no hosting or Google settings were
+changed by this integration.
+
 ## Demo login
 
 Open `/admin/login` and use the manually created demonstration user. The

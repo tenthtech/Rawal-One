@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
 import { ApplicationFrame } from "@/components/application-frame";
+import { PublicAnalytics } from "@/components/public-analytics";
 import { ACCESSIBILITY_PREFERENCES_SCRIPT } from "@/lib/accessibility-preferences";
 
 import "./globals.css";
@@ -42,6 +43,7 @@ export default function RootLayout({
         className={`${publicSans.variable} flex min-h-screen flex-col antialiased`}
       >
         <ApplicationFrame>{children}</ApplicationFrame>
+        <PublicAnalytics />
       </body>
     </html>
   );

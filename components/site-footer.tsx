@@ -115,6 +115,12 @@ export function SiteFooter() {
             >
               Image credits
             </Link>
+            <Link
+              href="/privacy"
+              className="inline-flex min-h-11 items-center text-white/85 underline decoration-white/40 underline-offset-4 hover:text-white"
+            >
+              Privacy
+            </Link>
           </div>
           <Link
             href="#main-content"
