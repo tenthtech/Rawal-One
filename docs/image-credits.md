@@ -26,7 +26,7 @@ Verified against Wikimedia Commons file descriptions, API image metadata and Cre
 - **Date photographed:** 5 April 2014, 14:47:43, as recorded by Commons.
 - **Original dimensions:** 3264 × 2448 pixels.
 - **Local file:** `public/images/ayub-park-lake.webp` — 2000 × 1500 pixels.
-- **Usage:** `/` “Around the community” section; thumbnail on `/image-credits`.
+- **Usage:** `/` “Around Rawalpindi” section; thumbnail on `/image-credits`.
 - **Changes:** resized, converted to sRGB WebP at quality 84, metadata stripped; responsive CSS cropping. No generative alteration or compositing. This adapted photograph remains available under CC BY-SA 3.0.
 
 ## Presentation and reuse

@@ -60,28 +60,28 @@ export default function AccessibilityPage() {
         title="Accessibility at Rawal One"
         description="Accessibility is a core requirement of Rawal One. We consider how people read, navigate and use our public services throughout design, content and implementation."
       >
-        <div className="border-t-[3px] border-accent bg-surface px-5 py-5 shadow-[0_14px_34px_-30px_rgba(16,55,44,0.45)] sm:px-7 sm:py-6">
+        <div className="public-intro-aside">
           <h2 className="text-lg font-semibold tracking-[-0.02em] text-ink">
             Make it comfortable to read
           </h2>
-          <p className="mt-3 text-sm leading-7 text-muted">
+          <p className="mt-2 text-sm leading-6 text-muted">
             Adjust text size, contrast, link underlines and motion on this
             device. These optional preferences supplement the default
             experience.
           </p>
-          <AccessibilityPreferencesButton className="civic-button mt-5 min-h-11 px-5 py-3" />
+          <AccessibilityPreferencesButton className="civic-button mt-4 min-h-11 px-5 py-3" />
         </div>
       </PublicPageIntro>
 
-      <div className="civic-container grid gap-10 py-10 sm:py-14 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-16 lg:py-16">
-        <nav aria-label="On this page" className="min-w-0">
+      <div className="civic-container grid gap-8 py-8 sm:py-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12 lg:py-12">
+        <nav aria-label="On this page" className="accessibility-contents min-w-0">
           <h2 className="civic-eyebrow">On this page</h2>
-          <ul className="mt-4 border-t border-line">
+          <ul className="mt-3 grid grid-cols-2 gap-x-5 border-t border-line lg:block">
             {pageSections.map((section) => (
               <li key={section.id} className="border-b border-line">
                 <a
                   href={`#${section.id}`}
-                  className="civic-link min-h-11 w-full py-3 text-sm"
+                  className="civic-link min-h-11 w-full py-2 text-sm leading-6"
                 >
                   {section.title}
                 </a>

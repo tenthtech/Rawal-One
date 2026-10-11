@@ -112,15 +112,15 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
         title="Services"
         description="Find municipal services, applications, local information and the right pathway for reporting an issue."
       >
-        <div className="border-t-[3px] border-accent bg-surface px-5 py-5 shadow-[0_14px_34px_-30px_rgba(16,55,44,0.45)] sm:px-7 sm:py-6">
+        <div className="public-search-panel">
           <form action="/services" method="get" role="search">
             <label
               htmlFor="services-search"
-              className="block text-base font-semibold tracking-[-0.01em] text-ink"
+              className="block text-sm font-semibold tracking-[-0.01em] text-ink"
             >
               Search services
             </label>
-            <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
+            <div className="mt-2 flex gap-2">
               <div className="relative min-w-0 flex-1">
                 <svg
                   aria-hidden="true"
@@ -141,7 +141,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                   type="search"
                   defaultValue={query}
                   placeholder="Search waste, permits, water, roads..."
-                  className="civic-input search-preview min-h-14 w-full min-w-0 ps-12"
+                  className="civic-input search-preview min-h-12 w-full min-w-0 py-3 ps-12"
                 />
               </div>
               {activeCategory ? (
@@ -151,7 +151,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                   value={activeCategory.slug}
                 />
               ) : null}
-              <button type="submit" className="civic-button min-h-14 px-7">
+              <button type="submit" className="civic-button min-h-12 px-4 py-3 sm:px-6">
                 Search
               </button>
             </div>
@@ -165,7 +165,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
               Clear search
             </Link>
           ) : (
-            <p className="mt-3 text-sm leading-6 text-muted">
+            <p className="mt-2 text-xs leading-5 text-muted">
               Search by service, resident task or a common term such as garbage
               or pothole.
             </p>
@@ -174,24 +174,24 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
       </PublicPageIntro>
 
       <section className="bg-page" aria-label="Services directory">
-        <div className="civic-container grid gap-10 py-10 sm:py-12 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-16 lg:py-16">
+        <div className="civic-container grid gap-6 py-7 sm:py-9 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12 lg:py-10">
           <nav
             aria-labelledby="service-categories-heading"
-            className="min-w-0 border-t-[3px] border-accent pt-5 lg:self-start"
+            className="min-w-0 border-t-2 border-accent pt-3 lg:self-start"
           >
-            <p className="civic-eyebrow">Explore</p>
+            <p className="civic-eyebrow sr-only">Explore</p>
             <h2
               id="service-categories-heading"
-              className="mt-2 text-xl font-semibold tracking-[-0.025em] text-ink"
+              className="text-base font-semibold tracking-[-0.025em] text-ink lg:text-lg"
             >
               Browse by category
             </h2>
-            <ul className="mt-5 flex flex-wrap gap-2 lg:block lg:border-t lg:border-line">
-              <li>
+            <ul className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:block lg:border-t lg:border-line">
+              <li className="min-w-0">
                 <Link
                   href={buildServicesHref({ query })}
                   aria-current={!activeCategory ? "page" : undefined}
-                  className={`inline-flex min-h-11 items-center gap-2 border px-3 py-2 text-sm font-semibold no-underline transition-colors motion-reduce:transition-none lg:flex lg:min-h-12 lg:border-0 lg:border-b lg:border-s-[3px] lg:px-4 ${
+                  className={`flex min-h-11 items-center justify-between gap-2 border px-2.5 py-2 text-[0.8125rem] font-semibold no-underline transition-colors motion-reduce:transition-none lg:min-h-12 lg:justify-start lg:border-0 lg:border-b lg:border-s-[3px] lg:px-4 lg:text-sm ${
                     !activeCategory
                       ? "border-civic bg-civic text-white lg:border-line lg:border-s-accent lg:bg-sage lg:text-civic"
                       : "border-line bg-surface text-ink hover:border-civic hover:bg-sage lg:border-line lg:border-s-transparent lg:bg-transparent lg:hover:border-s-accent lg:hover:bg-surface lg:hover:text-civic"
@@ -205,14 +205,14 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                 const isCurrent = activeCategory?.slug === category.slug;
 
                 return (
-                  <li key={category.slug}>
+                  <li key={category.slug} className="min-w-0">
                     <Link
                       href={buildServicesHref({
                         query,
                         category: category.slug,
                       })}
                       aria-current={isCurrent ? "page" : undefined}
-                      className={`inline-flex min-h-11 items-center gap-2 border px-3 py-2 text-sm font-semibold no-underline transition-colors motion-reduce:transition-none lg:flex lg:min-h-12 lg:border-0 lg:border-b lg:border-s-[3px] lg:px-4 ${
+                      className={`flex min-h-11 items-center justify-between gap-2 border px-2.5 py-2 text-[0.8125rem] font-semibold no-underline transition-colors motion-reduce:transition-none lg:min-h-12 lg:justify-start lg:border-0 lg:border-b lg:border-s-[3px] lg:px-4 lg:text-sm ${
                         isCurrent
                           ? "border-civic bg-civic text-white lg:border-line lg:border-s-accent lg:bg-sage lg:text-civic"
                           : "border-line bg-surface text-ink hover:border-civic hover:bg-sage lg:border-line lg:border-s-transparent lg:bg-transparent lg:hover:border-s-accent lg:hover:bg-surface lg:hover:text-civic"
@@ -228,12 +228,12 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
           </nav>
 
           <section className="min-w-0" aria-labelledby="service-results-heading">
-            <div className="flex flex-col gap-3 border-b-2 border-ink pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+            <div className="flex flex-col gap-2 border-b-2 border-ink pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
               <div>
                 <p className="civic-eyebrow">Directory</p>
                 <h2
                   id="service-results-heading"
-                  className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-ink sm:text-3xl"
+                  className="mt-1 text-2xl font-semibold tracking-[-0.035em] text-ink"
                 >
                   {matchingServices.length === 0
                     ? "No services found"
@@ -265,12 +265,12 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
               <ul className="grid xl:grid-cols-2 xl:gap-x-12">
                 {matchingServices.map((service) => (
                   <li key={service.slug} className="min-w-0 border-b border-line">
-                    <article className="py-6 sm:py-7">
-                      <p className="text-sm font-semibold tracking-[0.08em] text-civic uppercase">
+                    <article className="py-5 sm:py-6">
+                      <p className="text-xs font-semibold tracking-[0.06em] text-civic uppercase">
                         <span className="sr-only">Category: </span>
                         {getServiceCategoryLabel(service.category)}
                       </p>
-                      <h3 className="mt-2 text-xl font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-[1.35rem]">
+                      <h3 className="mt-1.5 text-lg font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-xl">
                         {"detailHref" in service ? (
                           <Link
                             href={service.detailHref}
@@ -288,7 +288,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                           service.title
                         )}
                       </h3>
-                      <p className="mt-2 max-w-2xl leading-7 text-muted">
+                      <p className="mt-1.5 max-w-2xl text-sm leading-6 text-muted">
                         {service.summary}
                       </p>
                     </article>

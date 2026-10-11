@@ -10,14 +10,20 @@ const serviceLinks = [
 ];
 
 const communityLinks = [
-  { href: "/#community", label: "Around the community" },
-  { href: "/notices", label: "News & public notices" },
+  { href: "/#updates", label: "City updates" },
+  { href: "/notices", label: "Public notices" },
+  { href: "/#community", label: "Around Rawalpindi" },
+];
+
+const helpLinks = [
   { href: "/accessibility", label: "Accessibility" },
+  { href: "/#useful-information-heading", label: "Useful information" },
+  { href: "/#about-this-demo", label: "About this demonstration" },
 ];
 
 export function SiteFooter() {
   return (
-    <footer id="about-this-demo" className="site-footer">
+    <footer className="site-footer">
       <div className="civic-container">
         <div className="footer-grid">
           <div className="footer-identity">
@@ -37,13 +43,13 @@ export function SiteFooter() {
               </span>
             </Link>
             <p className="mt-5 max-w-64 text-sm leading-6 text-white/75">
-              Everyday services. Shared spaces.
-              <br />A place to feel connected.
+              Services, local information and shared spaces for the people of
+              Rawalpindi.
             </p>
           </div>
 
           <nav aria-label="Footer services">
-            <h2 className="footer-label">Find what you need</h2>
+            <h2 className="footer-label">Services</h2>
             <ul className="mt-3">
               {serviceLinks.map((item) => (
                 <li key={item.href}>
@@ -56,7 +62,7 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-label="Community information">
-            <h2 className="footer-label">Our community</h2>
+            <h2 className="footer-label">Community</h2>
             <ul className="mt-3">
               {communityLinks.map((item) => (
                 <li key={item.href}>
@@ -68,15 +74,37 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <div className="footer-about">
-            <h2 className="footer-label">Made in Rawalpindi</h2>
-            <p className="mt-4 text-sm leading-6 text-white/75">
-              Rawal One is an internal municipal digital-services R&amp;D
-              demonstration created by Tenth Tech in Rawalpindi, Pakistan. It is
-              not an official government service.
-            </p>
-          </div>
+          <nav aria-label="Footer help">
+            <h2 className="footer-label">Help</h2>
+            <ul className="mt-3">
+              {helpLinks.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="footer-link">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
+
+        <section
+          id="about-this-demo"
+          aria-labelledby="footer-disclosure-heading"
+          className="footer-disclosure"
+        >
+          <h2
+            id="footer-disclosure-heading"
+            className="footer-disclosure-label"
+          >
+            Made in Rawalpindi
+          </h2>
+          <p className="text-sm leading-6 text-white/75">
+            Rawal One is an internal municipal digital-services R&amp;D
+            demonstration created by Tenth Tech in Rawalpindi, Pakistan. It is
+            not an official government service.
+          </p>
+        </section>
 
         <div className="footer-bottom">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-1">

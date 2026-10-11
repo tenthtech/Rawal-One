@@ -27,9 +27,9 @@ export function ServiceNotice({
   return (
     <section
       aria-labelledby="service-notice-heading"
-      className="border border-line bg-surface px-5 py-5 shadow-[0_3px_16px_#173d2c05] sm:px-7 sm:py-6"
+      className="service-advisory"
     >
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(16rem,0.8fr)] lg:items-center lg:gap-10">
+      <div className="service-advisory-layout">
         <div className="flex items-start gap-4">
           <span className="hidden h-11 w-11 shrink-0 items-center justify-center bg-warm text-advisory sm:flex">
             <CivicIcon name="water" className="h-6 w-6" />
@@ -42,12 +42,12 @@ export function ServiceNotice({
               />
               {label}
             </p>
-            <h2
+            <h3
               id="service-notice-heading"
               className="mt-2 text-lg font-semibold leading-6 tracking-[-0.025em] text-ink sm:text-xl"
             >
               {title}
-            </h2>
+            </h3>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
               {description}
             </p>
@@ -58,7 +58,7 @@ export function ServiceNotice({
           </div>
         </div>
 
-        <dl className="grid grid-cols-2 gap-4 border-t border-line pt-4 text-xs lg:border-t-0 lg:border-s lg:py-2 lg:ps-8">
+        <dl className="service-advisory-metadata">
           {metadata.map((item) => (
             <div key={item.label}>
               <dt className="font-medium text-muted">{item.label}</dt>

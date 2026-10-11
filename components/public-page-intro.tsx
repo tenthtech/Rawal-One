@@ -21,14 +21,14 @@ export function PublicPageIntro({
         <div className={children ? "public-intro-grid" : "max-w-4xl"}>
           <div className="min-w-0">
             <p className="civic-eyebrow">{eyebrow}</p>
-            <h1 id={id} className="civic-page-title mt-5">
+            <h1 id={id} className="civic-page-title mt-3">
               {title}
             </h1>
-            <div className="mt-5 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
+            <div className="public-intro-description mt-3 max-w-2xl text-base leading-7 text-muted">
               {description}
             </div>
           </div>
-          {children ? <div className="min-w-0 lg:pt-4">{children}</div> : null}
+          {children ? <div className="min-w-0">{children}</div> : null}
         </div>
       </div>
     </section>

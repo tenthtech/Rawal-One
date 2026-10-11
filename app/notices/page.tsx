@@ -38,9 +38,9 @@ export default async function NoticesPage() {
         title="Public notices"
         description="Read community updates, consultations and public information in this Rawal One demonstration."
       >
-        <aside className="border-s-[3px] border-accent bg-surface px-5 py-5 sm:px-6">
+        <aside className="border-s-2 border-accent py-1 ps-4">
           <p className="civic-eyebrow">About this demonstration</p>
-          <p className="mt-3 max-w-sm text-sm leading-7 text-muted">
+          <p className="mt-2 max-w-sm text-sm leading-6 text-muted">
             These are Tenth Tech R&amp;D examples. They have not been issued by
             a government authority.
           </p>
@@ -48,13 +48,13 @@ export default async function NoticesPage() {
       </PublicPageIntro>
 
       <section className="bg-page" aria-labelledby="published-notices-heading">
-        <div className="civic-container py-10 sm:py-12 lg:py-16">
-          <div className="flex flex-col gap-3 border-b-2 border-ink pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+        <div className="civic-container py-7 sm:py-9 lg:py-10">
+          <div className="flex flex-col gap-2 border-b-2 border-ink pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
             <div>
               <p className="civic-eyebrow">Published information</p>
               <h2
                 id="published-notices-heading"
-                className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-ink sm:text-3xl"
+                className="mt-1 text-2xl font-semibold tracking-[-0.035em] text-ink"
               >
                 Notices
               </h2>
@@ -92,24 +92,30 @@ export default async function NoticesPage() {
                   <li key={notice.id}>
                     <article
                       id={anchor}
-                      className="grid scroll-mt-6 gap-5 py-7 sm:py-8 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-12"
+                      className="grid scroll-mt-6 gap-y-3 py-6 lg:grid-cols-[11.5rem_minmax(0,1fr)] lg:gap-x-10"
                     >
-                      <div className="min-w-0 text-sm">
-                        <p className="font-semibold tracking-[0.08em] text-civic uppercase">
-                          {notice.category}
-                        </p>
-                        <p className="mt-2 inline-flex items-center gap-2 border border-line bg-sage px-2.5 py-1 font-semibold text-civic">
-                          <span
-                            aria-hidden="true"
-                            className="h-1.5 w-1.5 rounded-full bg-civic"
-                          />
-                          <span className="sr-only">Status: </span>
-                          {noticeStatus === "Open" &&
-                          presentation?.openStatusLabel
-                            ? presentation.openStatusLabel
-                            : noticeStatus}
-                        </p>
-                        <dl className="mt-4 grid gap-x-5 gap-y-2 text-sm text-muted sm:grid-cols-2 lg:grid-cols-1">
+                      <h3 className="text-lg font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-xl lg:col-start-2">
+                        {notice.title}
+                      </h3>
+
+                      <div className="min-w-0 text-xs lg:col-start-1 lg:row-start-1 lg:row-span-2">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 lg:block">
+                          <p className="font-semibold tracking-[0.06em] text-civic uppercase">
+                            {notice.category}
+                          </p>
+                          <p className="inline-flex items-center gap-2 border border-line bg-sage px-2.5 py-1 font-semibold text-civic lg:mt-2">
+                            <span
+                              aria-hidden="true"
+                              className="h-1.5 w-1.5 rounded-full bg-civic"
+                            />
+                            <span className="sr-only">Status: </span>
+                            {noticeStatus === "Open" &&
+                            presentation?.openStatusLabel
+                              ? presentation.openStatusLabel
+                              : noticeStatus}
+                          </p>
+                        </div>
+                        <dl className="mt-3 grid grid-cols-2 gap-x-5 gap-y-2 text-xs text-muted lg:grid-cols-1">
                           {notice.published_at ? (
                             <div>
                               <dt className="font-medium">Published</dt>
@@ -133,16 +139,13 @@ export default async function NoticesPage() {
                         </dl>
                       </div>
 
-                      <div className="min-w-0">
-                        <h3 className="text-xl font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-2xl">
-                          {notice.title}
-                        </h3>
-                        <p className="mt-3 max-w-3xl leading-7 text-muted">
+                      <div className="min-w-0 lg:col-start-2">
+                        <p className="max-w-3xl text-sm leading-6 text-muted">
                           {notice.summary}
                         </p>
 
-                        <details className="mt-5 max-w-3xl border-t border-line">
-                          <summary className="min-h-12 cursor-pointer py-3 font-semibold text-civic underline decoration-civic/35 underline-offset-4 marker:text-civic hover:decoration-civic">
+                        <details className="mt-3 max-w-3xl border-t border-line open:bg-sage/40">
+                          <summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold text-civic underline decoration-civic/35 underline-offset-4 marker:text-civic hover:decoration-civic">
                             Read notice details
                             <span className="sr-only"> for {notice.title}</span>
                           </summary>

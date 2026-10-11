@@ -10,10 +10,10 @@ import { CivicIcon } from "@/components/civic-icon";
 
 const navigation = [
   { href: "/services", label: "Services" },
-  { href: "/#community", label: "Community" },
-  { href: "/notices", label: "News & Notices" },
+  { href: "/#updates", label: "Updates" },
+  { href: "/notices", label: "Public notices" },
   { href: "/documents", label: "Documents" },
-  { href: "/#about-this-demo", label: "About" },
+  { href: "/#community", label: "Community" },
 ];
 
 export function SiteHeader() {
@@ -110,7 +110,9 @@ export function SiteHeader() {
             <BrandMark className="site-brand-mark" />
             <span className="min-w-0">
               <span className="site-wordmark">Rawal One</span>
-              <span className="site-tagline">Your city. One place.</span>
+              <span className="site-tagline">
+                Rawalpindi community platform
+              </span>
             </span>
           </Link>
 
@@ -171,16 +173,17 @@ export function SiteHeader() {
           className="mobile-navigation xl:hidden"
         >
           <div className="civic-container py-3 pb-6">
-            <ul>{navigationList(true)}</ul>
-            <AccessibilityPreferencesButton className="a11y-mobile-trigger mt-4 w-full" />
+            <h2 className="mobile-menu-heading">Find your way</h2>
             <Link
               href="/search"
               onClick={() => setMenuOpen(false)}
-              className="mt-5 flex min-h-14 items-center gap-3 bg-sage px-4 text-sm font-semibold text-civic"
+              className="mb-3 flex min-h-14 items-center gap-3 bg-sage px-4 text-sm font-semibold text-civic"
             >
               <CivicIcon name="search" className="h-5 w-5" />
               Search all of Rawal One
             </Link>
+            <ul>{navigationList(true)}</ul>
+            <AccessibilityPreferencesButton className="a11y-mobile-trigger mt-4 w-full" />
           </div>
         </nav>
       </div>

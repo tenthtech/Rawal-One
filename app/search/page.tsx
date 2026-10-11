@@ -86,15 +86,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         title="Search Rawal One"
         description="Find services, documents, notices, community information and current resident updates."
       >
-        <div className="border-t-[3px] border-accent bg-surface px-5 py-5 shadow-[0_14px_34px_-30px_rgba(16,55,44,0.45)] sm:px-7 sm:py-6">
+        <div className="public-search-panel">
           <form action="/search" method="get" role="search">
             <label
               htmlFor="global-search"
-              className="block text-base font-semibold tracking-[-0.01em] text-ink"
+              className="block text-sm font-semibold tracking-[-0.01em] text-ink"
             >
               Search the site
             </label>
-            <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
+            <div className="mt-2 flex gap-2">
               <div className="relative min-w-0 flex-1">
                 <svg
                   aria-hidden="true"
@@ -116,18 +116,18 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   defaultValue={query}
                   maxLength={200}
                   placeholder="Search water, permits, waste, roads..."
-                  className="civic-input search-preview min-h-14 w-full min-w-0 ps-12"
+                  className="civic-input search-preview min-h-12 w-full min-w-0 py-3 ps-12"
                 />
               </div>
               {activeFilter !== "all" ? (
                 <input type="hidden" name="type" value={activeFilter} />
               ) : null}
-              <button type="submit" className="civic-button min-h-14 px-7">
+              <button type="submit" className="civic-button min-h-12 px-4 py-3 sm:px-6">
                 Search
               </button>
             </div>
           </form>
-          <p className="mt-3 text-sm leading-6 text-muted">
+          <p className="mt-2 text-xs leading-5 text-muted">
             Search across resident services and community information.
           </p>
         </div>
@@ -138,7 +138,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           className="bg-page"
           aria-labelledby="search-suggestions-heading"
         >
-          <div className="civic-container grid gap-8 py-10 sm:py-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16 lg:py-16">
+          <div className="civic-container grid gap-6 py-7 sm:py-9 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12 lg:py-10">
             <div>
               <p className="civic-eyebrow">A place to start</p>
               <h2 id="search-suggestions-heading" className="civic-heading mt-2 max-w-lg">
@@ -173,28 +173,28 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </section>
       ) : (
         <div className="bg-page">
-          <div className="civic-container grid gap-10 py-10 sm:py-12 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-16 lg:py-16">
+          <div className="civic-container grid gap-6 py-7 sm:py-9 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12 lg:py-10">
             <nav
-              className="min-w-0 border-t-[3px] border-accent pt-5 lg:self-start"
+              className="min-w-0 border-t-2 border-accent pt-3 lg:self-start"
               aria-labelledby="search-filters-heading"
             >
-              <p className="civic-eyebrow">Refine</p>
+              <p className="civic-eyebrow sr-only">Refine</p>
               <h2
                 id="search-filters-heading"
-                className="mt-2 text-xl font-semibold tracking-[-0.025em] text-ink"
+                className="text-base font-semibold tracking-[-0.025em] text-ink lg:text-lg"
               >
                 Filter by type
               </h2>
-              <ul className="mt-5 flex flex-wrap gap-2 lg:block lg:border-t lg:border-line">
+              <ul className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:block lg:border-t lg:border-line">
                 {searchFilters.map((filter) => {
                   const isCurrent = activeFilter === filter.value;
 
                   return (
-                    <li key={filter.value}>
+                    <li key={filter.value} className="min-w-0">
                       <Link
                         href={buildSearchHref(query, filter.value)}
                         aria-current={isCurrent ? "page" : undefined}
-                        className={`inline-flex min-h-11 items-center gap-2 border px-3 py-2 text-sm font-semibold no-underline transition-colors duration-200 motion-reduce:transition-none lg:flex lg:min-h-12 lg:border-0 lg:border-b lg:border-s-[3px] lg:px-4 ${
+                        className={`flex min-h-11 items-center justify-between gap-2 border px-2.5 py-2 text-[0.8125rem] font-semibold no-underline transition-colors duration-200 motion-reduce:transition-none lg:min-h-12 lg:justify-start lg:border-0 lg:border-b lg:border-s-[3px] lg:px-4 lg:text-sm ${
                           isCurrent
                             ? "border-civic bg-civic text-white lg:border-line lg:border-s-accent lg:bg-sage lg:text-civic"
                             : "border-line bg-surface text-ink hover:border-civic hover:bg-sage lg:border-line lg:border-s-transparent lg:bg-transparent lg:hover:border-s-accent lg:hover:bg-surface lg:hover:text-civic"
@@ -210,12 +210,12 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             </nav>
 
             <section className="min-w-0" aria-labelledby="search-results-heading">
-              <div className="flex flex-col gap-3 border-b-2 border-ink pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+              <div className="flex flex-col gap-2 border-b-2 border-ink pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
                 <div>
                   <p className="civic-eyebrow">Matches</p>
                   <h2
                     id="search-results-heading"
-                    className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-ink sm:text-3xl"
+                    className="mt-1 text-2xl font-semibold tracking-[-0.035em] text-ink"
                   >
                     {results.length === 0 ? "No results found" : "Search results"}
                   </h2>
@@ -261,9 +261,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 <ol className="divide-y divide-line border-b border-b-line">
                   {results.map((result) => (
                     <li key={result.id} className="min-w-0">
-                      <article className="py-6 sm:py-7">
-                        <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-sm [overflow-wrap:anywhere]">
-                          <p className="font-semibold tracking-[0.08em] text-civic uppercase">{result.typeLabel}</p>
+                      <article className="py-5 sm:py-6">
+                        <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-xs [overflow-wrap:anywhere]">
+                          <p className="font-semibold tracking-[0.06em] text-civic uppercase">{result.typeLabel}</p>
                           {result.category ? (
                             <>
                               <span className="text-line" aria-hidden="true">
@@ -283,7 +283,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                             </>
                           ) : null}
                         </div>
-                        <h3 className="mt-2 text-xl font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-[1.35rem]">
+                        <h3 className="mt-1.5 text-lg font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-xl">
                           <Link
                             href={result.href}
                             className="group inline-flex min-h-11 max-w-full items-center gap-3 text-civic underline decoration-civic/35 underline-offset-4 [overflow-wrap:anywhere] hover:decoration-civic"
@@ -297,7 +297,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                             </span>
                           </Link>
                         </h3>
-                        <p className="mt-2 max-w-3xl leading-7 text-muted [overflow-wrap:anywhere]">
+                        <p className="mt-1.5 max-w-3xl text-sm leading-6 text-muted [overflow-wrap:anywhere]">
                           {result.summary}
                         </p>
                       </article>

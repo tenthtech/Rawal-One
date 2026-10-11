@@ -58,30 +58,16 @@ export default function WaterServiceInterruptionsPage() {
           eyebrow={service.category}
           title={service.title}
           description={service.summary}
-        >
-          <div className="border-s-[3px] border-accent ps-5">
-            <p className="civic-eyebrow">Explore the category</p>
-            <p className="mt-2 max-w-xs text-base leading-7 text-muted">
-              Find other water and sewer guidance in the services directory.
-            </p>
-            <Link
-              href={service.categoryHref}
-              className="civic-link mt-3 inline-flex min-h-11 items-center gap-2 font-semibold"
-            >
-              Browse {service.category.toLowerCase()} services
-              <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </PublicPageIntro>
+        />
 
         <div className="bg-page">
-          <div className="civic-container py-10 sm:py-14">
-            <section
-              aria-labelledby="current-status-heading"
-              className="border border-line bg-surface shadow-[0_12px_28px_-28px_rgba(16,55,44,0.4)]"
-            >
-              <div className="grid lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
-                <div className="border-s-4 border-advisory bg-warm/55 px-5 py-7 sm:px-8 sm:py-8">
+          <div className="civic-container py-8 sm:py-10">
+            <div className="water-status-actions grid min-w-0 items-start gap-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-10">
+              <section
+                aria-labelledby="current-status-heading"
+                className="border border-line bg-surface"
+              >
+                <div className="border-s-4 border-advisory bg-warm/55 px-5 py-6 sm:px-7 sm:py-7">
                   <p className="inline-flex items-center gap-2 border border-advisory/30 bg-surface px-3 py-1 text-sm font-semibold tracking-[0.08em] text-advisory uppercase">
                     <span aria-hidden="true" className="h-2 w-2 rounded-full bg-advisory" />
                     {service.status.type}
@@ -99,110 +85,80 @@ export default function WaterServiceInterruptionsPage() {
                     {service.status.description}
                   </p>
                 </div>
+              </section>
 
-                <dl className="grid gap-x-8 gap-y-6 border-t border-line p-5 sm:grid-cols-2 sm:p-8 lg:border-t-0">
-                  <div>
-                    <dt className="text-sm font-semibold tracking-[0.06em] text-civic uppercase">Affected area</dt>
-                    <dd className="mt-2 leading-7 text-ink">
-                      {service.status.affectedArea}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-sm font-semibold tracking-[0.06em] text-civic uppercase">Maintenance window</dt>
-                    <dd className="mt-2 leading-7 text-ink">
-                      <time dateTime={service.status.maintenanceStart.dateTime}>
-                        {service.status.maintenanceStart.label}
-                      </time>
-                      {" – "}
-                      <time dateTime={service.status.maintenanceEnd.dateTime}>
-                        {service.status.maintenanceEnd.label}
-                      </time>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-sm font-semibold tracking-[0.06em] text-civic uppercase">Expected impact</dt>
-                    <dd className="mt-2 leading-7 text-ink">
-                      {service.status.impact}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-sm font-semibold tracking-[0.06em] text-civic uppercase">Last updated</dt>
-                    <dd className="mt-2 leading-7 text-ink">
-                      <time dateTime={service.status.lastUpdated.dateTime}>
-                        {service.status.lastUpdated.label}
-                      </time>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
+              <section aria-labelledby="resident-actions-heading">
+                <p className="civic-eyebrow">Resident guidance</p>
+                <h2
+                  id="resident-actions-heading"
+                  className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-ink sm:text-3xl"
+                >
+                  What you should do
+                </h2>
+                <ol className="mt-6 divide-y divide-line border-t-2 border-ink border-b border-b-line">
+                  {service.immediateActions.map((action, index) => (
+                    <li
+                      key={action}
+                      className="grid grid-cols-[2.75rem_minmax(0,1fr)] items-start gap-4 py-4 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-5"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="text-2xl font-semibold leading-7 tracking-[-0.06em] text-civic"
+                      >
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <p className="max-w-2xl leading-7 text-ink">{action}</p>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            </div>
+
+            <section
+              aria-label="Service advisory details"
+              className="water-status-context mt-7 border-y border-line bg-surface"
+            >
+              <dl className="grid gap-x-8 gap-y-5 p-5 sm:grid-cols-2 sm:p-7 lg:grid-cols-4">
+                <div>
+                  <dt className="text-sm font-semibold tracking-[0.06em] text-civic uppercase">Affected area</dt>
+                  <dd className="mt-2 leading-7 text-ink">
+                    {service.status.affectedArea}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-semibold tracking-[0.06em] text-civic uppercase">Maintenance window</dt>
+                  <dd className="mt-2 leading-7 text-ink">
+                    <time dateTime={service.status.maintenanceStart.dateTime}>
+                      {service.status.maintenanceStart.label}
+                    </time>
+                    {" – "}
+                    <time dateTime={service.status.maintenanceEnd.dateTime}>
+                      {service.status.maintenanceEnd.label}
+                    </time>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-semibold tracking-[0.06em] text-civic uppercase">Expected impact</dt>
+                  <dd className="mt-2 leading-7 text-ink">
+                    {service.status.impact}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-semibold tracking-[0.06em] text-civic uppercase">Last updated</dt>
+                  <dd className="mt-2 leading-7 text-ink">
+                    <time dateTime={service.status.lastUpdated.dateTime}>
+                      {service.status.lastUpdated.label}
+                    </time>
+                  </dd>
+                </div>
+              </dl>
             </section>
 
-            <div className="mt-12 grid min-w-0 gap-12 sm:mt-16 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+            <div className="water-guidance-layout mt-10 min-w-0 sm:mt-12">
               <div className="min-w-0">
-                <section aria-labelledby="resident-actions-heading">
-                  <p className="civic-eyebrow">Resident guidance</p>
-                  <h2
-                    id="resident-actions-heading"
-                    className="civic-heading mt-2"
-                  >
-                    What you should do
-                  </h2>
-                  <ol className="mt-6 divide-y divide-line border-t-2 border-ink border-b border-b-line">
-                    {service.immediateActions.map((action, index) => (
-                      <li
-                        key={action}
-                        className="grid grid-cols-[2.75rem_minmax(0,1fr)] items-start gap-4 py-5 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-5"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="text-2xl font-semibold leading-7 tracking-[-0.06em] text-civic"
-                        >
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <p className="max-w-2xl leading-7 text-ink">{action}</p>
-                      </li>
-                    ))}
-                  </ol>
-                </section>
-
-                <section
-                  aria-labelledby="help-pathways-heading"
-                  className="mt-14 border-t border-line pt-10"
-                >
-                  <h2
-                    id="help-pathways-heading"
-                    className="civic-heading"
-                  >
-                    Service help pathways
-                  </h2>
-                  <ul className="mt-6 divide-y divide-line border-t-2 border-ink border-b border-b-line">
-                    {service.helpPathways.map((pathway) => (
-                      <li key={pathway.title}>
-                        <article className="grid gap-3 py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-8">
-                          <div>
-                            <h3 className="text-xl font-semibold tracking-[-0.025em] text-ink">
-                              {pathway.title}
-                            </h3>
-                            <p className="mt-2 max-w-2xl leading-7 text-muted">
-                              {pathway.description}
-                            </p>
-                          </div>
-                          <Link
-                            href={pathway.href}
-                            className="civic-link group inline-flex min-h-11 items-center gap-2 font-semibold"
-                          >
-                            {pathway.linkLabel}
-                            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none">→</span>
-                          </Link>
-                        </article>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-
                 <section
                   aria-labelledby="interruption-types-heading"
-                  className="mt-14 border-t border-line pt-10"
+                  className="min-w-0"
                 >
                   <h2
                     id="interruption-types-heading"
@@ -233,7 +189,7 @@ export default function WaterServiceInterruptionsPage() {
 
                 <section
                   aria-labelledby="interruption-guidance-heading"
-                  className="mt-14 border-t border-line pt-10"
+                  className="mt-10 border-t border-line pt-8 sm:mt-12 sm:pt-10"
                 >
                   <h2
                     id="interruption-guidance-heading"
@@ -268,7 +224,7 @@ export default function WaterServiceInterruptionsPage() {
 
                 <section
                   aria-labelledby="faq-heading"
-                  className="mt-14 border-t border-line pt-10"
+                  className="mt-10 border-t border-line pt-8 sm:mt-12 sm:pt-10"
                 >
                   <h2
                     id="faq-heading"
@@ -295,69 +251,119 @@ export default function WaterServiceInterruptionsPage() {
                 </section>
               </div>
 
-              <aside className="min-w-0" aria-label="Service support and related services">
+              <div className="mt-12 grid min-w-0 gap-9 border-t border-line pt-8 sm:mt-14 sm:pt-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-12">
                 <section
-                  id="service-support"
-                  aria-labelledby="service-support-heading"
-                  className="scroll-mt-6 border-t-[3px] border-accent bg-civic-deep px-6 py-7 text-white sm:px-7"
-                >
-                  <p className="text-xs font-semibold tracking-[0.12em] text-warm uppercase">
-                    Service support
-                  </p>
-                  <h2
-                    id="service-support-heading"
-                    className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white"
-                  >
-                    {service.support.title}
-                  </h2>
-                  <dl className="mt-6 space-y-5 border-t border-white/25 pt-5 text-sm">
-                    <div>
-                      <dt className="font-semibold text-white">Service area</dt>
-                      <dd className="mt-1 leading-6 text-white/80">
-                        {service.support.serviceArea}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className="font-semibold text-white">Hours</dt>
-                      <dd className="mt-1 leading-6 text-white/80">
-                        {service.support.hours}
-                      </dd>
-                    </div>
-                  </dl>
-                  <Link
-                    href={service.support.href}
-                    className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-white underline decoration-warm/60 underline-offset-4 hover:decoration-white"
-                  >
-                    {service.support.linkLabel}
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </section>
-
-                <section
-                  aria-labelledby="related-services-heading"
-                  className="mt-5 border-t-[3px] border-accent bg-surface px-6 py-7 sm:px-7"
+                  aria-labelledby="help-pathways-heading"
+                  className="min-w-0"
                 >
                   <h2
-                    id="related-services-heading"
-                    className="text-xl font-semibold tracking-[-0.03em] text-ink"
+                    id="help-pathways-heading"
+                    className="civic-heading"
                   >
-                    Related services
+                    Service help pathways
                   </h2>
-                  <ul className="mt-5 divide-y divide-line border-t border-line">
-                    {service.relatedServices.map((relatedService) => (
-                      <li key={relatedService.label}>
-                        <Link
-                          href={relatedService.href}
-                          className="group flex min-h-14 items-center justify-between gap-4 py-3 font-semibold text-civic underline decoration-civic/30 underline-offset-4 hover:decoration-civic"
-                        >
-                          <span>{relatedService.label}</span>
-                          <span aria-hidden="true" className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none">→</span>
-                        </Link>
+                  <ul className="mt-6 divide-y divide-line border-t-2 border-ink border-b border-b-line">
+                    {service.helpPathways.map((pathway) => (
+                      <li key={pathway.title}>
+                        <article className="grid gap-3 py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-8">
+                          <div>
+                            <h3 className="text-xl font-semibold tracking-[-0.025em] text-ink">
+                              {pathway.title}
+                            </h3>
+                            <p className="mt-2 max-w-2xl leading-7 text-muted">
+                              {pathway.description}
+                            </p>
+                          </div>
+                          <Link
+                            href={pathway.href}
+                            className="civic-link group inline-flex min-h-11 items-center gap-2 font-semibold"
+                          >
+                            {pathway.linkLabel}
+                            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none">→</span>
+                          </Link>
+                        </article>
                       </li>
                     ))}
                   </ul>
                 </section>
-              </aside>
+
+                <aside className="min-w-0" aria-label="Service support and related services">
+                  <section
+                    id="service-support"
+                    aria-labelledby="service-support-heading"
+                    className="scroll-mt-6 border-t-[3px] border-accent bg-civic-deep px-6 py-7 text-white sm:px-7"
+                  >
+                    <p className="text-xs font-semibold tracking-[0.12em] text-warm uppercase">
+                      Service support
+                    </p>
+                    <h2
+                      id="service-support-heading"
+                      className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white"
+                    >
+                      {service.support.title}
+                    </h2>
+                    <dl className="mt-6 space-y-5 border-t border-white/25 pt-5 text-sm">
+                      <div>
+                        <dt className="font-semibold text-white">Service area</dt>
+                        <dd className="mt-1 leading-6 text-white/80">
+                          {service.support.serviceArea}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="font-semibold text-white">Hours</dt>
+                        <dd className="mt-1 leading-6 text-white/80">
+                          {service.support.hours}
+                        </dd>
+                      </div>
+                    </dl>
+                    <Link
+                      href={service.support.href}
+                      className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-white underline decoration-warm/60 underline-offset-4 hover:decoration-white"
+                    >
+                      {service.support.linkLabel}
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  </section>
+
+                  <section
+                    aria-labelledby="related-services-heading"
+                    className="mt-5 border-t-[3px] border-accent bg-surface px-6 py-7 sm:px-7"
+                  >
+                    <h2
+                      id="related-services-heading"
+                      className="text-xl font-semibold tracking-[-0.03em] text-ink"
+                    >
+                      Related services
+                    </h2>
+                    <ul className="mt-5 divide-y divide-line border-t border-line">
+                      {service.relatedServices.map((relatedService) => (
+                        <li key={relatedService.label}>
+                          <Link
+                            href={relatedService.href}
+                            className="group flex min-h-14 items-center justify-between gap-4 py-3 font-semibold text-civic underline decoration-civic/30 underline-offset-4 hover:decoration-civic"
+                          >
+                            <span>{relatedService.label}</span>
+                            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none">→</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-6 border-t border-line pt-5">
+                      <p className="civic-eyebrow">Explore the category</p>
+                      <p className="mt-2 max-w-xs text-base leading-7 text-muted">
+                        Find other water and sewer guidance in the services directory.
+                      </p>
+                      <Link
+                        href={service.categoryHref}
+                        className="civic-link mt-3 inline-flex min-h-11 items-center gap-2 font-semibold"
+                      >
+                        Browse {service.category.toLowerCase()} services
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  </section>
+                </aside>
+              </div>
             </div>
 
             <footer className="mt-14 flex flex-col gap-2 border-t border-line pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:gap-8">

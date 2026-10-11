@@ -94,15 +94,15 @@ export default async function DocumentsPage({
         title="Documents & forms"
         description="Find commonly used forms, guides, notices and municipal reference documents."
       >
-        <div className="border-t-[3px] border-accent bg-surface px-5 py-5 shadow-[0_14px_34px_-30px_rgba(16,55,44,0.45)] sm:px-7 sm:py-6">
+        <div className="public-search-panel">
           <form action="/documents" method="get" role="search">
             <label
               htmlFor="documents-search"
-              className="block text-base font-semibold tracking-[-0.01em] text-ink"
+              className="block text-sm font-semibold tracking-[-0.01em] text-ink"
             >
               Search documents
             </label>
-            <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
+            <div className="mt-2 flex gap-2">
               <div className="relative min-w-0 flex-1">
                 <svg
                   aria-hidden="true"
@@ -124,10 +124,10 @@ export default async function DocumentsPage({
                   defaultValue={query}
                   maxLength={200}
                   placeholder="Search forms, permits, waste, water..."
-                  className="civic-input search-preview min-h-14 w-full min-w-0 ps-12"
+                  className="civic-input search-preview min-h-12 w-full min-w-0 py-3 ps-12"
                 />
               </div>
-              <button type="submit" className="civic-button min-h-14 px-7">
+              <button type="submit" className="civic-button min-h-12 px-4 py-3 sm:px-6">
                 Search
               </button>
             </div>
@@ -139,7 +139,7 @@ export default async function DocumentsPage({
                 Clear search
               </Link>
             ) : (
-              <p className="mt-3 text-sm leading-6 text-muted">
+              <p className="mt-2 text-xs leading-5 text-muted">
                 Search by document title, topic, category or a common resident
                 term.
               </p>
@@ -149,13 +149,13 @@ export default async function DocumentsPage({
       </PublicPageIntro>
 
       <section className="bg-page" aria-labelledby="documents-results-heading">
-        <div className="civic-container py-10 sm:py-12 lg:py-16">
-          <div className="flex flex-col gap-3 border-b-2 border-ink pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+        <div className="civic-container py-7 sm:py-9 lg:py-10">
+          <div className="flex flex-col gap-2 border-b-2 border-ink pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
             <div>
               <p className="civic-eyebrow">Resource library</p>
               <h2
                 id="documents-results-heading"
-                className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-ink sm:text-3xl"
+                className="mt-1 text-2xl font-semibold tracking-[-0.035em] text-ink"
               >
                 {matchingDocuments.length === 0
                   ? "No documents found"
@@ -199,10 +199,10 @@ export default async function DocumentsPage({
                   key={document.id}
                   className="scroll-mt-6"
                 >
-                  <article className="grid min-w-0 grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4 gap-y-3 py-6 sm:grid-cols-[3.25rem_minmax(0,1fr)] sm:gap-x-5 sm:py-7 lg:grid-cols-[3.25rem_minmax(0,1fr)_auto] lg:items-center lg:gap-x-8">
+                  <article className="grid min-w-0 gap-x-5 gap-y-2 py-5 sm:grid-cols-[3rem_minmax(0,1fr)] sm:py-6 lg:grid-cols-[3rem_minmax(0,1fr)_auto] lg:items-center lg:gap-x-8">
                     <div
                       aria-hidden="true"
-                      className="flex h-11 w-11 items-center justify-center border border-line bg-sage text-civic sm:h-13 sm:w-13"
+                      className="hidden h-12 w-12 items-center justify-center border border-line bg-sage text-civic sm:flex"
                     >
                       <svg
                         viewBox="0 0 24 24"
@@ -219,7 +219,10 @@ export default async function DocumentsPage({
                       </svg>
                     </div>
                     <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm [overflow-wrap:anywhere]">
+                      <h3 className="text-lg font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-xl">
+                        {document.title}
+                      </h3>
+                      <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs [overflow-wrap:anywhere]">
                         <p className="border border-line bg-surface px-2 py-0.5 text-xs font-semibold tracking-[0.08em] text-civic uppercase">
                           {document.document_type}
                         </p>
@@ -236,14 +239,11 @@ export default async function DocumentsPage({
                           </time>
                         </p>
                       </div>
-                      <h3 className="mt-3 text-xl font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-[1.35rem]">
-                        {document.title}
-                      </h3>
-                      <p className="mt-2 max-w-2xl leading-7 text-muted">
+                      <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
                         {document.description}
                       </p>
                     </div>
-                    <div className="col-start-2 flex flex-wrap items-center gap-x-5 gap-y-1 lg:col-start-auto lg:justify-self-end">
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-1 sm:col-start-2 lg:col-start-auto lg:justify-self-end">
                       <a
                         href={document.file_url}
                         target="_blank"

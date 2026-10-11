@@ -119,14 +119,14 @@ export default async function HomePage() {
       <section className="home-hero" aria-labelledby="help-heading">
         <div className="civic-container hero-grid">
           <div className="hero-content">
-            <p className="civic-eyebrow">For the place we call home</p>
+            <p className="civic-eyebrow">Rawalpindi · Community services</p>
             <h1 id="help-heading" className="hero-title">
               What can we
               <br className="hidden lg:block" /> help you with?
             </h1>
             <p className="hero-description">
-              Find a service, solve an everyday problem, or see what’s happening
-              in your neighbourhood.
+              Find services, local information, public notices and community
+              updates in one place.
             </p>
 
             <form
@@ -139,7 +139,7 @@ export default async function HomePage() {
                 htmlFor="global-search"
                 className="mb-3 block text-sm font-semibold text-ink"
               >
-                Search Rawal One
+                Find what you need
               </label>
               <div className="hero-search-control">
                 <CivicIcon name="search" className="hero-search-icon" />
@@ -162,7 +162,7 @@ export default async function HomePage() {
               aria-label="Common resident tasks"
               className="hero-quick-actions"
             >
-              <p className="text-xs font-medium text-muted">Common tasks</p>
+              <p className="text-xs font-medium text-muted">Everyday tasks</p>
               <ul>
                 {quickActions.map((action) => (
                   <li key={action.href}>
@@ -183,21 +183,18 @@ export default async function HomePage() {
                 alt="People walking between shops and market stalls beneath colourful evening lights in Lalkurti, Rawalpindi"
                 width={1920}
                 height={1920}
-                priority
+                preload
                 sizes="(min-width: 1280px) 492px, (min-width: 1024px) 43vw, (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
               />
             </div>
             <figcaption>
               <span className="photo-caption-rule" aria-hidden="true" />
               <span>
-                <strong>The life of our streets</strong>
-                <span>An evening in Lalkurti, Rawalpindi.</span>
+                <strong>Lalkurti, Rawalpindi</strong>
+                <span>Shops, streets and everyday life.</span>
               </span>
             </figcaption>
           </figure>
-        </div>
-        <div className="civic-container pb-8 sm:pb-12">
-          <ServiceNotice {...serviceNotice} />
         </div>
       </section>
 
@@ -210,11 +207,11 @@ export default async function HomePage() {
             <div>
               <p className="civic-eyebrow">Everyday essentials</p>
               <h2 id="popular-services-heading" className="civic-heading mt-4">
-                Popular services
+                Most-used services
               </h2>
             </div>
             <Link href="/services" className="civic-link">
-              Explore all services <CivicIcon name="arrow" />
+              Find a service <CivicIcon name="arrow" />
             </Link>
           </div>
           <ul className="popular-service-grid">
@@ -241,6 +238,24 @@ export default async function HomePage() {
       </section>
 
       <section
+        className="home-service-information"
+        aria-labelledby="service-information-heading"
+      >
+        <div className="civic-container service-information-grid">
+          <div className="service-information-intro">
+            <p className="civic-eyebrow">Before you set out</p>
+            <h2 id="service-information-heading" className="service-information-title">
+              Current service information
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              Planned work and routine changes that may affect your day.
+            </p>
+          </div>
+          <ServiceNotice {...serviceNotice} />
+        </div>
+      </section>
+
+      <section
         className="resident-action-band"
         aria-labelledby="report-problem-heading"
       >
@@ -251,11 +266,11 @@ export default async function HomePage() {
               id="report-problem-heading"
               className="civic-heading mt-4 text-white"
             >
-              Report a<br className="hidden lg:block" /> local problem
+              Report a local problem
             </h2>
             <p className="mt-5 max-w-sm text-sm leading-7 text-white/75">
-              Something in your neighbourhood needs attention? Find the right
-              place to start.
+              A pothole, a broken streetlight or a missed collection? Find the
+              right service and what to do next.
             </p>
           </div>
           <ul className="problem-pathways">
@@ -290,13 +305,13 @@ export default async function HomePage() {
         <div className="civic-container">
           <div className="section-heading-row">
             <div>
-              <p className="civic-eyebrow">Keep in the know</p>
+              <p className="civic-eyebrow">In your city</p>
               <h2 id="updates-heading" className="civic-heading mt-4">
-                City updates
+                Latest from Rawalpindi
               </h2>
             </div>
             <Link href="/notices" className="civic-link">
-              All public notices <CivicIcon name="arrow" />
+              View public notices <CivicIcon name="arrow" />
             </Link>
           </div>
           {featuredUpdate ? (
@@ -373,8 +388,9 @@ export default async function HomePage() {
               ) : null}
             </div>
           ) : (
-            <div className="featured-update">
+            <div className="civic-empty-state">
               <h3>No city updates are published at this time.</h3>
+              <p>Find current guidance in service information and public notices.</p>
             </div>
           )}
         </div>
@@ -394,19 +410,15 @@ export default async function HomePage() {
               height={1500}
               sizes="(min-width: 1280px) 556px, (min-width: 1024px) 46vw, (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
             />
-            <figcaption>
-              Room to pause. The lake at Ayub Park, Rawalpindi.
-            </figcaption>
+            <figcaption>Ayub Park, Rawalpindi · A shared place to pause.</figcaption>
           </figure>
           <div className="community-content">
-            <p className="civic-eyebrow">Life beyond the everyday</p>
+            <p className="civic-eyebrow">Our shared spaces</p>
             <h2 id="community-heading" className="civic-heading mt-4">
-              Around the
-              <br className="hidden lg:block" /> community
+              Around Rawalpindi
             </h2>
             <p className="mt-5 max-w-lg text-base leading-7 text-muted">
-              Neighbourhood activities and shared spaces are part of what makes
-              a city feel like home.
+              Community activities and upcoming events across the city.
             </p>
             {communityEvents.length > 0 ? (
               <ul className="community-events">
@@ -427,6 +439,9 @@ export default async function HomePage() {
                           <h3 className="text-lg font-semibold leading-6 tracking-[-0.02em] text-ink">
                             {event.title}
                           </h3>
+                          {event.location ? (
+                            <p className="community-event-location">{event.location}</p>
+                          ) : null}
                           <p className="mt-2 text-sm leading-6 text-muted">
                             {event.summary}
                           </p>
@@ -441,11 +456,15 @@ export default async function HomePage() {
                 There are no upcoming community events at this time.
               </p>
             )}
+            <Link href="/services?category=community-services" className="civic-link mt-4">
+              Find community services <CivicIcon name="arrow" />
+            </Link>
           </div>
         </div>
       </section>
 
       <section
+        id="useful-information"
         className="home-utility"
         aria-labelledby="useful-information-heading"
       >
@@ -456,7 +475,7 @@ export default async function HomePage() {
               id="useful-information-heading"
               className="mt-4 text-[1.75rem] font-semibold leading-tight tracking-[-0.035em] text-ink"
             >
-              Useful information
+              Documents & useful information
             </h2>
           </div>
           <ul>
