@@ -72,13 +72,29 @@ export default function ImageCreditsPage() {
                   {photo.title}
                 </h2>
                 <p className="mt-3 text-sm leading-7 text-muted">
-                  Photograph by <a href={photo.creatorUrl}>{photo.creator}</a>,{" "}
+                  Photograph by{" "}
+                  <a
+                    href={photo.creatorUrl}
+                    className="font-semibold text-civic underline underline-offset-4"
+                  >
+                    {photo.creator}
+                  </a>,{" "}
                   {photo.date}. Used in the {photo.usage.toLowerCase()}.
                 </p>
                 <p className="mt-2 text-sm leading-7">
-                  <a href={photo.source}>Original on Wikimedia Commons</a>
+                  <a
+                    href={photo.source}
+                    className="font-semibold text-civic underline underline-offset-4"
+                  >
+                    Original on Wikimedia Commons
+                  </a>
                   {" · "}
-                  <a href={photo.licenceUrl}>{photo.licence}</a>
+                  <a
+                    href={photo.licenceUrl}
+                    className="font-semibold text-civic underline underline-offset-4"
+                  >
+                    {photo.licence}
+                  </a>
                 </p>
                 <p className="mt-3 max-w-2xl text-sm leading-7 text-muted">
                   Resized and converted to WebP; cropped to fit the page at

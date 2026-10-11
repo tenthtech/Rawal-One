@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { AccessibilityPreferencesButton } from "@/components/accessibility-preferences";
 import { BrandMark } from "@/components/brand-mark";
 import { CivicIcon } from "@/components/civic-icon";
 
@@ -25,6 +26,8 @@ export function SiteHeader() {
     if (!menuOpen) return;
 
     function closeOnEscape(event: KeyboardEvent) {
+      if (event.defaultPrevented || document.querySelector("dialog[open]")) return;
+
       if (event.key === "Escape") {
         setMenuOpen(false);
         menuButtonRef.current?.focus();
@@ -32,6 +35,8 @@ export function SiteHeader() {
     }
 
     function closeOnOutsidePress(event: PointerEvent) {
+      if (document.querySelector("dialog[open]")) return;
+
       if (
         event.target instanceof Node &&
         !headerRef.current?.contains(event.target)
@@ -87,12 +92,15 @@ export function SiteHeader() {
             <span aria-hidden="true" className="h-1 w-1 bg-[#d8b679]" />
             Rawalpindi, Pakistan
           </p>
-          <p className="text-white/80">
-            <span className="sm:hidden">R&amp;D demo</span>
-            <span className="hidden sm:inline">
-              Tenth Tech R&amp;D demonstration
-            </span>
-          </p>
+          <div className="flex items-center gap-5">
+            <p className="text-white/80">
+              <span className="sm:hidden">R&amp;D demo</span>
+              <span className="hidden sm:inline">
+                Tenth Tech R&amp;D demonstration
+              </span>
+            </p>
+            <AccessibilityPreferencesButton className="a11y-utility-trigger hidden xl:inline-flex" />
+          </div>
         </div>
       </div>
 
@@ -106,7 +114,10 @@ export function SiteHeader() {
             </span>
           </Link>
 
-          <nav aria-label="Primary navigation" className="hidden xl:block">
+          <nav
+            aria-label="Primary navigation"
+            className="public-desktop-navigation hidden xl:block"
+          >
             <ul className="flex items-center gap-7">{navigationList(false)}</ul>
           </nav>
 
@@ -124,7 +135,7 @@ export function SiteHeader() {
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
               onClick={() => setMenuOpen((open) => !open)}
-              className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-civic bg-surface px-3 text-sm font-semibold text-civic transition-colors duration-200 hover:bg-sage xl:hidden"
+              className="public-menu-toggle inline-flex min-h-11 items-center gap-2 rounded-sm border border-civic bg-surface px-3 text-sm font-semibold text-civic transition-colors duration-200 hover:bg-sage xl:hidden"
             >
               <span>{menuOpen ? "Close" : "Menu"}</span>
               <svg
@@ -161,6 +172,7 @@ export function SiteHeader() {
         >
           <div className="civic-container py-3 pb-6">
             <ul>{navigationList(true)}</ul>
+            <AccessibilityPreferencesButton className="a11y-mobile-trigger mt-4 w-full" />
             <Link
               href="/search"
               onClick={() => setMenuOpen(false)}

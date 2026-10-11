@@ -12,7 +12,7 @@ const serviceLinks = [
 const communityLinks = [
   { href: "/#community", label: "Around the community" },
   { href: "/notices", label: "News & public notices" },
-  { href: "/documents?q=accessibility", label: "Accessibility statement" },
+  { href: "/accessibility", label: "Accessibility" },
 ];
 
 export function SiteFooter() {

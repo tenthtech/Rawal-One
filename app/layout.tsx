@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
 import { ApplicationFrame } from "@/components/application-frame";
+import { ACCESSIBILITY_PREFERENCES_SCRIPT } from "@/lib/accessibility-preferences";
 
 import "./globals.css";
 
@@ -30,7 +31,13 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          id="rawal-one-accessibility-preferences"
+          dangerouslySetInnerHTML={{ __html: ACCESSIBILITY_PREFERENCES_SCRIPT }}
+        />
+      </head>
       <body
         className={`${publicSans.variable} flex min-h-screen flex-col antialiased`}
       >

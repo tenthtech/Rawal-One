@@ -1,14 +1,20 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useLayoutEffect } from "react";
 import type { ReactNode } from "react";
 
+import { AccessibilityPreferencesProvider } from "@/components/accessibility-preferences";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export function ApplicationFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const isAdminRoute = pathname.startsWith("/admin");
+  const isAdminRoute = /^\/admin(?:\/|$)/.test(pathname);
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.site = isAdminRoute ? "admin" : "public";
+  }, [isAdminRoute]);
 
   if (isAdminRoute) {
     return (
@@ -28,7 +34,7 @@ export function ApplicationFrame({ children }: { children: ReactNode }) {
   }
 
   return (
-    <>
+    <AccessibilityPreferencesProvider>
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
@@ -37,6 +43,6 @@ export function ApplicationFrame({ children }: { children: ReactNode }) {
         {children}
       </main>
       <SiteFooter />
-    </>
+    </AccessibilityPreferencesProvider>
   );
 }
