@@ -75,20 +75,20 @@ export const problemPathways: ProblemPathway[] = [
   {
     title: "Road or pothole issue",
     description: "Find help with damaged roads and street surfaces.",
-    href: "/services?q=pothole&category=roads-streets",
-    linkLabel: "Find road and pothole services",
+    href: "/services/report-pothole-road-issue",
+    linkLabel: "Read road issue guidance",
   },
   {
     title: "Streetlight problem",
     description: "Find the right service for a faulty streetlight.",
-    href: "/services?q=streetlight&category=roads-streets",
-    linkLabel: "Find streetlight services",
+    href: "/services/report-streetlight-problem",
+    linkLabel: "Read streetlight guidance",
   },
   {
     title: "Missed waste collection",
     description: "Get guidance when a scheduled pickup is missed.",
-    href: "/services?q=missed%20collection&category=waste-recycling",
-    linkLabel: "Find waste collection services",
+    href: "/services/missed-waste-collection",
+    linkLabel: "Read missed collection guidance",
   },
 ];
 

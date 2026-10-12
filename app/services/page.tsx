@@ -80,7 +80,7 @@ function getResultStatus(
   return `${count} ${serviceLabel}`;
 }
 
-function filterServices(query: string, category: ServiceCategorySlug | undefined) {
+function filterServices(query: string, category: ServiceCategorySlug | undefined): ServiceRecord[] {
   const searchTerms = normalizeSearchText(query).split(" ").filter(Boolean);
 
   return services.filter((service) => {
@@ -271,7 +271,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                         {getServiceCategoryLabel(service.category)}
                       </p>
                       <h3 className="mt-1.5 text-lg font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-xl">
-                        {"detailHref" in service ? (
+                        {service.detailHref ? (
                           <Link
                             href={service.detailHref}
                             className="group inline-flex min-h-11 items-center gap-3 text-civic underline decoration-civic/35 underline-offset-4 hover:decoration-civic"

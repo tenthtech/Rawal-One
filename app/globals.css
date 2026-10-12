@@ -441,6 +441,81 @@ body {
     line-height: 1.5;
   }
 
+  /* Informational service pages share the public editorial rhythm. */
+  .service-guidance-note {
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem;
+    background: var(--sage);
+  }
+  .service-detail-layout {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+  }
+  .service-page-index {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    padding-block: 1rem;
+  }
+  .service-detail-aside {
+    min-width: 0;
+    border-top: 3px solid var(--accent);
+    padding-top: 1rem;
+  }
+  .service-guidance-list {
+    list-style: disc;
+    padding-left: 1.25rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+  .service-guidance-list li + li {
+    margin-top: 0.75rem;
+  }
+  .service-guidance-list li::marker {
+    color: var(--civic-green);
+  }
+  .service-guidance-steps {
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+  .service-guidance-steps > li {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.25rem;
+  }
+  .service-guidance-steps > li + li {
+    border-top: 1px solid var(--line);
+  }
+  .service-step-number {
+    color: var(--civic-green);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.75rem;
+    letter-spacing: -0.05em;
+  }
+  .service-support-block {
+    border-top: 3px solid var(--civic-green);
+    background: var(--sage);
+    padding: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    .service-detail-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.38fr);
+      gap: 4rem;
+    }
+    .service-detail-aside {
+      align-self: start;
+    }
+    .service-guidance-note,
+    .service-support-block {
+      padding: 1.75rem;
+    }
+  }
+
   /* Public homepage compositions. */
   .home-hero {
     position: relative;
@@ -566,30 +641,41 @@ body {
   .hero-quick-actions a:is(:hover, :focus-visible) svg {
     transform: translateX(3px);
   }
-  .hero-photograph {
+  .public-gallery {
     position: relative;
     min-width: 0;
   }
-  .hero-photo-window {
+  .public-gallery-window {
     position: relative;
     overflow: hidden;
+    background: var(--sage);
+  }
+  .public-gallery--hero .public-gallery-window {
     aspect-ratio: 16/11;
     border-bottom: 3px solid var(--accent);
   }
-  .hero-photo-window img {
+  .public-gallery-image {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  .public-gallery-image--lalkurti {
     object-position: 50% 57%;
   }
-  .hero-photograph figcaption {
-    position: relative;
-    display: flex;
-    align-items: center;
+  .public-gallery-image--ayub-park {
+    object-position: 50% 52%;
+  }
+  .public-gallery-footer {
+    display: grid;
     gap: 0.75rem;
-    width: 100%;
     padding-top: 0.75rem;
+  }
+  .public-gallery-caption {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    min-width: 0;
   }
   .photo-caption-rule {
     width: 0.5rem;
@@ -597,19 +683,56 @@ body {
     flex: none;
     background: var(--accent);
   }
-  .hero-photograph figcaption strong {
+  .public-gallery-place {
     display: block;
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     line-height: 1.5;
     font-weight: 600;
     color: var(--ink);
   }
-  .hero-photograph figcaption span span {
+  .public-gallery-description {
     display: block;
     margin-top: 0.125rem;
     font-size: 0.75rem;
     line-height: 1.5;
     color: var(--muted);
+  }
+  .public-gallery-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .public-gallery-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    border: 1px solid var(--civic-green);
+    background: var(--surface);
+    color: var(--civic-green);
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+  .public-gallery-button:is(:hover, :focus-visible) {
+    background: var(--civic-green);
+    color: white;
+  }
+  .public-gallery-position {
+    min-width: 3rem;
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+  .public-gallery-arrow {
+    width: 1rem;
+    height: 1rem;
+  }
+  .public-gallery-arrow--previous {
+    rotate: 180deg;
   }
   .home-services,
   .home-updates {
@@ -840,24 +963,8 @@ body {
     display: grid;
     gap: 2rem;
   }
-  .community-photograph {
-    position: relative;
-    min-width: 0;
-  }
-  .community-photograph img {
-    width: 100%;
+  .public-gallery--community .public-gallery-window {
     height: 14rem;
-    object-fit: cover;
-    object-position: 50% 52%;
-  }
-  .community-photograph figcaption {
-    width: 100%;
-    position: relative;
-    background: var(--warm);
-    padding-top: 0.75rem;
-    font-size: 0.75rem;
-    line-height: 1.6;
-    color: var(--muted);
   }
   .community-content {
     min-width: 0;
@@ -1001,11 +1108,12 @@ body {
     .hero-search-control button {
       padding-inline: 1.25rem;
     }
-    .hero-photo-window {
+    .public-gallery--hero .public-gallery-window {
       aspect-ratio: 16/9;
     }
-    .hero-photo-window img {
-      object-position: 50% 58%;
+    .public-gallery-footer {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
     }
     .home-services,
     .home-updates {
@@ -1049,8 +1157,8 @@ body {
     .featured-update {
       padding: 2rem;
     }
-    .community-photograph img {
-      height: 20rem;
+    .public-gallery--community .public-gallery-window {
+      height: 18rem;
     }
     .home-community {
       padding-block: 3rem;
@@ -1099,14 +1207,14 @@ body {
       gap: 3rem;
       padding-block: 3.5rem;
     }
-    .hero-photo-window {
-      height: 31rem;
+    .public-gallery--hero .public-gallery-window {
+      height: 27rem;
       aspect-ratio: auto;
     }
-    .hero-photograph figcaption {
+    .public-gallery-footer {
       padding-top: 1rem;
     }
-    .hero-photo-window img {
+    .public-gallery--hero .public-gallery-image--lalkurti {
       object-position: 50% 50%;
     }
     .hero-title {
@@ -1186,8 +1294,8 @@ body {
       align-items: center;
       gap: 3.5rem;
     }
-    .community-photograph img {
-      height: 26rem;
+    .public-gallery--community .public-gallery-window {
+      height: 23rem;
     }
     .community-content {
       padding-block: 1rem;

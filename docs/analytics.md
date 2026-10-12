@@ -41,10 +41,12 @@ No live measurement events were sent during verification.
 - The known public routes are `/`, `/services`,
   `/services/water-service-interruptions`, `/search`, `/documents`, `/notices`,
   `/accessibility`, `/image-credits` and `/privacy`.
+  The fifteen additional, fixed service-detail paths in the local service
+  catalogue are also explicitly allowlisted with constant page titles.
 - Each view uses a fixed page name and `origin + pathname`. No query string,
   fragment, original referrer, rendered title/content or form value is read
   into event parameters. Search/filter changes on the same pathname do not
-  create additional views or expose search terms. Unknown/dynamic paths and
+  create additional views or expose search terms. Unknown paths and unapproved dynamic segments and
   PDF file URLs are excluded.
 - The component sends explicit `page_view` events. Every configuration uses
   `send_page_view: false`; a pathname guard avoids duplicate initial events,

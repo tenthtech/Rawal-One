@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { CivicIcon } from "@/components/civic-icon";
 import { EmergencyAlert } from "@/components/emergency-alert";
+import { PublicGallery } from "@/components/public-gallery";
 import { ServiceNotice } from "@/components/service-notice";
 import {
   popularServices,
@@ -36,16 +36,16 @@ const problemIcons = ["road", "light", "waste"] as const;
 const quickActions = [
   {
     label: "Water billing help",
-    href: "/services?q=billing&category=water-sewer",
+    href: "/services/water-billing-account-help",
   },
-  { label: "Waste collection", href: "/services?category=waste-recycling" },
+  { label: "Waste collection", href: "/services/waste-collection-schedules" },
   {
     label: "Report a road issue",
-    href: "/services?q=pothole&category=roads-streets",
+    href: "/services/report-pothole-road-issue",
   },
   {
     label: "Building permits",
-    href: "/services?q=building&category=permits-applications",
+    href: "/services/building-permits-applications",
   },
 ];
 
@@ -176,25 +176,14 @@ export default async function HomePage() {
             </nav>
           </div>
 
-          <figure className="hero-photograph">
-            <div className="hero-photo-window">
-              <Image
-                src="/images/lalkurti-street.webp"
-                alt="People walking between shops and market stalls beneath colourful evening lights in Lalkurti, Rawalpindi"
-                width={1920}
-                height={1920}
-                preload
-                sizes="(min-width: 1280px) 492px, (min-width: 1024px) 43vw, (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
-              />
-            </div>
-            <figcaption>
-              <span className="photo-caption-rule" aria-hidden="true" />
-              <span>
-                <strong>Lalkurti, Rawalpindi</strong>
-                <span>Shops, streets and everyday life.</span>
-              </span>
-            </figcaption>
-          </figure>
+          <PublicGallery
+            id="hero-gallery"
+            label="Rawalpindi street and park photographs"
+            variant="hero"
+            initialPhotoId="lalkurti"
+            preload
+            sizes="(min-width: 1280px) 492px, (min-width: 1024px) 43vw, (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
+          />
         </div>
       </section>
 
@@ -402,16 +391,13 @@ export default async function HomePage() {
         aria-labelledby="community-heading"
       >
         <div className="civic-container community-grid">
-          <figure className="community-photograph">
-            <Image
-              src="/images/ayub-park-lake.webp"
-              alt="A fountain rises from the lake in Ayub Park, Rawalpindi, surrounded by trees and a waterside path"
-              width={2000}
-              height={1500}
-              sizes="(min-width: 1280px) 556px, (min-width: 1024px) 46vw, (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
-            />
-            <figcaption>Ayub Park, Rawalpindi · A shared place to pause.</figcaption>
-          </figure>
+          <PublicGallery
+            id="community-gallery"
+            label="Around Rawalpindi photographs"
+            variant="community"
+            initialPhotoId="ayub-park"
+            sizes="(min-width: 1280px) 556px, (min-width: 1024px) 46vw, (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
+          />
           <div className="community-content">
             <p className="civic-eyebrow">Our shared spaces</p>
             <h2 id="community-heading" className="civic-heading mt-4">
@@ -456,7 +442,7 @@ export default async function HomePage() {
                 There are no upcoming community events at this time.
               </p>
             )}
-            <Link href="/services?category=community-services" className="civic-link mt-4">
+            <Link href="/services/community-information-support" className="civic-link mt-4">
               Find community services <CivicIcon name="arrow" />
             </Link>
           </div>

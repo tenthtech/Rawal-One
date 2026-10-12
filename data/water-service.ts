@@ -58,13 +58,13 @@ export const waterServiceDetail = {
     {
       title: "Water billing & account help",
       description: "Find guidance about water bills and account questions.",
-      href: "/services?q=water%20billing&category=water-sewer",
+      href: "/services/water-billing-account-help",
       linkLabel: "Find billing help",
     },
     {
       title: "New water & sewer connections",
       description: "Information for new connections and service requests.",
-      href: "/services?q=new%20water%20connections&category=water-sewer",
+      href: "/services/new-water-sewer-connections",
       linkLabel: "Find connection information",
     },
   ] satisfies readonly ServicePathway[],
@@ -138,15 +138,15 @@ export const waterServiceDetail = {
   relatedServices: [
     {
       label: "Water billing & account help",
-      href: "/services?q=water%20billing&category=water-sewer",
+      href: "/services/water-billing-account-help",
     },
     {
       label: "New water & sewer connections",
-      href: "/services?q=new%20water%20connections&category=water-sewer",
+      href: "/services/new-water-sewer-connections",
     },
     {
       label: "Road works & local closures",
-      href: "/services?q=road%20works&category=roads-streets",
+      href: "/services/road-works-local-closures",
     },
   ],
   contentOwner: "Water & sewer services",

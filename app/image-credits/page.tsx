@@ -20,7 +20,7 @@ const photographs = [
     image: "/images/lalkurti-street.webp",
     width: 1920,
     height: 1920,
-    usage: "Homepage hero",
+    usage: "Homepage hero and community galleries",
     date: "1 January 2015",
   },
   {
@@ -34,7 +34,7 @@ const photographs = [
     image: "/images/ayub-park-lake.webp",
     width: 2000,
     height: 1500,
-    usage: "Homepage community section",
+    usage: "Homepage community and hero galleries",
     date: "5 April 2014",
   },
 ];

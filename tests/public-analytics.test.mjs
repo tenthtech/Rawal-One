@@ -63,7 +63,15 @@ test("Do Not Track and Global Privacy Control suppress analytics", () => {
 });
 
 test("every known public page has fixed, content-independent metadata", () => {
-  const routes = ["/", "/services", "/services/water-service-interruptions", "/search", "/documents", "/notices", "/accessibility", "/image-credits", "/privacy"];
+  const routes = ["/", "/services", "/services/water-service-interruptions", "/search", "/documents", "/notices", "/accessibility", "/image-credits", "/privacy",
+    "/services/waste-collection-schedules", "/services/missed-waste-collection",
+    "/services/bulky-waste-disposal-guidance", "/services/water-billing-account-help",
+    "/services/new-water-sewer-connections", "/services/report-pothole-road-issue",
+    "/services/report-streetlight-problem", "/services/road-works-local-closures",
+    "/services/building-permits-applications", "/services/signage-commercial-permits",
+    "/services/development-information", "/services/parks-community-facilities",
+    "/services/recreation-programmes", "/services/licences-certificates",
+    "/services/community-information-support"];
   for (const route of routes) {
     const page = getPublicAnalyticsPage(route);
     assert.ok(page, route);

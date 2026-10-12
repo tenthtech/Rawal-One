@@ -22,6 +22,7 @@ export type ServiceRecord = {
 export const services = [
   {
     slug: "waste-collection-schedules",
+    detailHref: "/services/waste-collection-schedules",
     title: "Waste collection schedules",
     summary: "Find regular household waste collection information.",
     category: "waste-recycling",
@@ -39,6 +40,7 @@ export const services = [
   },
   {
     slug: "missed-waste-collection",
+    detailHref: "/services/missed-waste-collection",
     title: "Missed waste collection",
     summary: "Find help when scheduled household waste was not collected.",
     category: "waste-recycling",
@@ -55,6 +57,7 @@ export const services = [
   },
   {
     slug: "bulky-waste-disposal-guidance",
+    detailHref: "/services/bulky-waste-disposal-guidance",
     title: "Bulky waste & disposal guidance",
     summary: "Guidance for larger household items and responsible disposal.",
     category: "waste-recycling",
@@ -86,6 +89,7 @@ export const services = [
   },
   {
     slug: "water-billing-account-help",
+    detailHref: "/services/water-billing-account-help",
     title: "Water billing & account help",
     summary: "Find guidance about water bills and account questions.",
     category: "water-sewer",
@@ -93,6 +97,7 @@ export const services = [
   },
   {
     slug: "new-water-sewer-connections",
+    detailHref: "/services/new-water-sewer-connections",
     title: "New water & sewer connections",
     summary: "Information for new connections and service requests.",
     category: "water-sewer",
@@ -108,6 +113,7 @@ export const services = [
   },
   {
     slug: "report-pothole-road-issue",
+    detailHref: "/services/report-pothole-road-issue",
     title: "Report a pothole or road issue",
     summary: "Find the correct pathway for damaged roads and street surfaces.",
     category: "roads-streets",
@@ -115,6 +121,7 @@ export const services = [
   },
   {
     slug: "report-streetlight-problem",
+    detailHref: "/services/report-streetlight-problem",
     title: "Report a streetlight problem",
     summary: "Find help for faulty or damaged streetlights.",
     category: "roads-streets",
@@ -130,6 +137,7 @@ export const services = [
   },
   {
     slug: "road-works-local-closures",
+    detailHref: "/services/road-works-local-closures",
     title: "Road works & local closures",
     summary: "Check information about scheduled road maintenance and closures.",
     category: "roads-streets",
@@ -137,6 +145,7 @@ export const services = [
   },
   {
     slug: "building-permits-applications",
+    detailHref: "/services/building-permits-applications",
     title: "Building permits & applications",
     summary: "Guidance for common building and development applications.",
     category: "permits-applications",
@@ -153,6 +162,7 @@ export const services = [
   },
   {
     slug: "signage-commercial-permits",
+    detailHref: "/services/signage-commercial-permits",
     title: "Signage & commercial permits",
     summary: "Information about signage and related commercial permissions.",
     category: "permits-applications",
@@ -169,6 +179,7 @@ export const services = [
   },
   {
     slug: "development-information",
+    detailHref: "/services/development-information",
     title: "Development information",
     summary: "Access development-related guidance and public information.",
     category: "permits-applications",
@@ -183,6 +194,7 @@ export const services = [
   },
   {
     slug: "parks-community-facilities",
+    detailHref: "/services/parks-community-facilities",
     title: "Parks & community facilities",
     summary: "Find parks, facilities and community spaces.",
     category: "parks-recreation",
@@ -200,6 +212,7 @@ export const services = [
   },
   {
     slug: "recreation-programmes",
+    detailHref: "/services/recreation-programmes",
     title: "Recreation programmes",
     summary: "Find information about recreation activities and programme registration.",
     category: "parks-recreation",
@@ -207,6 +220,7 @@ export const services = [
   },
   {
     slug: "licences-certificates",
+    detailHref: "/services/licences-certificates",
     title: "Licences & certificates",
     summary: "Find common licence, certificate and application guidance.",
     category: "licences-certificates",
@@ -222,6 +236,7 @@ export const services = [
   },
   {
     slug: "community-information-support",
+    detailHref: "/services/community-information-support",
     title: "Community information & support",
     summary: "Find useful local information, public resources and community support pathways.",
     category: "community-services",
