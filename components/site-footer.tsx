@@ -5,19 +5,21 @@ import { CivicIcon } from "@/components/civic-icon";
 
 const serviceLinks = [
   { href: "/services", label: "All services" },
-  { href: "/search", label: "Search Rawal One" },
-  { href: "/documents", label: "Documents & forms" },
+  { href: "/services?category=water-sewer", label: "Water & sewer" },
+  { href: "/services?category=waste-recycling", label: "Waste & recycling" },
 ];
 
 const communityLinks = [
   { href: "/#updates", label: "City updates" },
   { href: "/notices", label: "Public notices" },
   { href: "/#community", label: "Around Rawalpindi" },
+  { href: "/#community-events", label: "Community events" },
 ];
 
 const helpLinks = [
+  { href: "/documents", label: "Documents & forms" },
+  { href: "/search", label: "Search Rawal One" },
   { href: "/accessibility", label: "Accessibility" },
-  { href: "/#useful-information-heading", label: "Useful information" },
   { href: "/#about-this-demo", label: "About this demonstration" },
 ];
 
@@ -75,7 +77,7 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-label="Footer help">
-            <h2 className="footer-label">Help</h2>
+            <h2 className="footer-label">Information</h2>
             <ul className="mt-3">
               {helpLinks.map((item) => (
                 <li key={item.href}>

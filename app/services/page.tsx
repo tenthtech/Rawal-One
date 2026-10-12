@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { PublicPageIntro } from "@/components/public-page-intro";
+import { PlacePhotograph } from "@/components/place-photograph";
 import {
   getServiceCategory,
   getServiceCategoryLabel,
@@ -225,6 +226,11 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                 );
               })}
             </ul>
+            <PlacePhotograph
+              photoId="murree-road"
+              className="directory-place-photograph"
+              sizes="(min-width: 1024px) 224px, (min-width: 640px) 384px, calc(100vw - 40px)"
+            />
           </nav>
 
           <section className="min-w-0" aria-labelledby="service-results-heading">

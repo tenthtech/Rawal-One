@@ -20,7 +20,11 @@ export function PublicPageIntro({
       <div className="civic-container">
         <div className={children ? "public-intro-grid" : "max-w-4xl"}>
           <div className="min-w-0">
-            <p className="civic-eyebrow">{eyebrow}</p>
+            <p className="civic-eyebrow intro-context-label">
+              <span className="intro-place-label">Rawalpindi</span>
+              <span aria-hidden="true" className="intro-context-divider">/</span>
+              <span className="intro-topic-label">{eyebrow}</span>
+            </p>
             <h1 id={id} className="civic-page-title mt-3">
               {title}
             </h1>

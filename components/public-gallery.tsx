@@ -28,10 +28,11 @@ export function PublicGallery({
   preload = false,
   className = "",
 }: PublicGalleryProps) {
-  const photos =
-    initialPhotoId === "ayub-park"
-      ? ([rawalpindiGalleryPhotos[1], rawalpindiGalleryPhotos[0]] as const)
-      : rawalpindiGalleryPhotos;
+  const start = rawalpindiGalleryPhotos.findIndex((photo) => photo.id === initialPhotoId);
+  const photos = [
+    ...rawalpindiGalleryPhotos.slice(start),
+    ...rawalpindiGalleryPhotos.slice(0, start),
+  ];
   const [index, setIndex] = useState(0);
   const [announcement, setAnnouncement] = useState("");
   const photo = photos[index];

@@ -20,8 +20,9 @@ const photographs = [
     image: "/images/lalkurti-street.webp",
     width: 1920,
     height: 1920,
-    usage: "Homepage hero and community galleries",
+    usage: "Homepage galleries and waste service guides",
     date: "1 January 2015",
+    changes: "The adapted photograph is shared under the same CC BY-SA 2.0 licence.",
   },
   {
     title: "Ayub park,rawalpindi,pakistan",
@@ -34,8 +35,39 @@ const photographs = [
     image: "/images/ayub-park-lake.webp",
     width: 2000,
     height: 1500,
-    usage: "Homepage community and hero galleries",
+    usage: "Homepage galleries and parks and recreation service guides",
     date: "5 April 2014",
+    changes: "The adapted photograph is shared under the same CC BY-SA 3.0 licence.",
+  },
+  {
+    title: "Murree Road Rawalpindi",
+    creator: "King Eliot",
+    creatorUrl: "https://commons.wikimedia.org/wiki/User:King_Eliot",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Murree_Road_Rawalpindi.jpg",
+    licence: "CC BY-SA 4.0",
+    licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    image: "/images/murree-road.webp",
+    width: 2000,
+    height: 1500,
+    usage: "Homepage galleries, services directory, and road and building service guides",
+    date: "2 March 2016",
+    changes: "The adapted photograph is shared under the same CC BY-SA 4.0 licence.",
+  },
+  {
+    title: "Rawalpindi Station Scene 1",
+    creator: "HuangWending18072009",
+    creatorUrl: "https://commons.wikimedia.org/wiki/User:HuangWending18072009",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Rawalpindi_Station_Scene_1.jpg",
+    licence: "CC0 1.0",
+    licenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    image: "/images/rawalpindi-station.webp",
+    width: 2000,
+    height: 1500,
+    usage: "Homepage galleries and community support service guides",
+    date: "9 December 2024",
+    changes: "The photograph is available under the CC0 1.0 public domain dedication; credit is included here to acknowledge its creator.",
   },
 ];
 
@@ -98,9 +130,8 @@ export default function ImageCreditsPage() {
                 </p>
                 <p className="mt-3 max-w-2xl text-sm leading-7 text-muted">
                   Resized and converted to WebP; cropped to fit the page at
-                  different screen sizes. The adapted photograph is shared under
-                  the same {photo.licence} licence. No photographer endorsement is
-                  implied.
+                  different screen sizes. {photo.changes} No photographer
+                  endorsement is implied.
                 </p>
               </div>
             </li>

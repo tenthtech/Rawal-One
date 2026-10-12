@@ -1,21 +1,24 @@
+import { BRAND_MARK } from "@/lib/brand-identity";
+
 export function BrandMark({ className = "" }: { className?: string }) {
   return (
     <svg
       aria-hidden="true"
-      viewBox="0 0 44 44"
+      focusable="false"
+      viewBox={BRAND_MARK.viewBox}
       fill="none"
       className={className}
     >
       <path
-        d="M2 2h16v16H2zM26 2h16v16H26zM2 26h16v16H2zM26 26h16v16H26z"
+        d={BRAND_MARK.blocks}
         fill="currentColor"
       />
       <path
-        d="m16 16 6 6m6-6-6 6m-6 6 6-6m6 6-6-6"
+        d={BRAND_MARK.connections}
         stroke="currentColor"
-        strokeWidth="4"
+        strokeWidth={BRAND_MARK.connectionWidth}
       />
-      <path d="M18 18h8v8h-8z" fill="#c39448" />
+      <path d={BRAND_MARK.centre} fill={BRAND_MARK.centreColour} />
     </svg>
   );
 }

@@ -126,7 +126,7 @@ export default async function HomePage() {
             </h1>
             <p className="hero-description">
               Find services, local information, public notices and community
-              updates in one place.
+              updates for everyday life in Rawalpindi.
             </p>
 
             <form
@@ -404,8 +404,10 @@ export default async function HomePage() {
               Around Rawalpindi
             </h2>
             <p className="mt-5 max-w-lg text-base leading-7 text-muted">
-              Community activities and upcoming events across the city.
+              From neighbourhood streets to shared green spaces, explore
+              community life and upcoming events across Rawalpindi.
             </p>
+            <div id="community-events" className="scroll-mt-6">
             {communityEvents.length > 0 ? (
               <ul className="community-events">
                 {communityEvents.map((event) => {
@@ -442,6 +444,7 @@ export default async function HomePage() {
                 There are no upcoming community events at this time.
               </p>
             )}
+            </div>
             <Link href="/services/community-information-support" className="civic-link mt-4">
               Find community services <CivicIcon name="arrow" />
             </Link>

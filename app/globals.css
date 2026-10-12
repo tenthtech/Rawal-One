@@ -238,12 +238,89 @@ body {
   .public-intro-description {
     max-width: 38rem;
   }
+  .intro-context-label {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .intro-context-label::before {
+    margin-right: 0.25rem;
+  }
+  .intro-context-divider,
+  .intro-topic-label {
+    color: var(--muted);
+  }
+  .intro-topic-label {
+    min-width: 0;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .place-photograph {
+    min-width: 0;
+    max-width: 30rem;
+  }
+  .place-photo-window {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-bottom: 2px solid var(--accent);
+    background: var(--sage);
+  }
+  .place-photo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .place-photo-image--lalkurti {
+    object-position: 50% 57%;
+  }
+  .place-photo-image--ayub-park {
+    object-position: 50% 52%;
+  }
+  .place-photo-image--murree-road {
+    object-position: 54% 60%;
+  }
+  .place-photo-image--rawalpindi-station {
+    object-position: 43% 50%;
+  }
+  .place-photo-caption {
+    display: flex;
+    align-items: baseline;
+    gap: 0.625rem;
+    margin-top: 0.625rem;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .place-photo-caption strong,
+  .place-photo-caption span span {
+    display: block;
+  }
+  .place-photo-caption strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .directory-place-photograph {
+    display: none;
+    margin-top: 2rem;
+  }
+  .service-place-photograph {
+    margin-top: 1.75rem;
+  }
+  @media (min-width: 1024px) {
+    .directory-place-photograph {
+      display: block;
+    }
+  }
 
+  .site-header {
+    position: relative;
+    z-index: 30;
+  }
   .site-utility-bar {
     background: var(--civic-green-deep);
     color: white;
   }
   .site-header-main {
+    position: relative;
     display: flex;
     min-height: 5rem;
     align-items: center;
@@ -279,18 +356,26 @@ body {
     line-height: 1.4;
     color: var(--muted);
   }
-  .site-nav-link {
+  .site-navigation-groups {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .site-nav-trigger {
     position: relative;
     display: flex;
     align-items: center;
     min-height: 6rem;
-    font-size: 0.8125rem;
+    gap: 0.5rem;
+    padding-inline: 0.25rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--ink);
     text-decoration: none;
+    cursor: pointer;
     transition: color 180ms ease;
   }
-  .site-nav-link::after {
+  .site-nav-trigger::after {
     content: "";
     position: absolute;
     bottom: 1.25rem;
@@ -302,12 +387,98 @@ body {
     transform-origin: left;
     transition: transform 180ms ease;
   }
-  .site-nav-link:hover::after,
-  .site-nav-link:focus-visible::after,
-  .site-nav-link[data-active]::after {
+  .site-nav-trigger:hover::after,
+  .site-nav-trigger:focus-visible::after,
+  .site-nav-trigger[data-active]::after,
+  .site-nav-trigger[aria-expanded="true"]::after {
     transform: scaleX(1);
   }
-  .site-nav-link[data-active] {
+  .site-nav-trigger[data-active],
+  .site-nav-trigger[aria-expanded="true"] {
+    color: var(--civic-green);
+  }
+  .site-nav-chevron {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex: none;
+    transition: rotate 160ms ease;
+  }
+  :where(.site-nav-trigger, .mobile-group-trigger)[aria-expanded="true"] .site-nav-chevron {
+    rotate: 180deg;
+  }
+  .site-navigation-panel {
+    position: absolute;
+    top: 100%;
+    right: 3rem;
+    width: min(54rem, calc(100% - 6rem));
+    max-height: calc(100dvh - 11rem);
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    background: var(--surface);
+    box-shadow: 0 14px 30px #102e2614;
+  }
+  .site-navigation-panel[hidden],
+  .mobile-group-links[hidden] {
+    display: none;
+  }
+  .site-navigation-panel-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.7fr);
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+  .site-navigation-intro {
+    border-right: 1px solid var(--line);
+    padding-right: 1.5rem;
+  }
+  .site-navigation-kicker {
+    color: var(--civic-green);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .site-navigation-description {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.75;
+  }
+  .site-navigation-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem 1.5rem;
+  }
+  .site-navigation-link {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.625rem 0.5rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 0.875rem;
+    font-weight: 550;
+    line-height: 1.5;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+  .site-navigation-link svg {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    color: var(--civic-green);
+  }
+  .site-navigation-link:is(:hover, :focus-visible),
+  .site-navigation-link[data-active] {
+    background: var(--sage);
+    color: var(--civic-green);
+  }
+  .site-navigation-link[data-featured] {
+    font-weight: 700;
     color: var(--civic-green);
   }
   .header-search {
@@ -330,8 +501,37 @@ body {
   .mobile-navigation[hidden] {
     display: none;
   }
-  .mobile-navigation:not([hidden]) {
-    animation: public-menu-entry 180ms ease-out;
+  .mobile-navigation-group {
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-group-trigger {
+    display: flex;
+    width: 100%;
+    min-height: 3.5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 650;
+    text-align: left;
+    cursor: pointer;
+  }
+  .mobile-group-trigger:is(:hover, :focus-visible),
+  .mobile-group-trigger[data-active] {
+    color: var(--civic-green);
+  }
+  .mobile-group-links {
+    border-top: 1px solid var(--line);
+    padding-left: 1rem;
+    padding-bottom: 0.625rem;
+  }
+  .mobile-group-links .mobile-nav-link {
+    min-height: 2.75rem;
+    border-bottom: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
   }
   .mobile-nav-link {
     display: flex;
@@ -665,6 +865,12 @@ body {
   }
   .public-gallery-image--ayub-park {
     object-position: 50% 52%;
+  }
+  .public-gallery-image--murree-road {
+    object-position: 54% 60%;
+  }
+  .public-gallery-image--rawalpindi-station {
+    object-position: 43% 50%;
   }
   .public-gallery-footer {
     display: grid;
@@ -1317,15 +1523,6 @@ body {
   }
 }
 
-@keyframes public-menu-entry {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 /* Resident preferences apply only to the public site, including its dialog. */
 html[data-site="public"][data-a11y-text="default"] {
   font-size: 100%;
@@ -1465,6 +1662,9 @@ html[data-site="public"][data-a11y-contrast="true"] :where(a, button, input, sel
 }
 
 html[data-site="public"][data-a11y-links="true"] :where(
+  .site-navigation-link,
+  .mobile-nav-link,
+  .mobile-search-link,
   .civic-link,
   .hero-quick-actions a,
   .utility-grid a,
@@ -1523,6 +1723,10 @@ html[data-site="public"]:has(.a11y-dialog[open]) {
 
 .a11y-mobile-trigger:is(:hover, :focus-visible) {
   background: var(--sage);
+}
+
+.mobile-navigation .a11y-mobile-trigger {
+  margin-top: 0;
 }
 
 .a11y-dialog {
@@ -1813,12 +2017,12 @@ html[data-site="public"][data-a11y-motion="true"] :where(
   transform: none !important;
 }
 
-html[data-site="public"][data-a11y-motion="true"] .site-nav-link::after {
+html[data-site="public"][data-a11y-motion="true"] .site-nav-trigger::after {
   transform: none;
   opacity: 0;
 }
 
-html[data-site="public"][data-a11y-motion="true"] .site-nav-link:is(:hover, :focus-visible, [data-active])::after {
+html[data-site="public"][data-a11y-motion="true"] .site-nav-trigger:is(:hover, :focus-visible, [data-active], [aria-expanded="true"])::after {
   opacity: 1;
 }
 
@@ -1844,11 +2048,11 @@ html[data-site="public"][data-a11y-motion="true"] .site-nav-link:is(:hover, :foc
     translate: 0 0 !important;
     transform: none !important;
   }
-  html[data-site="public"] .site-nav-link::after {
+  html[data-site="public"] .site-nav-trigger::after {
     transform: none;
     opacity: 0;
   }
-  html[data-site="public"] .site-nav-link:is(:hover, :focus-visible, [data-active])::after {
+  html[data-site="public"] .site-nav-trigger:is(:hover, :focus-visible, [data-active], [aria-expanded="true"])::after {
     opacity: 1;
   }
 }

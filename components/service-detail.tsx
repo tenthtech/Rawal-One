@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { CivicIcon } from "@/components/civic-icon";
 import { PublicPageIntro } from "@/components/public-page-intro";
+import { PlacePhotograph } from "@/components/place-photograph";
+import type { RawalpindiPhotoId } from "@/data/rawalpindi-gallery";
 import type { PublicServiceDetail } from "@/data/service-details";
 import { getServiceCategoryLabel, services } from "@/data/services";
 import { formatPublicDate } from "@/lib/public-content";
@@ -15,7 +17,17 @@ const sections = [
   ["service-support", "Support"],
 ] as const;
 
+const servicePhotographs: Readonly<Partial<Record<PublicServiceDetail["slug"], RawalpindiPhotoId>>> = {
+  "waste-collection-schedules": "lalkurti",
+  "report-pothole-road-issue": "murree-road",
+  "building-permits-applications": "murree-road",
+  "parks-community-facilities": "ayub-park",
+  "recreation-programmes": "ayub-park",
+  "community-information-support": "rawalpindi-station",
+};
+
 export function ServiceDetail({ service }: { service: PublicServiceDetail }) {
+  const photoId = servicePhotographs[service.slug];
   const category = getServiceCategoryLabel(service.category) ?? "Resident services";
   const related = service.relatedSlugs.flatMap((slug) => {
     const record = services.find((item) => item.slug === slug);
@@ -126,6 +138,13 @@ export function ServiceDetail({ service }: { service: PublicServiceDetail }) {
                 </ul>
                 <Link href={`/services?category=${service.category}`} className="civic-link mt-3 min-h-11 text-sm"><span>All {category.toLowerCase()} services</span><CivicIcon name="arrow" /></Link>
               </nav>
+              {photoId ? (
+                <PlacePhotograph
+                  photoId={photoId}
+                  className="service-place-photograph"
+                  sizes="(min-width: 1024px) 320px, (min-width: 640px) 480px, calc(100vw - 40px)"
+                />
+              ) : null}
               <p className="mt-7 text-sm leading-6 text-muted">Rawal One is a research demonstration. These pages explain how to prepare; they do not submit requests, accept payments or book appointments.</p>
             </aside>
           </div>
