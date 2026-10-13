@@ -26,7 +26,7 @@ The Lalkurti and Ayub Park photographs were verified against Wikimedia Commons f
 - **Date photographed:** 5 April 2014, 14:47:43, as recorded by Commons.
 - **Original dimensions:** 3264 × 2448 pixels.
 - **Local file:** `public/images/ayub-park-lake.webp` — 2000 × 1500 pixels.
-- **Usage:** `/` “Around Rawalpindi” community gallery (first photograph) and hero gallery; context photographs in parks and recreation service guides; thumbnail on `/image-credits`.
+- **Usage:** `/` “Around Rawalpindi” community gallery (first photograph) and hero gallery; context photographs in parks and recreation service guides; `/rawalpindi#places` contextual photograph; thumbnail on `/image-credits`.
 - **Changes:** resized, converted to sRGB WebP at quality 84, metadata stripped; responsive CSS cropping. No generative alteration or compositing. This adapted photograph remains available under CC BY-SA 3.0.
 
 ## Streets and connections — Murree Road
@@ -39,7 +39,7 @@ The Lalkurti and Ayub Park photographs were verified against Wikimedia Commons f
 - **Date photographed:** 2 March 2016, 15:25:47, as recorded by Commons.
 - **Original dimensions:** 3264 × 2448 pixels.
 - **Local file:** `public/images/murree-road.webp` — 2000 × 1500 pixels, 303,276 bytes.
-- **Usage:** both `/` homepage galleries; `/services` directory; context photographs in road and building service guides; thumbnail on `/image-credits`.
+- **Usage:** both `/` homepage galleries; `/services` directory; context photographs in road and building service guides; `/rawalpindi` hero; thumbnail on `/image-credits`.
 - **Changes:** EXIF orientation applied, resized with Lanczos resampling, converted to sRGB WebP at quality 84, metadata stripped; responsive CSS cropping. No generative alteration, retouching or compositing. This adapted photograph remains available under CC BY-SA 4.0.
 - **Licence verification detail:** Commons revision `1149560894` records the creator, own-work declaration, date and `{{self|cc-by-sa-4.0}}` licence. API image metadata agrees with the file description and identifies attribution as required. The Creative Commons deed confirms reuse and adaptation with attribution, a licence link, an indication of changes and ShareAlike.
 

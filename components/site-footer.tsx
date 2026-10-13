@@ -10,6 +10,7 @@ const serviceLinks = [
 ];
 
 const communityLinks = [
+  { href: "/rawalpindi", label: "Know Rawalpindi" },
   { href: "/#updates", label: "City updates" },
   { href: "/notices", label: "Public notices" },
   { href: "/#community", label: "Around Rawalpindi" },
@@ -17,6 +18,8 @@ const communityLinks = [
 ];
 
 const helpLinks = [
+  { href: "/rawalpindi/health-emergency", label: "Hospitals & emergency" },
+  { href: "/rawalpindi/metrobus", label: "Metro & transport" },
   { href: "/documents", label: "Documents & forms" },
   { href: "/search", label: "Search Rawal One" },
   { href: "/accessibility", label: "Accessibility" },

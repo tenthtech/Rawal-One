@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { CityGlance } from "@/components/city/city-glance";
 import { CivicIcon } from "@/components/civic-icon";
 import { EmergencyAlert } from "@/components/emergency-alert";
 import { PublicGallery } from "@/components/public-gallery";
@@ -285,6 +286,8 @@ export default async function HomePage() {
           </ul>
         </div>
       </section>
+
+      <CityGlance />
 
       <section
         id="updates"

@@ -1,0 +1,254 @@
+.route {
+  min-width: 0;
+  border-block: 1px solid var(--line);
+  background: var(--surface);
+  padding: 1.5rem 1.25rem;
+}
+
+.routeHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+}
+
+.direction {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.direction > span[aria-hidden] {
+  color: var(--civic-green);
+}
+
+.routeCount,
+.instructions,
+.mapNote {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
+
+.instructions {
+  margin-top: 1rem;
+  max-width: 40rem;
+}
+
+.diagram {
+  position: relative;
+  min-width: 0;
+  margin-top: 1.5rem;
+}
+
+.linework {
+  display: none;
+}
+
+.stations {
+  position: relative;
+  isolation: isolate;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.station {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 4rem;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-block: 0.5rem;
+  scroll-margin-top: 2rem;
+}
+
+.station:not(:last-child)::before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  inset-inline-start: calc(1rem - 2px);
+  top: 1.5rem;
+  height: 100%;
+  width: 4px;
+  background: var(--civic-green);
+}
+
+.station:target .stationTitle {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 2px;
+}
+
+.marker {
+  display: flex;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--civic-green);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stationLabel {
+  min-width: 0;
+  padding-top: 0.2rem;
+}
+
+.stationTitle {
+  display: block;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.terminal .marker {
+  border: 3px double var(--ink);
+  background: var(--warm);
+}
+
+.terminalLabel {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.mapNote {
+  max-width: 48rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 640px) {
+  .route {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .diagram {
+    margin-top: 2rem;
+  }
+
+  .linework {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 31.5rem;
+    overflow: visible;
+    color: var(--civic-green);
+    pointer-events: none;
+  }
+
+  .stations {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(3, 10.5rem);
+  }
+
+  .station:not(:last-child)::before {
+    display: none;
+  }
+
+  .station {
+    display: block;
+    text-align: center;
+    min-height: 0;
+    padding: 0.5rem 0.625rem 1rem;
+  }
+
+  .marker {
+    position: relative;
+    margin-inline: auto;
+  }
+
+  .stationLabel {
+    margin-top: 0.8rem;
+    padding: 0;
+  }
+
+  .stationTitle {
+    font-size: 0.875rem;
+    overflow-wrap: normal;
+  }
+
+  .terminalLabel {
+    margin-top: 0.4rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  :global(html[data-a11y-text="extra-large"]) .linework {
+    display: none;
+  }
+
+  :global(html[data-a11y-text="extra-large"]) .stations {
+    display: block;
+  }
+
+  :global(html[data-a11y-text="extra-large"]) .station {
+    display: flex;
+    min-height: 4rem;
+    padding: 0.5rem 0;
+    text-align: start;
+  }
+
+  :global(html[data-a11y-text="extra-large"]) .station:not(:last-child)::before {
+    display: block;
+  }
+
+  :global(html[data-a11y-text="extra-large"]) .marker {
+    margin-inline: 0;
+  }
+
+  :global(html[data-a11y-text="extra-large"]) .stationLabel {
+    margin-top: 0;
+    padding-top: 0.2rem;
+  }
+
+  :global(html[data-a11y-text="extra-large"]) .stationTitle {
+    font-size: 1rem;
+  }
+
+  :global(html[data-a11y-text="extra-large"]) .terminalLabel {
+    margin-top: 0.15rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .linework {
+    color: CanvasText;
+  }
+
+  .station:not(:last-child)::before {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .marker {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    forced-color-adjust: none;
+  }
+}

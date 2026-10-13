@@ -14,7 +14,7 @@ import {
 export const metadata: Metadata = {
   title: "Search",
   description:
-    "Search Rawal One services, documents, notices, community information and current resident updates.",
+    "Search Rawal One services, city information, documents, notices, community information and current resident updates.",
   robots: {
     index: false,
     follow: true,
@@ -38,6 +38,7 @@ const suggestedSearches = [
 
 const filteredResultLabels: Record<Exclude<SearchFilter, "all">, string> = {
   services: "service",
+  "city-information": "city information",
   documents: "document",
   "updates-notices": "update or notice",
   community: "community",
@@ -84,7 +85,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         id="search-page-heading"
         eyebrow="Find local information"
         title="Search Rawal One"
-        description="Find services, documents, notices, community information and current resident updates."
+        description="Find services, city information, documents, notices, community information and current resident updates."
       >
         <div className="public-search-panel">
           <form action="/search" method="get" role="search">

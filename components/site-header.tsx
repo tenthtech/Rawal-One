@@ -183,13 +183,22 @@ function PublicHeader({ pathname }: { pathname: string }) {
       return pathname === "/services" || pathname.startsWith("/services/");
     }
 
+    if (group.id === "rawalpindi") {
+      return pathname === "/rawalpindi" || pathname.startsWith("/rawalpindi/");
+    }
+
     return group.links.some((item) => isCurrentPage(item.href));
   }
 
   function navigationLinks(group: PublicNavigationGroup, mobile: boolean) {
     return group.links.map((item) => {
-      // The mobile menu already keeps this destination above its groups.
-      if (mobile && item.featured) return null;
+      // Browse all services is already kept above the mobile groups.
+      if (
+        mobile &&
+        group.id === "services" &&
+        item.href === "/services" &&
+        item.featured
+      ) return null;
       const isCurrent = isCurrentPage(item.href);
 
       return (

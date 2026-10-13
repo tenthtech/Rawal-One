@@ -1,5 +1,6 @@
 import "server-only";
 
+import { civicSearchRecords } from "@/data/rawalpindi/search";
 import {
   getServiceCategoryLabel,
   services,
@@ -26,6 +27,7 @@ import {
 export const searchFilters = [
   { value: "all", label: "All" },
   { value: "services", label: "Services" },
+  { value: "city-information", label: "City information" },
   { value: "documents", label: "Documents" },
   { value: "updates-notices", label: "Updates & notices" },
   { value: "community", label: "Community" },
@@ -111,6 +113,7 @@ const groupPriority: Record<SearchResultGroup, number> = {
   "updates-notices": 2,
   community: 3,
   alerts: 4,
+  "city-information": 5,
 };
 
 export function tidySearchQuery(value: string) {
@@ -259,6 +262,20 @@ function getServiceDocuments(): SearchDocument[] {
       body: [],
     };
   });
+}
+
+function getCivicDocuments(): SearchDocument[] {
+  return civicSearchRecords.map((record) => ({
+    id: record.id,
+    group: "city-information",
+    typeLabel: record.typeLabel,
+    title: record.title,
+    summary: record.summary,
+    href: record.href,
+    category: record.category,
+    keywords: record.keywords,
+    body: record.body,
+  }));
 }
 
 type PublishedCityUpdate = Awaited<
@@ -509,6 +526,7 @@ export async function searchRawalOne(query: string, now = new Date()) {
     ...getPublicNoticeDocuments(notices, now),
     ...getCommunityDocuments(events),
     ...alertDocuments,
+    ...getCivicDocuments(),
   ];
 
   return documents

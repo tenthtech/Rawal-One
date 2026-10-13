@@ -1,6 +1,10 @@
 import { serviceCategories } from "@/data/services";
 
-export type PublicNavigationGroupId = "services" | "community" | "information";
+export type PublicNavigationGroupId =
+  | "services"
+  | "rawalpindi"
+  | "community"
+  | "information";
 
 export type PublicNavigationLink = {
   href: string;
@@ -28,6 +32,23 @@ export const publicNavigation: readonly PublicNavigationGroup[] = [
         href: `/services?category=${category.slug}`,
         label: category.label,
       })),
+    ],
+  },
+  {
+    id: "rawalpindi",
+    label: "Rawalpindi",
+    kicker: "Know your city",
+    description:
+      "Health, safety, transport and public-service information from official sources.",
+    links: [
+      { href: "/rawalpindi", label: "Know Rawalpindi", featured: true },
+      { href: "/rawalpindi#at-a-glance", label: "City at a glance" },
+      { href: "/rawalpindi/health-emergency", label: "Hospitals & emergency" },
+      { href: "/rawalpindi/public-safety", label: "Police & public safety" },
+      { href: "/rawalpindi/government-services", label: "Government services" },
+      { href: "/rawalpindi/metrobus", label: "Metro & transport" },
+      { href: "/rawalpindi/nullah-lai", label: "Nullah Lai" },
+      { href: "/rawalpindi#places", label: "Around the city" },
     ],
   },
   {
